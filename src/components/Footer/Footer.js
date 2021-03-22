@@ -32,7 +32,7 @@ export default function Footer() {
                 <a href="https://rs.school/" className={styles.rs}>
                     <img src={rsLogo} alt="rs-school" className={styles.rs_img}/>
                 </a>
-                <p className={styles.copyright}>© 2021 TravelApp</p>
+                <p className={styles.copyright}>© 2021 RSLang</p>
             </div>
             <ul className={styles.authors}>
                 {allGitAccounts}
