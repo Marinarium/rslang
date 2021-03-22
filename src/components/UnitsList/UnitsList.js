@@ -4,18 +4,30 @@ import {Link} from "react-router-dom";
 import styles from './UnitsList.module.scss'
 
 export default function UnitsList() {
+    const bgColors = {
+        firsColor: '#1380EE',
+        secondColor: '#6970EC',
+        thirdColor: '#8D62D5',
+        fourthColor: '#A353BD',
+        fifthColor: '#E15CB2',
+        sixthColor: '#B53C8A',
+        accentColor: '#F13765'
+    }
+
     const unitItems = [
-        {name: '1 раздел', linkTo: '/1'},
-        {name: '2 раздел', linkTo: '/2'},
-        {name: '3 раздел', linkTo: '/3'},
-        {name: '4 раздел', linkTo: '/4'},
-        {name: '5 раздел', linkTo: '/5'},
-        {name: '6 раздел', linkTo: '/6'}
+        {name: '1 раздел', linkTo: '/1', color: bgColors.firsColor},
+        {name: '2 раздел', linkTo: '/2', color: bgColors.secondColor},
+        {name: '3 раздел', linkTo: '/3', color: bgColors.thirdColor},
+        {name: '4 раздел', linkTo: '/4', color: bgColors.fourthColor},
+        {name: '5 раздел', linkTo: '/5', color: bgColors.fifthColor},
+        {name: '6 раздел', linkTo: '/6', color: bgColors.sixthColor}
     ];
 
-    const units = unitItems.map(({name, linkTo}) => {
+
+
+    const units = unitItems.map(({name, linkTo, color}) => {
         return (
-            <li className={styles.unit} key={linkTo}>
+            <li className={styles.unit} key={linkTo}  style={{backgroundColor: `${color}`}}>
                 <Link to={linkTo} className={styles.link}>
                     {name}
                 </Link>
@@ -28,7 +40,7 @@ export default function UnitsList() {
         <ul className={styles.units}>
             {units}
         </ul>
-        <h2>Список слов — 3 раздел </h2>
+        <h2 className={styles.title}>Список слов — <span className={styles.current_unit} style={{color: `${bgColors.thirdColor}`}}>3 раздел</span></h2>
         </>
     );
 }

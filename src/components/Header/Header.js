@@ -8,6 +8,7 @@ export default function Header() {
     const menuItems = [
         {name: 'Электронный учебник', linkTo: '/text-book'},
         {name: 'Словарь', linkTo: '/dictionary'},
+        {name: 'Игры', linkTo: '/games'},
         {name: 'Статистика', linkTo: '/statistic'},
         {name: 'Настройки', linkTo: '/settings'},
         {name: 'Выход', linkTo: '/exit'}
@@ -25,9 +26,9 @@ export default function Header() {
 
     return (
         <header className={styles.header}>
-            <a href="#" className={styles.logo}>
+            <Link to="/" className={styles.logo}>
                 <img src={logo} alt="Logo RSLang" className={styles.logo} />
-            </a>
+            </Link>
             <nav className={styles.menu}>
                 <div className={styles.burger}>
                     <span></span>
@@ -35,7 +36,7 @@ export default function Header() {
                     <span></span>
                     <span></span>
                 </div>
-                <ul className={styles.menu_list}>
+                <ul className={styles.list}>
                     {menu}
                 </ul>
             </nav>

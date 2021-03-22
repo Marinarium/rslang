@@ -14,3 +14,13 @@
   font-size: $font-size;
   line-height: $line-height;
 }
+
+@mixin wrapper {
+  padding-left: 5%;
+  padding-right: 5%;
+
+  @media (min-width: 1600px) {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+}
