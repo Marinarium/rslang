@@ -15,12 +15,12 @@ export default function UnitsList() {
     }
 
     const unitItems = [
-        {name: '1 раздел', linkTo: '/1', color: bgColors.firsColor},
-        {name: '2 раздел', linkTo: '/2', color: bgColors.secondColor},
-        {name: '3 раздел', linkTo: '/3', color: bgColors.thirdColor},
-        {name: '4 раздел', linkTo: '/4', color: bgColors.fourthColor},
-        {name: '5 раздел', linkTo: '/5', color: bgColors.fifthColor},
-        {name: '6 раздел', linkTo: '/6', color: bgColors.sixthColor}
+        {name: '1 раздел', linkTo: '/text-book/1', color: bgColors.firsColor},
+        {name: '2 раздел', linkTo: '/text-book/2', color: bgColors.secondColor},
+        {name: '3 раздел', linkTo: '/text-book/3', color: bgColors.thirdColor},
+        {name: '4 раздел', linkTo: '/text-book/4', color: bgColors.fourthColor},
+        {name: '5 раздел', linkTo: '/text-book/5', color: bgColors.fifthColor},
+        {name: '6 раздел', linkTo: '/text-book/6', color: bgColors.sixthColor}
     ];
 
 

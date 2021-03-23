@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 
 import {wordsApi} from '../api/wordsApi'
 const initialState = {
-    words: [],
+    items: [],
     pageForm: {
         group: '',
         page: ''
@@ -41,13 +41,13 @@ const wordsReducer = createSlice({
         [fetchWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                words: action.payload
+                items: action.payload
             }
         },
 
     }
 })
 
-export const {pageFormChange} = wordsReducer.actions
+export const {} = wordsReducer.actions
 
 export default wordsReducer.reducer
