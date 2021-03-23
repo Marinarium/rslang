@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import styles from './WordItem.module.scss';
 import speaker from './images/speaker.svg'
@@ -6,6 +6,7 @@ import speaker from './images/speaker.svg'
 export default function WordItem({
                                      word,
                                      image,
+                                     audio,
                                      textMeaning,
                                      textMeaningTranslate,
                                      transcription,
@@ -13,6 +14,28 @@ export default function WordItem({
                                      textExampleTranslate,
                                      wordTranslate
                                  }) {
+
+    const sound = useMemo( () => new Audio(audio),[audio]);
+
+    useEffect(() => {
+        sound.load();
+    }, [sound]);
+
+
+    const playAudio = () => {
+        const audioPromise = sound.play();
+        if (audioPromise !== undefined) {
+            audioPromise
+                .then(_ => {
+                    // autoplay started
+                })
+                .catch(err => {
+                    // catch dom exception
+                    console.info(err);
+                });
+        }
+    };
+
     return (
         <section className={styles.card}>
             <header className={styles.head}>7/3</header>
@@ -20,7 +43,7 @@ export default function WordItem({
                 <div className={styles.main_info}>
                     <img src={image} alt={word} className={styles.image}/>
                     <div className={styles.about_word}>
-                        <img src={speaker} alt="audio" className={styles.speaker}/>
+                        <img src={speaker} alt="audio" className={styles.speaker} onClick={() =>playAudio()}/>
                         <h4 className={styles.word}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
                         <span className={styles.translation}>{wordTranslate}</span>
@@ -38,7 +61,8 @@ export default function WordItem({
                 </div>
                 <div className={styles.buttons}>
                     <button className={styles.button} type="button">В сложные слова</button>
-                    <button className={`${styles.button} ${styles.button_empty}`} type="button">В удалённые слова</button>
+                    <button className={`${styles.button} ${styles.button_empty}`} type="button">В удалённые слова
+                    </button>
                 </div>
             </main>
         </section>

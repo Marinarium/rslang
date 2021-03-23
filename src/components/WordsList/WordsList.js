@@ -50,6 +50,7 @@ function WordsList({match}) {
                                     id,
                                     group,
                                     word,
+                                    audio,
                                     image,
                                     textMeaning,
                                     textMeaningTranslate,
@@ -63,6 +64,7 @@ function WordsList({match}) {
                 key={id}
                 group={group}
                 word={word}
+                audio={baseUrl + audio}
                 image={baseUrl + image}
                 textMeaning={textMeaning}
                 textMeaningTranslate={textMeaningTranslate}
