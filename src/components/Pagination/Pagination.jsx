@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 
-export const Pagination = ({handlePageClick}) => {
+export const Pagination = ({handlePageClick, currentPage}) => {
 
     return (
 
@@ -16,6 +16,7 @@ export const Pagination = ({handlePageClick}) => {
             onPageChange={handlePageClick}
             containerClassName={'pagination'}
             activeClassName={'active'}
+            initialPage={currentPage}
         />
 
     );

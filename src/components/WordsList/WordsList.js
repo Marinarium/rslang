@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import styles from './WordsList.module.scss';
@@ -6,45 +6,47 @@ import WordItem from "../WordItem/WordItem";
 import {fetchWords} from '../../redux/wordsReducer';
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 import {Pagination} from '../Pagination/Pagination';
+import {setCurrentPagesArray} from '../../redux/appReducer';
+import {setCurrentPagesItem} from '../../redux/appReducer';
 
 function WordsList({match}) {
 
     const dispatch = useDispatch();
 
-    const [currentPage, setCurrentPage] = useState('0');
+    const currentGroup = match.params.unit - 1; // номер текущей группы
+    const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
 
     const words = useSelector(state => state.words.items);
+    const currentPagesArray = useSelector(state => state.app.currentPagesArray);
 
-    useEffect(() => {
+    useEffect(() => {   // Зписываем массив текущих страниц из LS в store
 
-        dispatch(fetchWords({group: match.params.unit - 1, page: currentPage}));
+        const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'))
+        lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray))
 
-    }, [dispatch, currentPage, match.params.unit]);
+    }, [dispatch]);
 
-    const handlePageClick = (e) => {
+    useEffect(() => { // Загружаем слова
 
-        setCurrentPage(e.selected);
+        dispatch(fetchWords({group: currentGroup, page: currentPage}));
+
+    }, [dispatch, currentPage, currentGroup]);
+
+    useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
+
+        localStorage.setItem('currentPagesArray', JSON.stringify(currentPagesArray))
+
+    }, [currentPagesArray]);
+
+
+    const handlePageClick = (e) => { // Обработка нажатия на кнопку пагинации
+
+        dispatch(setCurrentPagesItem({
+            currentGroup: currentGroup,
+            currentPage: e.selected.toString()
+        }));
 
     };
-    // const words = [
-    //     {
-    //         id: "5e9f5ee35eb9e72bc21af4a0",
-    //         group: 3,
-    //         page: 0,
-    //         word: "alcohol",
-    //         image: "files/01_0002.jpg",
-    //         audio: "files/01_0002.mp3",
-    //         audioMeaning: "files/01_0002_meaning.mp3",
-    //         audioExample: "files/01_0002_example.mp3",
-    //         textMeaning: "<i>Alcohol</i> is a type of drink that can make people drunk.",
-    //         textExample: "A person should not drive a car after he or she has been drinking <b>alcohol</b>.",
-    //         transcription: "[ǽlkəhɔ̀ːl]",
-    //         textExampleTranslate: "Человек не должен водить машину после того, как он выпил алкоголь",
-    //         textMeaningTranslate: "Алкоголь - это тип напитка, который может сделать людей пьяными",
-    //         wordTranslate: "алкоголь"
-    //     },
-
-    // ]
 
     const allWords = words.map(({
                                     id,
@@ -78,6 +80,7 @@ function WordsList({match}) {
 
     return (
         <>
+            <Pagination handlePageClick={handlePageClick} currentPage={currentPage}/>
             <section className={styles.statistic_page}>
                 <h3>слов на странице: 4</h3>
                 <h3>общий результат страницы: 33/23</h3>
@@ -86,7 +89,7 @@ function WordsList({match}) {
             <div className={styles.words}>
                 {allWords}
             </div>
-            <Pagination handlePageClick={handlePageClick}/>
+
 
         </>
     );

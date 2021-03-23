@@ -1,12 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 import logo from "./images/logo.svg";
 import styles from './Header.module.scss';
 
+
+
 export default function Header() {
+
+
+
     const menuItems = [
-        {name: 'Электронный учебник', linkTo: '/text-book'},
+        {name: 'Электронный учебник', linkTo: '/text-book/1'},
         {name: 'Словарь', linkTo: '/dictionary'},
         {name: 'Игры', linkTo: '/games'},
         {name: 'Статистика', linkTo: '/statistic'},

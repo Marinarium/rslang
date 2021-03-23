@@ -3,7 +3,8 @@ import {Link, useLocation, withRouter} from "react-router-dom";
 
 import styles from './UnitsList.module.scss'
 
- function UnitsList() {
+
+function UnitsList() {
 
     const {pathname} = useLocation();
 
@@ -26,11 +27,14 @@ import styles from './UnitsList.module.scss'
         {name: '6 раздел', linkTo: '/text-book/6', color: bgColors.sixthColor}
     ];
 
-    const activeUnit =  unitItems.find(i => i.linkTo === pathname);
+    const activeUnit = unitItems.find(i => i.linkTo === pathname) || unitItems[0];
+
+
+
 
     const units = unitItems.map(({name, linkTo, color}) => {
         return (
-            <li className={styles.unit} key={linkTo}  style={{backgroundColor: `${color}`}}>
+            <li className={styles.unit} key={linkTo} style={{backgroundColor: `${color}`}}>
                 <Link to={linkTo} className={styles.link}>
                     {name}
                 </Link>
@@ -40,10 +44,12 @@ import styles from './UnitsList.module.scss'
 
     return (
         <>
-        <ul className={styles.units}>
-            {units}
-        </ul>
-        <h2 className={styles.title}>Список слов — <span className={styles.current_unit} style={{color: `${activeUnit.color}`}}>{activeUnit.name}</span></h2>
+            <ul className={styles.units}>
+                {units}
+            </ul>
+            <h2 className={styles.title}>Список слов —&nbsp;
+                <span className={styles.current_unit} style={{color: `${activeUnit.color}`}}>{activeUnit.name}</span>
+            </h2>
         </>
     );
 }
