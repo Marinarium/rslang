@@ -15,7 +15,7 @@ export default function WordItem({
                                      wordTranslate
                                  }) {
 
-    const sound = useMemo( () => new Audio(audio),[audio]);
+    const sound = useMemo(() => new Audio(audio), [audio]);
 
     useEffect(() => {
         sound.load();
@@ -43,7 +43,7 @@ export default function WordItem({
                 <div className={styles.main_info}>
                     <img src={image} alt={word} className={styles.image}/>
                     <div className={styles.about_word}>
-                        <img src={speaker} alt="audio" className={styles.speaker} onClick={() =>playAudio()}/>
+                        <img src={speaker} alt="audio" className={styles.speaker} onClick={() => playAudio()}/>
                         <h4 className={styles.word}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
                         <span className={styles.translation}>{wordTranslate}</span>

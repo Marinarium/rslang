@@ -1,9 +1,12 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useLocation, withRouter} from "react-router-dom";
 
 import styles from './UnitsList.module.scss'
 
-export default function UnitsList() {
+ function UnitsList() {
+
+    const {pathname} = useLocation();
+
     const bgColors = {
         firsColor: '#1380EE',
         secondColor: '#6970EC',
@@ -23,7 +26,7 @@ export default function UnitsList() {
         {name: '6 раздел', linkTo: '/text-book/6', color: bgColors.sixthColor}
     ];
 
-
+    const activeUnit =  unitItems.find(i => i.linkTo === pathname);
 
     const units = unitItems.map(({name, linkTo, color}) => {
         return (
@@ -40,7 +43,9 @@ export default function UnitsList() {
         <ul className={styles.units}>
             {units}
         </ul>
-        <h2 className={styles.title}>Список слов — <span className={styles.current_unit} style={{color: `${bgColors.thirdColor}`}}>3 раздел</span></h2>
+        <h2 className={styles.title}>Список слов — <span className={styles.current_unit} style={{color: `${activeUnit.color}`}}>{activeUnit.name}</span></h2>
         </>
     );
 }
+
+export default withRouter(UnitsList)
