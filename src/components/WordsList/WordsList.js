@@ -1,22 +1,31 @@
-import React, {useEffect} from 'react';
-import WordItem from "../WordItem/WordItem";
-import {useLocation, withRouter} from 'react-router-dom';
-import styles from './WordsList.module.scss';
-import {fetchWords} from '../../redux/wordsReducer';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import styles from './WordsList.module.scss';
+import WordItem from "../WordItem/WordItem";
+import {fetchWords} from '../../redux/wordsReducer';
 import {baseUrl} from '../../services/baseUrl/baseUrl';
+import {Pagination} from '../Pagination/Pagination';
 
 function WordsList({match}) {
 
-    const location = useLocation();
     const dispatch = useDispatch();
+
+    const [currentPage, setCurrentPage] = useState('0');
 
     const words = useSelector(state => state.words.items);
 
     useEffect(() => {
-        dispatch(fetchWords({group: match.params.unit - 1, page: '0'}));
-    },[location, dispatch]);
 
+        dispatch(fetchWords({group: match.params.unit - 1, page: currentPage}));
+
+    }, [dispatch, currentPage, match.params.unit]);
+
+    const handlePageClick = (e) => {
+
+        setCurrentPage(e.selected);
+
+    };
     // const words = [
     //     {
     //         id: "5e9f5ee35eb9e72bc21af4a0",
@@ -75,6 +84,8 @@ function WordsList({match}) {
             <div className={styles.words}>
                 {allWords}
             </div>
+            <Pagination handlePageClick={handlePageClick}/>
+
         </>
     );
 }
