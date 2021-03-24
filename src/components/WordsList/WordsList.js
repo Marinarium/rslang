@@ -9,6 +9,7 @@ import {Pagination} from '../Pagination/Pagination';
 import {setCurrentPagesArray} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
 
+
 function WordsList({match}) {
 
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function WordsList({match}) {
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
 
-    useEffect(() => {   // Зписываем массив текущих страниц из LS в store
+    useEffect(() => {   // Записываем массив текущих страниц из LS в store
 
         const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'))
         lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray))
@@ -53,6 +54,8 @@ function WordsList({match}) {
                                     group,
                                     word,
                                     audio,
+                                    audioMeaning,
+                                    audioExample,
                                     image,
                                     textMeaning,
                                     textMeaningTranslate,
@@ -67,6 +70,8 @@ function WordsList({match}) {
                 group={group}
                 word={word}
                 audio={baseUrl + audio}
+                audioMeaning={baseUrl + audioMeaning}
+                audioExample={baseUrl + audioExample}
                 image={baseUrl + image}
                 textMeaning={textMeaning}
                 textMeaningTranslate={textMeaningTranslate}
@@ -89,7 +94,6 @@ function WordsList({match}) {
             <div className={styles.words}>
                 {allWords}
             </div>
-
 
         </>
     );

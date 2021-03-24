@@ -1,12 +1,14 @@
-import React, {useEffect, useMemo} from 'react';
-
+import React from 'react';
 import styles from './WordItem.module.scss';
 import speaker from './images/speaker.svg'
+import {playAudios} from '../../services/utils/playAudio'
 
 export default function WordItem({
                                      word,
                                      image,
                                      audio,
+                                     audioMeaning,
+                                     audioExample,
                                      textMeaning,
                                      textMeaningTranslate,
                                      transcription,
@@ -15,35 +17,19 @@ export default function WordItem({
                                      wordTranslate
                                  }) {
 
-    const sound = useMemo(() => new Audio(audio), [audio]);
-
-    useEffect(() => {
-        sound.load();
-    }, [sound]);
-
-
-    const playAudio = () => {
-        const audioPromise = sound.play();
-        if (audioPromise !== undefined) {
-            audioPromise
-                .then(_ => {
-                    // autoplay started
-                })
-                .catch(err => {
-                    // catch dom exception
-                    console.info(err);
-                });
-        }
+    const playHandler = () => {
+        playAudios(audio, audioMeaning, audioExample);
     };
 
     return (
+
         <section className={styles.card}>
             <header className={styles.head}>7/3</header>
             <main className={styles.main}>
                 <div className={styles.main_info}>
                     <img src={image} alt={word} className={styles.image}/>
                     <div className={styles.about_word}>
-                        <img src={speaker} alt="audio" className={styles.speaker} onClick={() => playAudio()}/>
+                        <img src={speaker} alt="audio" className={styles.speaker} onClick={playHandler}/>
                         <h4 className={styles.word}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
                         <span className={styles.translation}>{wordTranslate}</span>
