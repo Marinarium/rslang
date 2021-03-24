@@ -4,11 +4,7 @@ import {Link} from 'react-router-dom';
 import logo from "./images/logo.svg";
 import styles from './Header.module.scss';
 
-
-
 export default function Header() {
-
-
 
     const menuItems = [
         {name: 'Электронный учебник', linkTo: '/text-book/1'},

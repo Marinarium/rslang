@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
     currentPagesArray: ['0', '0', '0', '0', '0', '0'],
+    activeUnit: {}
 }
 
 const appReducer = createSlice({
@@ -29,6 +30,13 @@ const appReducer = createSlice({
 
             }
         },
+        setActiveUnit: (state, action) => {
+            return {
+                ...state,
+                activeUnit: action.payload,
+
+            }
+        },
 
     },
     extraReducers: {}
@@ -36,7 +44,8 @@ const appReducer = createSlice({
 
 export const {
     setCurrentPagesItem,
-    setCurrentPagesArray
+    setCurrentPagesArray,
+    setActiveUnit
 
 } = appReducer.actions
 

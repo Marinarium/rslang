@@ -61,16 +61,9 @@ export const getUser = createAsyncThunk(
         }
 
         return data
-
     }
 )
-// export const setMe = createAsyncThunk(
-//     'authReducer/setMe',
-//     async (userId: string) => {
-//         return await api.getAvatar(userId)
-//             .then((res) => res && res.json())
-//     }
-// )
+
 
 const authReducer = createSlice({
     name: 'authReducer',
@@ -88,57 +81,6 @@ const authReducer = createSlice({
                 registerForm: {...state.registerForm, ...action.payload}
             }
         },
-        // setIsAuthenticated: (state, action) => {
-        //     return {
-        //         ...state,
-        //         token: action.payload.token,
-        //         userId: action.payload.userId,
-        //         name: action.payload.name,
-        //         isAuthenticated: !!action.payload.token
-        //     }
-        // },
-        // setIsRegistered: (state, action) => {
-        //     return {
-        //         ...state,
-        //         isRegistered: action.payload
-        //     }
-        // },
-        //
-        // cleanAuthError: (state) => {
-        //     return {
-        //         ...state,
-        //         authError: ''
-        //     }
-        // },
-        //
-        // cleanRegisterMessage: (state) => {
-        //     return {
-        //         ...state,
-        //         registerMessage: ''
-        //     }
-        // },
-        //
-        // cleanRegistrationForm: (state) => {
-        //     return {
-        //         ...state,
-        //         registrationForm: {
-        //             email: '',
-        //             password: '',
-        //             name: ''
-        //         }
-        //     }
-        // },
-        // cleanLoginForm: (state) => {
-        //     return {
-        //         ...state,
-        //         loginForm: {
-        //             email: '',
-        //             password: ''
-        //         }
-        //     }
-        // },
-        //
-        //
         // authLogout: (state) => {
         //     return {
         //         ...state,
@@ -152,7 +94,6 @@ const authReducer = createSlice({
         //         }
         //     }
         // }
-
     },
     extraReducers: {
 
