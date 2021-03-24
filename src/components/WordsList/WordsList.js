@@ -97,13 +97,14 @@ function WordsList({match}) {
                 <h3>слов на странице: 4</h3>
                 <h3>общий результат страницы: 33/23</h3>
             </section>
-
             <div className={styles.words}>
                 {allWords}
             </div>
+
 
         </>
     );
 }
 
 export default withRouter(WordsList)
+

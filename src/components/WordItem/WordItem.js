@@ -18,6 +18,7 @@ export default function WordItem({
                                      wordTranslate
                                  }) {
 
+
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
