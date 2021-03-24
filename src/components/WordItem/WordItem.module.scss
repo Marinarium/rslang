@@ -1,0 +1,143 @@
+@import '../../assets/styles/main';
+
+.card {
+  background: $light;
+  border: 1px solid $lightGrey;
+  box-sizing: border-box;
+  border-radius: 13px 13px 3px 3px;
+}
+
+.head {
+  background-color: $thirdColor;
+  padding: 18px 25px 18px;
+  color: $light;
+  @include title-font(16px, normal);
+  border-radius: 13px 13px 0 0;
+  text-align: right;
+}
+
+.main {
+  padding: 31px 48px 61px;
+}
+
+.main_info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.image {
+  margin-right: 22px;
+  object-fit: cover;
+  object-position: center;
+  width: 130px;
+  height: 121px;
+  border: 1px solid $lightGrey;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+.about_word {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.speaker {
+  display: inline-block;
+  margin-right: 12px;
+  transition-duration: 300ms;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(1px);
+  }
+}
+
+.word {
+  display: inline-block;
+  margin-right: 9px;
+  @include title-font(20px, 500);
+  color: $thirdColor;
+}
+
+.transcription {
+  @include title-font(18px, 300);
+  color: $darkGrey;
+}
+
+.translation {
+  flex-basis: 100%;
+  margin-top: 7px;
+  @include text-font(17px, normal);
+  letter-spacing: 0.05em;
+  color: $dark;
+}
+
+.meaning {
+  padding-left: 32px;
+  @include text-font(14px, normal);
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: $dark;
+  margin-bottom: 33px;
+  background-image: url("./images/magnifier.svg");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: auto;
+}
+
+.meaning_eng {
+  margin-bottom: 9px;
+}
+
+.meaning_ru {
+  color: $darkGrey;
+}
+
+.example {
+  padding-left: 32px;
+  @include text-font(14px, normal);
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: $dark;
+  margin-bottom: 32px;
+  background-image: url("./images/book.svg");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: auto;
+}
+
+.example_eng {
+  margin-bottom: 9px;
+}
+
+.example_ru {
+  color: $darkGrey;
+}
+
+.button {
+  background: $thirdColor;
+  border-radius: 50px;
+  border: 1px solid $thirdColor;
+  color: $light;
+  @include title-font(16px, normal);
+  line-height: 19px;
+  padding: 11px 18px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition-duration: 300ms;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    filter: saturate(200%);
+  }
+}
+
+.button_empty {
+  background-color: $light;
+  color: $thirdColor;
+}
