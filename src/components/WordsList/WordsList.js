@@ -6,7 +6,7 @@ import WordItem from "../WordItem/WordItem";
 import {fetchWords} from '../../redux/wordsReducer';
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 import {Pagination} from '../Pagination/Pagination';
-import {setCurrentPagesArray} from '../../redux/appReducer';
+import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
 
 
@@ -20,12 +20,19 @@ function WordsList({match}) {
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
 
-    useEffect(() => {   // Записываем массив текущих страниц из LS в store
+    useEffect(() => {
 
+        // Записываем массив текущих страниц из LS в store
         const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'))
         lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray))
 
+        // Записываем настройки букв из LS в store
+        const lSWordSettings = JSON.parse(localStorage.getItem('wordSettings'))
+        lSWordSettings && dispatch(setIsWordTranslated(lSWordSettings.isWordTranslated))
+        lSWordSettings && dispatch(setIsWordButtonsShown(lSWordSettings.isWordButtonsShown))
+
     }, [dispatch]);
+
 
     useEffect(() => { // Загружаем слова
 

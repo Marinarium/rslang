@@ -19,6 +19,8 @@ export default function WordItem({
                                  }) {
 
     const activeUnit = useSelector(state => state.app.activeUnit);
+    const isWordTranslated = useSelector(state => state.app.isWordTranslated);
+    const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
 
     const playHandler = () => {
         playAudios(audio, audioMeaning, audioExample);
@@ -54,7 +56,7 @@ export default function WordItem({
         default:
             break
     }
-    
+
 
     return (
 
@@ -67,24 +69,24 @@ export default function WordItem({
                         <img src={speaker} alt="audio" className={styles.speaker} onClick={playHandler}/>
                         <h4 className={`${styles.word} ${classesAlt.join(' ')}`}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
-                        <span className={styles.translation}>{wordTranslate}</span>
+                        {isWordTranslated && <span className={styles.translation}>{wordTranslate}</span>}
                     </div>
                 </div>
                 <div className={styles.description}>
                     <div className={styles.meaning}>
                         <p className={styles.meaning_eng}>{textMeaning}</p>
-                        <p className={styles.meaning_ru}>{textMeaningTranslate}</p>
+                        {isWordTranslated && <p className={styles.meaning_ru}>{textMeaningTranslate}</p>}
                     </div>
                     <div className={styles.example}>
                         <p className={styles.example_eng}>{textExample}</p>
-                        <p className={styles.example_ru}>{textExampleTranslate}</p>
+                        {isWordTranslated && <p className={styles.example_ru}>{textExampleTranslate}</p>}
                     </div>
                 </div>
-                <div className={styles.buttons}>
+                {isWordButtonsShown && <div className={styles.buttons}>
                     <button className={`${styles.button} ${classes.join(' ')}`} type="button">В сложные слова</button>
                     <button className={`${styles.button} ${classesAlt.join(' ')}`} type="button">В удалённые слова
                     </button>
-                </div>
+                </div>}
             </main>
         </section>
     );

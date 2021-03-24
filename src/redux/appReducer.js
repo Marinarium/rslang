@@ -2,7 +2,10 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
     currentPagesArray: ['0', '0', '0', '0', '0', '0'],
-    activeUnit: {}
+    activeUnit: {},
+    isWordTranslated: true,
+    isWordButtonsShown: true
+
 }
 
 const appReducer = createSlice({
@@ -37,6 +40,19 @@ const appReducer = createSlice({
 
             }
         },
+        setIsWordTranslated: (state, action) => {
+            return {
+                ...state,
+                isWordTranslated: action.payload //? action.payload : !state.isWordTranslated
+            }
+        },
+        setIsWordButtonsShown: (state, action) => {
+            return {
+                ...state,
+                isWordButtonsShown: action.payload //? action.payload : !state.isWordButtonsShown
+            }
+        },
+
 
     },
     extraReducers: {}
@@ -45,7 +61,10 @@ const appReducer = createSlice({
 export const {
     setCurrentPagesItem,
     setCurrentPagesArray,
-    setActiveUnit
+    setActiveUnit,
+    setIsWordButtonsShown,
+    setIsWordTranslated
+
 
 } = appReducer.actions
 
