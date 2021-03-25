@@ -24,6 +24,7 @@ export function WordsList({words, handlePageClick, currentPage}) {
         return (
             <WordItem
                 key={id}
+                id={id}
                 group={group}
                 word={word}
                 audio={baseUrl + audio}

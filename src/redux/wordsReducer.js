@@ -24,6 +24,18 @@ export const fetchWords = createAsyncThunk(
     }
 )
 
+export const createUserWord = createAsyncThunk(
+    'wordsReducer/createUserWord',
+    async ({userId, wordId, props}) => {
+        const data = await wordsApi.createUserWord({userId, wordId, props})
+            .then((res) => res && res.json())
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        return data
+    }
+)
+
 
 const wordsReducer = createSlice({
     name: 'wordsReducer',
@@ -42,6 +54,11 @@ const wordsReducer = createSlice({
             return {
                 ...state,
                 items: action.payload
+            }
+        },
+        [createUserWord.fulfilled]: (state, action) => {
+            return {
+                ...state
             }
         },
 

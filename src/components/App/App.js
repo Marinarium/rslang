@@ -5,6 +5,8 @@ import TextBookPage from "../../pages/TextBookPage/TextBookPage";
 import Footer from "../Footer/Footer";
 import DictionaryPage from "../../pages/DictionaryPage/DictionaryPage";
 import SettingsPage from "../../pages/SettingsPage/SettingsPage";
+import {LoginForm} from '../LoginForm/LoginForm'
+import {RegisterForm} from '../RegisterForm/RegisterForm'
 
 function App() {
     return (
@@ -12,6 +14,8 @@ function App() {
             <div className="App">
                 <Header/>
                 <Route path="/" exact component={TextBookPage}/>
+                <Route path="/login" exact component={LoginForm}/>
+                <Route path="/register" exact component={RegisterForm}/>
                 <Route path="/text-book/:unit" exact component={TextBookPage}/>  {/*Добавил раздел*/}
                 <Route path="/dictionary" component={DictionaryPage}/>
                 <Route path="/settings" component={SettingsPage}/>

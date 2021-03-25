@@ -22,7 +22,7 @@ export const wordsApi = {
         )
 
     },
-    createUserWord({userId, wordId, word}) {
+    createUserWord({userId, wordId, props}) {
         return request(
             `users/${userId}/words/${wordId}`,
             'POST',
@@ -32,7 +32,7 @@ export const wordsApi = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            JSON.stringify(word)
+            JSON.stringify(props)
         )
 
     },
