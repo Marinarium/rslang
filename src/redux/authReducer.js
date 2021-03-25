@@ -81,6 +81,15 @@ const authReducer = createSlice({
                 registerForm: {...state.registerForm, ...action.payload}
             }
         },
+        setIsAuthenticated: (state, action) => {
+            return {
+                ...state,
+                token: action.payload.token,
+                userId: action.payload.userId,
+                name: action.payload.name,
+                isAuthenticated: !!action.payload.token
+            }
+        },
         // authLogout: (state) => {
         //     return {
         //         ...state,

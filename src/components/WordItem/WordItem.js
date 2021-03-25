@@ -70,6 +70,18 @@ export default function WordItem({
             }
         }))
     }
+    const deleteButtonHandler = () => {
+        dispatch(createUserWord({
+            userId,
+            wordId: id,
+            props: {
+                "difficulty": "easy",
+                "optional": {
+                    "deleted": "true"
+                }
+            }
+        }))
+    }
 
     return (
 
@@ -107,6 +119,7 @@ export default function WordItem({
                     <button
                         className={`${styles.button} ${classesAlt.join(' ')}`}
                         type="button"
+                        onClick={deleteButtonHandler}
                     >
                         В удалённые слова
                     </button>
