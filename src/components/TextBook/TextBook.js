@@ -8,7 +8,7 @@ export default function TextBook() {
     return (
         <main className={styles.main}>
             <MainTitle text={"Электронный учебник"} icon={true}/>
-            <UnitsList/>
+            <UnitsList link={"text-book"}/>
             <TextBookListContainer/>
         </main>
     );
