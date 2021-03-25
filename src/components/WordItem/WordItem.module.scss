@@ -7,8 +7,62 @@
   border-radius: 13px 13px 3px 3px;
 }
 
-.head {
+.unit1{
+  background-color: $firstColor;
+}
+
+.unit1_alt{
+  border-color: $firstColor!important;
+  color: $firstColor!important;
+}
+
+.unit2{
+  background-color: $secondColor;
+}
+
+.unit2_alt{
+  border-color: $secondColor!important;
+  color: $secondColor!important;
+}
+
+.unit3{
   background-color: $thirdColor;
+}
+
+.unit3_alt{
+  border-color: 1px solid $thirdColor!important;
+  color: $thirdColor!important;
+}
+
+.unit4{
+  background-color: $fourthColor;
+}
+
+.unit4_alt{
+  border-color: $fourthColor!important;
+  color: $fourthColor!important;
+}
+
+.unit5{
+  background-color: $fifthColor;
+}
+
+.unit5_alt{
+  border-color: $fifthColor!important;
+  color: $fifthColor!important;
+}
+
+.unit6{
+  background-color: $sixthColor;
+}
+
+.unit6_alt{
+  border-color: $sixthColor!important;
+  color: $sixthColor!important;
+}
+
+.head {
+  //background-color: $thirdColor;
   padding: 18px 25px 18px;
   color: $light;
   @include title-font(16px, normal);
@@ -58,7 +112,8 @@
   display: inline-block;
   margin-right: 9px;
   @include title-font(20px, 500);
-  color: $thirdColor;
+  border: none;
+  //color: $thirdColor;
 }
 
 .transcription {
@@ -117,9 +172,11 @@
 }
 
 .button {
-  background: $thirdColor;
+
+  //background: $thirdColor;
   border-radius: 50px;
-  border: 1px solid $thirdColor;
+  border: 1px solid;
+  //border: none;
   color: $light;
   @include title-font(16px, normal);
   line-height: 19px;
@@ -139,5 +196,5 @@
 
 .button_empty {
   background-color: $light;
-  color: $thirdColor;
+  //color: $thirdColor;
 }

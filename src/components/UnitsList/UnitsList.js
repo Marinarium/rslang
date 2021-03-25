@@ -1,9 +1,15 @@
-import React from 'react';
-import {Link} from "react-router-dom";
 
+import React, {useEffect} from 'react';
+import {Link, useLocation, withRouter} from "react-router-dom";
 import styles from './UnitsList.module.scss'
+import {useDispatch} from 'react-redux'
+import {setActiveUnit} from '../../redux/appReducer'
 
-export default function UnitsList() {
+
+function UnitsList() {
+
+    const {pathname} = useLocation();
+
     const bgColors = {
         firsColor: '#1380EE',
         secondColor: '#6970EC',
@@ -15,19 +21,25 @@ export default function UnitsList() {
     }
 
     const unitItems = [
-        {name: '1 раздел', linkTo: '/1', color: bgColors.firsColor},
-        {name: '2 раздел', linkTo: '/2', color: bgColors.secondColor},
-        {name: '3 раздел', linkTo: '/3', color: bgColors.thirdColor},
-        {name: '4 раздел', linkTo: '/4', color: bgColors.fourthColor},
-        {name: '5 раздел', linkTo: '/5', color: bgColors.fifthColor},
-        {name: '6 раздел', linkTo: '/6', color: bgColors.sixthColor}
+        {name: '1 раздел', linkTo: '/text-book/1', color: bgColors.firsColor},
+        {name: '2 раздел', linkTo: '/text-book/2', color: bgColors.secondColor},
+        {name: '3 раздел', linkTo: '/text-book/3', color: bgColors.thirdColor},
+        {name: '4 раздел', linkTo: '/text-book/4', color: bgColors.fourthColor},
+        {name: '5 раздел', linkTo: '/text-book/5', color: bgColors.fifthColor},
+        {name: '6 раздел', linkTo: '/text-book/6', color: bgColors.sixthColor}
     ];
 
+    const activeUnit = unitItems.find(i => i.linkTo === pathname) || unitItems[0];
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setActiveUnit(activeUnit));
+    }, [activeUnit, dispatch])
 
     const units = unitItems.map(({name, linkTo, color}) => {
         return (
-            <li className={styles.unit} key={linkTo}  style={{backgroundColor: `${color}`}}>
+            <li className={styles.unit} key={linkTo} style={{backgroundColor: `${color}`}}>
                 <Link to={linkTo} className={styles.link}>
                     {name}
                 </Link>
@@ -37,10 +49,14 @@ export default function UnitsList() {
 
     return (
         <>
-        <ul className={styles.units}>
-            {units}
-        </ul>
-        <h2 className={styles.title}>Список слов — <span className={styles.current_unit} style={{color: `${bgColors.thirdColor}`}}>3 раздел</span></h2>
+            <ul className={styles.units}>
+                {units}
+            </ul>
+            <h2 className={styles.title}>Список слов —&nbsp;
+                <span className={styles.current_unit} style={{color: `${activeUnit.color}`}}>{activeUnit.name}</span>
+            </h2>
         </>
     );
 }
+
+export default withRouter(UnitsList)
