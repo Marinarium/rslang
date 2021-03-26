@@ -65,8 +65,8 @@ export default function WordItem({
         default:
             break
     }
-    const difficultButtonHandler = () => {
-        dispatch(createUserWord({
+    const difficultButtonHandler = async () => {
+       await dispatch(createUserWord({
             userId,
             wordId: id,
             props: {
@@ -77,8 +77,8 @@ export default function WordItem({
 
 
     }
-    const deleteButtonHandler = () => {
-        dispatch(createUserWord({
+    const deleteButtonHandler = async() => {
+        await dispatch(createUserWord({
             userId,
             wordId: id,
             props: {

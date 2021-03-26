@@ -13,7 +13,7 @@ export const wordsApi = {
 
     getAllUserWordsWithoutUserWords({group, page, userId}) { //Get all not user words by group & page
         return request(
-            `users/${userId}/aggregatedWords?filter={"userWord":null}&group=${group}&page=${page}`,
+            `users/${userId}/aggregatedWords?filter={"userWord":null}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
             true,
             {
@@ -24,7 +24,7 @@ export const wordsApi = {
     },
     getAllUserWordsWithoutDeletedWords({group, page, userId}) { //Get all not deleted words by group & page
         return request(
-            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted": null}&group=${group}&page=${page}`,
+            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted": null}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
             true,
             {
@@ -97,7 +97,7 @@ export const wordsApi = {
     },
     getDifficultWords({group, page, userId}) { //Get difficult words
         return request(
-            `users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}&group=${group}&page=${page}`,
+            `users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
             true,
             {
@@ -108,7 +108,7 @@ export const wordsApi = {
     },
     getDeletedWords({group, page, userId}) { //Get deleted words
         return request(
-            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted":true}&group=${group}&page=${page}`,
+            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted":true}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
             true,
             {
