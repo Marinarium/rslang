@@ -14,7 +14,7 @@ const DictionaryUnitsList = () => {
         {name: 'Удалённые Слова', linkTo: '/dictionary/deleted'}
     ];
     const {pathname} = useLocation();
-    const activeDictionaryUnit = dictionaryItems.find(i => i.linkTo === pathname) || dictionaryItems[0];
+    const activeDictionaryUnit = dictionaryItems.find(i =>pathname.includes(i.linkTo)) || dictionaryItems[0];
 
     const dispatch = useDispatch();
 
@@ -41,9 +41,6 @@ const DictionaryUnitsList = () => {
                     <span className={styles.current_unit}>{activeDictionaryUnit.name}</span>
                 </h2>
             </>
-            {/*{activeDictionaryUnit.name === 'Изучаемые слова' && <LearnedWords/>}*/}
-            {activeDictionaryUnit.name === 'Сложные слова' && <DifficultWords/>}
-            {/*{activeDictionaryUnit.name === 'Удалённые слова' && <DeletedWords/>}*/}
         </div>
     )
 };

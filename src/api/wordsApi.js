@@ -83,9 +83,9 @@ export const wordsApi = {
         )
 
     },
-    getAllUserAggregatedWords(userId) { //Get all user aggregated words
+    getDifficultWords({group, page, userId}) { //Get difficult words
         return request(
-            `users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}`,
+            `users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}&group=${group}&page=${page}`,
             'GET',
             true,
             {

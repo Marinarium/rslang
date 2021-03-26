@@ -25,10 +25,10 @@ export const fetchWords = createAsyncThunk(
     }
 )
 
-export const getAllUserAggregatedWords = createAsyncThunk(
-    'wordsReducer/getAllUserAggregatedWords ',
-    async (userId) => {
-        const data = await wordsApi.getAllUserAggregatedWords(userId)
+export const getDifficultWords = createAsyncThunk(
+    'wordsReducer/getDifficultWords ',
+    async ({group, page, userId}) => {
+        const data = await wordsApi.getDifficultWords({group, page, userId})
             .then((res) => res && res.json())
 
         if (!data) {
@@ -98,7 +98,7 @@ const wordsReducer = createSlice({
                 items: action.payload
             }
         },
-        [getAllUserAggregatedWords.fulfilled]: (state, action) => {
+        [getDifficultWords.fulfilled]: (state, action) => {
             return {
                 ...state,
                 userItems: action.payload
