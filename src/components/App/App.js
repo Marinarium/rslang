@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route, IndexRoute} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import Header from "../Header/Header";
 import TextBookPage from "../../pages/TextBookPage/TextBookPage";
 import Footer from "../Footer/Footer";
@@ -20,7 +20,6 @@ function App() {
                 <Route path="/text-book/:unit" exact component={TextBookPage}/>  {/*Добавил раздел*/}
                 <Route path="/dictionary" component={DictionaryPage}/>
                 <Route path="/dictionary/difficult/:unit" component={DifficultWords}/>
-
                 <Route path="/settings" component={SettingsPage}/>
                 <Footer/>
             </div>

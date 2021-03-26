@@ -72,7 +72,7 @@ export default function WordItem({
             }
         }))
         //Получаем слова с учётом добавленных в сложные:
-        dispatch(getAllUserWordsWithoutUserWords({group: currentGroup, page: currentPage, userId}))
+        dispatch(getAllUserWordsWithoutUserWords({group: currentGroup, page: currentPage, userId}));
     }
     const deleteButtonHandler = () => {
         dispatch(createUserWord({

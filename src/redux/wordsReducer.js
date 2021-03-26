@@ -19,7 +19,6 @@ export const fetchWords = createAsyncThunk(
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
-
         return data
 
     }
@@ -50,7 +49,6 @@ export const getAllUserWordsWithoutUserWords = createAsyncThunk(
     async ({group, page, userId}) => {
         const data = await wordsApi.getAllUserWordsWithoutUserWords({group, page, userId})
             .then((res) => res && res.json())
-
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
@@ -60,7 +58,6 @@ export const getAllUserWordsWithoutUserWords = createAsyncThunk(
             return obj
 
         })
-
         return modifiedData
 
     }

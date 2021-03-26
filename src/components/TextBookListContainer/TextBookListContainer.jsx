@@ -10,17 +10,18 @@ import {WordsList} from '../WordsList/WordsList'
 function TextBookListContainer({match}) {
 
     const dispatch = useDispatch();
-
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
     const userId = useSelector(state => state.auth.userId);
-
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
 
     useEffect(() => {
 
         // Записываем массив текущих страниц из LS в store
+        // Может кто предложет вариант по-лучше, мне этот не очень по душе, то же самое нужно сделать по-хорошему
+        // ещё для 3-х страниц, выходит очень громоздко, или хотя бы это как-то отрефакторить
+
         const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'))
         lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray))
 
@@ -65,5 +66,5 @@ function TextBookListContainer({match}) {
     );
 }
 
-export default withRouter(TextBookListContainer)
+export default withRouter(TextBookListContainer);
 

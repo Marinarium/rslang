@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {getDifficultWords} from '../../../redux/wordsReducer';
 import {setCurrentDifficultPagesArray} from '../../../redux/appReducer';
-import {setCurrentPagesItem, setCurrentDifficultPagesItem} from '../../../redux/appReducer';
+import { setCurrentDifficultPagesItem} from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
 
 
@@ -11,7 +11,6 @@ function DifficultWordsListContainer({match}) {
 
     const dispatch = useDispatch();
     const currentGroup = match.params.unit - 1; // номер текущей группы
-    console.log('cur',currentGroup)
     const currentPage = useSelector(state => state.app.currentDifficultPagesArray[currentGroup]); // номер текущей страницы
     const words = useSelector(state => state.words.userItems);
     const currentDifficultPagesArray = useSelector(state => state.app.currentDifficultPagesArray);
@@ -27,13 +26,13 @@ function DifficultWordsListContainer({match}) {
     }, [dispatch]);
     useEffect(() => { // Загружаем сложные слова
 
-        userId && dispatch(getDifficultWords({group:currentGroup, page:currentPage, userId}));
+        userId && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
 
     }, [dispatch, userId, currentGroup, currentPage]);
 
     useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
 
-        localStorage.setItem('currentDifficultPagesArray', JSON.stringify(currentDifficultPagesArray))
+        localStorage.setItem('currentDifficultPagesArray', JSON.stringify(currentDifficultPagesArray));
 
     }, [currentDifficultPagesArray]);
 
@@ -56,5 +55,5 @@ function DifficultWordsListContainer({match}) {
     );
 }
 
-export default withRouter(DifficultWordsListContainer)
+export default withRouter(DifficultWordsListContainer);
 
