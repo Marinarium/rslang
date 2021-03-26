@@ -1,4 +1,5 @@
-.timer {
+.timer,
+.endGame {
   display: block;
   font-size: 75px;
   position: fixed;
@@ -29,7 +30,7 @@
   width: 100%;
   z-index: 15;
   top: 0vh;
-  transition: 1s linear all;
+  transition: 0.5s linear all;
 }
 
 .savannah {
@@ -90,4 +91,76 @@
   text-shadow: rgb(112, 111, 107) 1px 0 10px;
   cursor: pointer;
   z-index: 30;
+  transition: 0.5s linear all;
+}
+
+.endGame_body {
+  width: 50%;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.endGame_body_top h1 {
+  font-size: 25px;
+  text-align: center;
+}
+.endGame_body_top h3 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.endGame_body_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_circle {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background-color: rgba(251, 255, 0, 0.74);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.endGame_body_info {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_info p {
+  font-size: 25px;
+  text-align: center;
+}
+
+.endGame_body_bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.endGame_body_bottom button {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  background-color: rgb(253, 89, 89);
+  outline: 0 !important;
+  border: 1px solid wheat;
+  border-radius: 10px;
+}
+.endGame_body_bottom button a {
+  color: #000 !important;
+  text-decoration: none;
 }

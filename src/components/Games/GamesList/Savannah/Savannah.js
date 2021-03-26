@@ -3,6 +3,10 @@ import styles from "./Savannah.module.scss";
 import { Link } from "react-router-dom";
 import crystal from "./images/crystal.svg";
 
+const SPEED_WORD = 4;
+const LIMIT_WORD = 60;
+const RETURN_START_WORD = -20;
+
 export default function Savannah() {
   const [health, setHealth] = useState(5);
   const [activeWord, setActiveWord] = useState(0);
@@ -10,7 +14,9 @@ export default function Savannah() {
   const [numberWords, setNumberWords] = useState(15);
   const [arrWords, setArrWords] = useState([]);
   const [randomWords, setRandomWords] = useState([]);
-  const [seconds, setSeconds] = useState(3);
+  const [seconds, setSeconds] = useState(5);
+  const [trueAnswer, setTrueAnswer] = useState(0);
+  const [newWord, setNewWord] = useState(false);
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -61,27 +67,46 @@ export default function Savannah() {
   }, [arrWords]);
 
   useInterval(() => {
-    if (seconds > 0) {
-      setSeconds(seconds - 1);
-    } else {
-      setMoveWord(moveWord + 7);
+    if (seconds <= 0) {
+      setMoveWord(moveWord + SPEED_WORD);
     }
-    if (moveWord > 60) {
-      setMoveWord(-15);
+    if (moveWord > LIMIT_WORD) {
+      setMoveWord(RETURN_START_WORD);
       setHealth(health - 1);
-      setActiveWord(activeWord + 1);
+      setNewWord(true);
+      setTimeout(() => {
+        setActiveWord(activeWord + 1);
+      }, 500);
+      setTimeout(() => {
+        setNewWord(false);
+        setActiveWord(activeWord + 1);
+      }, 1000);
+    }
+  }, 500);
+
+		useInterval(() => {
+    if (seconds > 0) {
+      if (Object.keys(randomWords).length !== 0) {
+        setSeconds(seconds - 1);
+      }
     }
   }, 1000);
 
   const clickButtonChoise = (el) => {
     if (!el[1]) {
       setHealth(health - 1);
+    } else {
+      setTrueAnswer(trueAnswer + 1);
     }
-    setMoveWord(-15);
-    setActiveWord(activeWord + 1);
+    setNewWord(true);
+    setMoveWord(RETURN_START_WORD);
+    setTimeout(() => {
+      setActiveWord(activeWord + 1);
+    }, 500);
+    setTimeout(() => {
+      setNewWord(false);
+    }, 1000);
   };
-
-  console.log(Object.keys(randomWords).length);
 
   let hp = [];
   for (let i = 0; i < 5; i++) {
@@ -96,12 +121,21 @@ export default function Savannah() {
     );
   }
 
+  const startNewGame = () => {
+    setHealth(5);
+    setActiveWord(0);
+    setMoveWord(0);
+    setNumberWords(15);
+    setSeconds(5);
+    setTrueAnswer(0);
+  };
+
   return Object.keys(randomWords).length !== 0 ? (
     <div className={styles.savannah}>
       {seconds === 0 ? (
         health > 0 && activeWord < Object.keys(randomWords).length ? (
           <>
-            <div className={styles.moveWord} style={{ top: `${moveWord}vh` }}>
+            <div className={styles.moveWord} style={{ top: `${moveWord}vh`, transform: newWord ? "scale(0)" : "scale(1)" }}>
               {Object.keys(randomWords)[activeWord]}
             </div>
             <div className={styles.top}>
@@ -116,6 +150,8 @@ export default function Savannah() {
               {randomWords[Object.keys(randomWords)[activeWord]].map((el) => {
                 return (
                   <div
+                    style={{ transform: newWord ? "scale(0)" : "scale(1)" }}
+                    key={el[0]}
                     className={styles.button__choise}
                     onClick={() => clickButtonChoise(el)}
                   >
@@ -129,7 +165,36 @@ export default function Savannah() {
             </div>
           </>
         ) : (
-          <h1>123</h1>
+          <div className={styles.endGame}>
+            <div className={styles.endGame_body}>
+              <div className={styles.endGame_body_top}>
+                <h1>Круто,отличный результат!</h1>
+                <h3>
+                  {trueAnswer} слов изучено,
+                  {Object.keys(randomWords).length - trueAnswer} на изучении
+                </h3>
+              </div>
+              <div className={styles.endGame_body_center}>
+                <div className={styles.endGame_body_circle}>
+                  <div className={styles.endGame_body_info}>
+                    <p>
+                      {Math.floor(
+                        (100 / Object.keys(randomWords).length) * trueAnswer
+                      )}
+                      %
+                    </p>
+                    <p>Правильных ответов</p>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.endGame_body_bottom}>
+                <button>
+                  <Link to="/games">К списку тренировок</Link>
+                </button>
+                <button onClick={startNewGame}>Повторить тренировку</button>
+              </div>
+            </div>
+          </div>
         )
       ) : (
         <div className={styles.timer}>
