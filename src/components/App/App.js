@@ -8,6 +8,7 @@ import SettingsPage from "../../pages/SettingsPage/SettingsPage";
 import {LoginForm} from '../LoginForm/LoginForm'
 import {RegisterForm} from '../RegisterForm/RegisterForm'
 import DifficultWords from '../DifficultWords/DifficultWords'
+import DeletedWords from '../DeletedWords/DeletedWords'
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/text-book/:unit" exact component={TextBookPage}/>  {/*Добавил раздел*/}
                 <Route path="/dictionary" component={DictionaryPage}/>
                 <Route path="/dictionary/difficult/:unit" component={DifficultWords}/>
+                <Route path="/dictionary/deleted/:unit" component={DeletedWords}/>
                 <Route path="/settings" component={SettingsPage}/>
                 <Footer/>
             </div>

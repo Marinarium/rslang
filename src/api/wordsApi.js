@@ -106,6 +106,17 @@ export const wordsApi = {
             }
         )
     },
+    getDeletedWords({group, page, userId}) { //Get deleted words
+        return request(
+            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted":true}&group=${group}&page=${page}`,
+            'GET',
+            true,
+            {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+    },
 
     getUserAggregatedWord({userId, wordId}) { //Get a user aggregated word by id
         return request(
