@@ -10,9 +10,21 @@ export const wordsApi = {
         )
 
     },
+
     getAllUserWordsWithoutUserWords({group, page, userId}) { //Get all not user words by group & page
         return request(
             `users/${userId}/aggregatedWords?filter={"userWord":null}&group=${group}&page=${page}`,
+            'GET',
+            true,
+            {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+    },
+    getAllUserWordsWithoutDeletedWords({group, page, userId}) { //Get all not deleted words by group & page
+        return request(
+            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted": null}&group=${group}&page=${page}`,
             'GET',
             true,
             {

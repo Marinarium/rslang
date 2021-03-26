@@ -3,7 +3,10 @@ import styles from './WordItem.module.scss';
 import speaker from './images/speaker.svg';
 import {playAudios} from '../../services/utils/playAudio';
 import {useDispatch, useSelector} from 'react-redux';
-import {createUserWord, getAllUserWordsWithoutUserWords} from '../../redux/wordsReducer';
+import {
+    createUserWord,
+    getAllUserWordsWithoutDeletedWords
+} from '../../redux/wordsReducer';
 
 export default function WordItem({
                                      id,
@@ -71,8 +74,8 @@ export default function WordItem({
                 "optional": {}
             }
         }))
-        //Получаем слова с учётом добавленных в сложные:
-        dispatch(getAllUserWordsWithoutUserWords({group: currentGroup, page: currentPage, userId}));
+
+
     }
     const deleteButtonHandler = () => {
         dispatch(createUserWord({
@@ -85,6 +88,8 @@ export default function WordItem({
                 }
             }
         }))
+        //Получаем слова с учётом удаленных:
+        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     }
 
     return (

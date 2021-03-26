@@ -62,6 +62,24 @@ export const getAllUserWordsWithoutUserWords = createAsyncThunk(
 
     }
 )
+export const getAllUserWordsWithoutDeletedWords = createAsyncThunk(
+    'wordsReducer/getAllUserWordsWithoutDeletedWords',
+    async ({group, page, userId}) => {
+        const data = await wordsApi.getAllUserWordsWithoutDeletedWords({group, page, userId})
+            .then((res) => res && res.json())
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        const modifiedData = data[0].paginatedResults.map(word => {
+            const obj = {id: word._id, ...word}
+            delete obj['_id']
+            return obj
+
+        })
+        return modifiedData
+
+    }
+)
 
 export const createUserWord = createAsyncThunk(
     'wordsReducer/createUserWord',
@@ -102,6 +120,12 @@ const wordsReducer = createSlice({
             }
         },
         [getAllUserWordsWithoutUserWords.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                items: action.payload
+            }
+        },
+        [getAllUserWordsWithoutDeletedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
                 items: action.payload
