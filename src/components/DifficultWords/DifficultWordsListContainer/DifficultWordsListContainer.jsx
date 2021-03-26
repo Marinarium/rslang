@@ -1,47 +1,28 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {fetchWords} from '../../../redux/wordsReducer';
+import {getAllUserAggregatedWords} from '../../../redux/wordsReducer';
 import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../../redux/appReducer';
 import {setCurrentPagesItem} from '../../../redux/appReducer';
-import {WordsList} from '../../WordsList/WordsList'
+import {WordsList} from '../../WordsList/WordsList';
 
 
 function DifficultWordsListContainer({match}) {
 
     const dispatch = useDispatch();
-
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
-
-    const words = useSelector(state => state.words.items);
+    const words = useSelector(state => state.words.userItems);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
-
-    useEffect(() => {
-
-        // Записываем массив текущих страниц из LS в store
-        const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'))
-        lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray))
-
-        // Записываем настройки букв из LS в store
-        const lSWordSettings = JSON.parse(localStorage.getItem('wordSettings'))
-        lSWordSettings && dispatch(setIsWordTranslated(lSWordSettings.isWordTranslated))
-        lSWordSettings && dispatch(setIsWordButtonsShown(lSWordSettings.isWordButtonsShown))
-
-    }, [dispatch]);
+    const userId = useSelector(state => state.auth.userId);
 
 
-    useEffect(() => { // Загружаем слова
+    useEffect(() => { // Загружаем сложные слова
 
-        dispatch(fetchWords({group: currentGroup, page: currentPage}));
+        userId && dispatch(getAllUserAggregatedWords(userId));
 
-    }, [dispatch, currentPage, currentGroup]);
+    }, [dispatch, userId]);
 
-    useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
-
-        localStorage.setItem('currentPagesArray', JSON.stringify(currentPagesArray))
-
-    }, [currentPagesArray]);
 
 
     const handlePageClick = (e) => { // Обработка нажатия на кнопку пагинации

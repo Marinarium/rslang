@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './WordItem.module.scss';
-import speaker from './images/speaker.svg'
-import {playAudios} from '../../services/utils/playAudio'
-import {useDispatch, useSelector} from 'react-redux'
-import {createUserWord} from '../../redux/wordsReducer'
+import speaker from './images/speaker.svg';
+import {playAudios} from '../../services/utils/playAudio';
+import {useDispatch, useSelector} from 'react-redux';
+import {createUserWord} from '../../redux/wordsReducer';
 
 export default function WordItem({
                                      id,
@@ -77,7 +77,7 @@ export default function WordItem({
             props: {
                 "difficulty": "easy",
                 "optional": {
-                    "deleted": "true"
+                    "deleted": true
                 }
             }
         }))

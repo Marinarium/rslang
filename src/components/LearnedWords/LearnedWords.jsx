@@ -5,7 +5,7 @@ import LearnedWordsListContainer from './LearnedWordsListContainer/LearnedWordsL
 export default function LearnedWords() {
     return (
         <div className={''}>
-            <UnitsList link={"learned"}/>
+            <UnitsList link={"dictionary/learned"}/>
             <LearnedWordsListContainer/>
         </div>
     );

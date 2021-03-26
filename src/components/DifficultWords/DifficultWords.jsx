@@ -5,7 +5,7 @@ import DifficultWordsListContainer from './DifficultWordsListContainer/Difficult
 export default function DifficultWords() {
     return (
         <div className={''}>
-            <UnitsList link={"difficult"}/>
+            <UnitsList link={"dictionary/difficult"}/>
             <DifficultWordsListContainer/>
         </div>
     );

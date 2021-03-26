@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {fetchWords} from '../../redux/wordsReducer';
+import {fetchWords, getAllUserWordsWithoutUserWords} from '../../redux/wordsReducer';
 import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
 import {WordsList} from '../WordsList/WordsList'
@@ -13,6 +13,7 @@ function TextBookListContainer({match}) {
 
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
+    const userId = useSelector(state => state.auth.userId);
 
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
@@ -33,9 +34,10 @@ function TextBookListContainer({match}) {
 
     useEffect(() => { // Загружаем слова
 
-        dispatch(fetchWords({group: currentGroup, page: currentPage}));
+        //dispatch(fetchWords({group: currentGroup, page: currentPage}));
+        userId && dispatch(getAllUserWordsWithoutUserWords({group: currentGroup, page: currentPage, userId}));
 
-    }, [dispatch, currentPage, currentGroup]);
+    }, [dispatch, currentPage, currentGroup, userId]);
 
     useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
 

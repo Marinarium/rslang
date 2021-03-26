@@ -3,6 +3,9 @@ import styles from '../UnitsList/UnitsList.module.scss';
 import {Link, withRouter, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {setActiveDictionaryUnit} from '../../redux/dictionaryReducer';
+import DifficultWords from '../DifficultWords/DifficultWords'
+import LearnedWords from '../LearnedWords/LearnedWords'
+import DeletedWords from '../DeletedWords/DeletedWords'
 
 const DictionaryUnitsList = () => {
     const dictionaryItems = [
@@ -38,7 +41,9 @@ const DictionaryUnitsList = () => {
                     <span className={styles.current_unit}>{activeDictionaryUnit.name}</span>
                 </h2>
             </>
-
+            {/*{activeDictionaryUnit.name === 'Изучаемые слова' && <LearnedWords/>}*/}
+            {activeDictionaryUnit.name === 'Сложные слова' && <DifficultWords/>}
+            {/*{activeDictionaryUnit.name === 'Удалённые слова' && <DeletedWords/>}*/}
         </div>
     )
 };

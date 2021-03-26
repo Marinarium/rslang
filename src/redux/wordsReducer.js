@@ -3,6 +3,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {wordsApi} from '../api/wordsApi'
 const initialState = {
     items: [],
+    userItems: [],
     pageForm: {
         group: '',
         page: ''
@@ -20,6 +21,47 @@ export const fetchWords = createAsyncThunk(
         }
 
         return data
+
+    }
+)
+
+export const getAllUserAggregatedWords = createAsyncThunk(
+    'wordsReducer/getAllUserAggregatedWords ',
+    async (userId) => {
+        const data = await wordsApi.getAllUserAggregatedWords(userId)
+            .then((res) => res && res.json())
+
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        const modifiedData = data[0].paginatedResults.map(word => {
+            const obj = {id: word._id, ...word}
+            delete obj['_id']
+            return obj
+
+        })
+
+        return modifiedData
+
+    }
+)
+export const getAllUserWordsWithoutUserWords = createAsyncThunk(
+    'wordsReducer/getAllUserWordsWithoutUserWords',
+    async ({group, page, userId}) => {
+        const data = await wordsApi.getAllUserWordsWithoutUserWords({group, page, userId})
+            .then((res) => res && res.json())
+
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        const modifiedData = data[0].paginatedResults.map(word => {
+            const obj = {id: word._id, ...word}
+            delete obj['_id']
+            return obj
+
+        })
+
+        return modifiedData
 
     }
 )
@@ -51,6 +93,18 @@ const wordsReducer = createSlice({
     },
     extraReducers: {
         [fetchWords.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                items: action.payload
+            }
+        },
+        [getAllUserAggregatedWords.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                userItems: action.payload
+            }
+        },
+        [getAllUserWordsWithoutUserWords.fulfilled]: (state, action) => {
             return {
                 ...state,
                 items: action.payload

@@ -5,7 +5,7 @@ import DeletedWordsListContainer from './DeletedWordsListContainer/DeletedWordsL
 export default function DeletedWords() {
     return (
         <div className={''}>
-            <UnitsList link={"deleted"}/>
+            <UnitsList link={"dictionary/deleted"}/>
             <DeletedWordsListContainer/>
         </div>
     );

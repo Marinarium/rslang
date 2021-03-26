@@ -10,6 +10,17 @@ export const wordsApi = {
         )
 
     },
+    getAllUserWordsWithoutUserWords({group, page, userId}) { //Get all not user words by group & page
+        return request(
+            `users/${userId}/aggregatedWords?filter={"userWord":null}&group=${group}&page=${page}`,
+            'GET',
+            true,
+            {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+    },
     getWordById(id) {
         return request(
             `words/${id}`,
@@ -48,9 +59,9 @@ export const wordsApi = {
         )
 
     },
-    getAllUserWords({userId, wordId}) { //Get all user words
+    getAllUserWords(userId) { //Get all user words
         return request(
-            `users/${userId}/words/${wordId}`,
+            `users/${userId}/words`,
             'GET',
             true,
             {
@@ -74,7 +85,7 @@ export const wordsApi = {
     },
     getAllUserAggregatedWords(userId) { //Get all user aggregated words
         return request(
-            `users/${userId}/aggregatedWords`,
+            `users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}`,
             'GET',
             true,
             {
@@ -83,6 +94,7 @@ export const wordsApi = {
             }
         )
     },
+
     getUserAggregatedWord({userId, wordId}) { //Get a user aggregated word by id
         return request(
             `users/${userId}/aggregatedWords/${wordId}`,
