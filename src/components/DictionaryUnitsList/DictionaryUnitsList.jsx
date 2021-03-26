@@ -3,34 +3,34 @@ import styles from '../UnitsList/UnitsList.module.scss';
 import {Link, withRouter, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {setActiveDictionaryUnit} from '../../redux/dictionaryReducer';
-import DifficultWords from '../DifficultWords/DifficultWords'
-import LearnedWords from '../LearnedWords/LearnedWords'
-import DeletedWords from '../DeletedWords/DeletedWords'
+
 
 const DictionaryUnitsList = () => {
-    const dictionaryItems = [
-        {name: 'Изучаемые слова', linkTo: '/dictionary/learned'},
-        {name: 'Сложные слова', linkTo: '/dictionary/difficult'},
-        {name: 'Удалённые Слова', linkTo: '/dictionary/deleted'}
-    ];
-    const {pathname} = useLocation();
-    const activeDictionaryUnit = dictionaryItems.find(i =>pathname.includes(i.linkTo)) || dictionaryItems[0];
 
+    const dictionaryItems = [
+        {name: 'Изучаемые слова', unit: 'learned'},
+        {name: 'Сложные слова', unit: 'difficult'},
+        {name: 'Удалённые Слова', unit: 'deleted'}
+    ];
     const dispatch = useDispatch();
+
+    const {pathname} = useLocation();
+    const activeDictionaryUnit = dictionaryItems.find(i => pathname.includes(i.unit)) || dictionaryItems[0];
 
     useEffect(() => {
         dispatch(setActiveDictionaryUnit(activeDictionaryUnit));
-    }, [activeDictionaryUnit, dispatch])
+    }, [activeDictionaryUnit, dispatch]);
 
-    const units = dictionaryItems.map(({name, linkTo}) => {
+    const units = dictionaryItems.map(({name, unit}) => {
         return (
-            <li className={''} key={linkTo}>
-                <Link to={linkTo} className={''}>
+            <li className={''} key={unit}>
+                <Link to={`/dictionary/${unit}/1`} className={''}>
                     {name}
                 </Link>
             </li>
         );
     });
+
     return (
         <div>
             <>
@@ -45,4 +45,4 @@ const DictionaryUnitsList = () => {
     )
 };
 
-export default withRouter(DictionaryUnitsList)
+export default withRouter(DictionaryUnitsList);

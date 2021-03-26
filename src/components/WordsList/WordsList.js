@@ -4,7 +4,7 @@ import WordItem from "../WordItem/WordItem";
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 import {Pagination} from '../Pagination/Pagination';
 
-export function WordsList({words, handlePageClick, currentPage}) {
+export function WordsList({words, handlePageClick, currentPage, currentGroup}) {
 
     const allWords = words.map(({
                                     id,
@@ -37,6 +37,8 @@ export function WordsList({words, handlePageClick, currentPage}) {
                 textExample={textExample}
                 textExampleTranslate={textExampleTranslate}
                 wordTranslate={wordTranslate}
+                currentPage={currentPage}
+                currentGroup={currentGroup}
             />
         );
     });

@@ -56,7 +56,12 @@ function TextBookListContainer({match}) {
     };
 
     return (
-        <WordsList words={words} handlePageClick={handlePageClick} currentPage={currentPage}/>
+        <WordsList
+            words={words}
+            handlePageClick={handlePageClick}
+            currentPage={currentPage}
+            currentGroup={currentGroup}
+        />
     );
 }
 
