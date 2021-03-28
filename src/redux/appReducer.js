@@ -2,6 +2,8 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
     currentPagesArray: ['0', '0', '0', '0', '0', '0'],
+    currentDifficultPagesArray: ['0', '0', '0', '0', '0', '0'],
+    currentDeletedPagesArray: ['0', '0', '0', '0', '0', '0'],
     activeUnit: {},
     isWordTranslated: true,
     isWordButtonsShown: true
@@ -25,11 +27,53 @@ const appReducer = createSlice({
 
             }
         },
+        setCurrentDifficultPagesItem: (state, action) => {
+
+            return {
+                ...state,
+                currentDifficultPagesArray: state.currentDifficultPagesArray.map((i, index) => {
+                    if (index === action.payload.currentGroup) {
+                        return action.payload.currentPage
+                    }
+                    return i
+                }),
+
+            }
+        },
+        setCurrentDeletedPagesItem: (state, action) => {
+
+            return {
+                ...state,
+                currentDeletedPagesArray: state.currentDeletedPagesArray.map((i, index) => {
+                    if (index === action.payload.currentGroup) {
+                        return action.payload.currentPage
+                    }
+                    return i
+                }),
+
+            }
+        },
         setCurrentPagesArray: (state, action) => {
 
             return {
                 ...state,
                 currentPagesArray: action.payload,
+
+            }
+        },
+        setCurrentDifficultPagesArray: (state, action) => {
+
+            return {
+                ...state,
+                currentDifficultPagesArray: action.payload,
+
+            }
+        },
+        setCurrentDeletedPagesArray: (state, action) => {
+
+            return {
+                ...state,
+                currentDeletePagesArray: action.payload,
 
             }
         },
@@ -63,7 +107,11 @@ export const {
     setCurrentPagesArray,
     setActiveUnit,
     setIsWordButtonsShown,
-    setIsWordTranslated
+    setIsWordTranslated,
+    setCurrentDifficultPagesArray,
+    setCurrentDifficultPagesItem,
+    setCurrentDeletedPagesArray,
+    setCurrentDeletedPagesItem
 
 
 } = appReducer.actions

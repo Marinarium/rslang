@@ -1,10 +1,15 @@
 import React from 'react';
 import styles from './WordItem.module.scss';
-import speaker from './images/speaker.svg'
-import {playAudios} from '../../services/utils/playAudio'
-import {useSelector} from 'react-redux'
+import speaker from './images/speaker.svg';
+import {playAudios} from '../../services/utils/playAudio';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    createUserWord,
+    getAllUserWordsWithoutDeletedWords
+} from '../../redux/wordsReducer';
 
 export default function WordItem({
+                                     id,
                                      word,
                                      image,
                                      audio,
@@ -15,13 +20,16 @@ export default function WordItem({
                                      transcription,
                                      textExample,
                                      textExampleTranslate,
-                                     wordTranslate
+                                     wordTranslate,
+                                     currentPage,
+                                     currentGroup
                                  }) {
 
-
+    const dispatch = useDispatch()
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
+    const userId = useSelector(state => state.auth.userId);
 
     const playHandler = () => {
         playAudios(audio, audioMeaning, audioExample);
@@ -57,7 +65,32 @@ export default function WordItem({
         default:
             break
     }
+    const difficultButtonHandler = async () => {
+       await dispatch(createUserWord({
+            userId,
+            wordId: id,
+            props: {
+                "difficulty": "hard",
+                "optional": {}
+            }
+        }))
 
+
+    }
+    const deleteButtonHandler = async() => {
+        await dispatch(createUserWord({
+            userId,
+            wordId: id,
+            props: {
+                "difficulty": "easy",
+                "optional": {
+                    "deleted": true
+                }
+            }
+        }))
+        //Получаем слова с учётом удаленных:
+        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+    }
 
     return (
 
@@ -84,8 +117,20 @@ export default function WordItem({
                     </div>
                 </div>
                 {isWordButtonsShown && <div className={styles.buttons}>
-                    <button className={`${styles.button} ${classes.join(' ')}`} type="button">В сложные слова</button>
-                    <button className={`${styles.button} ${classesAlt.join(' ')}`} type="button">В удалённые слова
+                    <button
+                        className={`${styles.button} ${classes.join(' ')}`}
+                        type="button"
+                        onClick={difficultButtonHandler}
+                    >
+                        В сложные слова
+                    </button>
+
+                    <button
+                        className={`${styles.button} ${classesAlt.join(' ')}`}
+                        type="button"
+                        onClick={deleteButtonHandler}
+                    >
+                        В удалённые слова
                     </button>
                 </div>}
             </main>

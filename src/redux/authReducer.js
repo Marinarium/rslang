@@ -50,19 +50,19 @@ export const authRegister = createAsyncThunk(
 
     }
 )
-export const getUser = createAsyncThunk(
-    'authReducer/getUser ',
-    async (id) => {
-        const data = await authApi.getUser(id)
-            .then((res) => res && res.json())
-
-        if (!data) {
-            throw new Error(data.message || 'Something went wrong!')
-        }
-
-        return data
-    }
-)
+// export const getUser = createAsyncThunk(
+//     'authReducer/getUser ',
+//     async (id) => {
+//         const data = await authApi.getUser(id)
+//             .then((res) => res && res.json())
+//
+//         if (!data) {
+//             throw new Error(data.message || 'Something went wrong!')
+//         }
+//
+//         return data
+//     }
+// )
 
 
 const authReducer = createSlice({
@@ -81,19 +81,28 @@ const authReducer = createSlice({
                 registerForm: {...state.registerForm, ...action.payload}
             }
         },
-        // authLogout: (state) => {
-        //     return {
-        //         ...state,
-        //         token: '',
-        //         userId: '',
-        //         isAuthenticated: false,
-        //         loginForm: {
-        //             ...state.loginForm,
-        //             email: '',
-        //             password: ''
-        //         }
-        //     }
-        // }
+        setIsAuthenticated: (state, action) => {
+            return {
+                ...state,
+                token: action.payload.token,
+                userId: action.payload.userId,
+                name: action.payload.name,
+                isAuthenticated: !!action.payload.token
+            }
+        },
+        authLogout: (state) => {
+            return {
+                ...state,
+                token: '',
+                userId: '',
+                isAuthenticated: false,
+                loginForm: {
+                    ...state.loginForm,
+                    email: '',
+                    password: ''
+                }
+            }
+        }
     },
     extraReducers: {
 
@@ -121,23 +130,6 @@ const authReducer = createSlice({
 
         },
 
-        // [authLogin.rejected.type]: (state, action) => {
-        //     return {
-        //         ...state,
-        //         authError: action.error.message
-        //     }
-        //
-        // },
-        // [setMe.fulfilled.type]: (state, action) => {
-        //
-        //     return {
-        //         ...state,
-        //         avatar: action.payload.avatar ? action.payload.avatar.split('\\').join('/') : '',
-        //         name: action.payload.name
-        //     }
-        //
-        // },
-
     }
 })
 
@@ -146,11 +138,7 @@ export const {
     loginFormChange,
     registerFormChange,
     setIsAuthenticated,
-    setIsRegistered,
-    cleanRegistrationForm,
-    cleanAuthError,
-    cleanRegisterMessage,
-    cleanLoginForm
+
 } = authReducer.actions
 
 export default authReducer.reducer
