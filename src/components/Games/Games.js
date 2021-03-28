@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Games.module.scss";
 import Sprint from "./GamesList/Sprint/Spint";
 import Audiocall from "./GamesList/Audiocall/Audiocall";
-import Listening from "./GamesList/Listening/Listening";
+import MakeAWord from "./GamesList/MakeAWord/MakeAWord";
 import Savannah from "./GamesList/Savannah/Savannah";
 
 export default function Games({ location, match }) {
@@ -11,7 +11,7 @@ export default function Games({ location, match }) {
     { name: "Спринт", linkTo: "games/sprint", page: <Sprint /> },
     { name: "Саванна", linkTo: "games/savannah", page: <Savannah /> },
     { name: "Аудиовызов", linkTo: "games/audiocall", page: <Audiocall /> },
-    { name: "Аудирование", linkTo: "games/listening", page: <Listening /> },
+    { name: "Составь слово", linkTo: "games/make-a-word", page: <MakeAWord /> },
   ];
 
   const games = gamesItems.map(({ name, linkTo }) => {
