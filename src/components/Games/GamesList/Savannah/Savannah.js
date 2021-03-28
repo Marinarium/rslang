@@ -113,9 +113,9 @@ export default function Savannah() {
     hp.push(
       <div>
         {health > i ? (
-          <img src="https://img.icons8.com/android/32/fa314a/hearts.png" />
+          <img src="https://img.icons8.com/android/32/fa314a/hearts.png"  alt=''/>
         ) : (
-          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png" />
+          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png"  alt=''/>
         )}
       </div>
     );
@@ -142,7 +142,7 @@ export default function Savannah() {
               <div className={styles.top__health}>{hp}</div>
               <div className={styles.top__exit}>
                 <Link to="/games">
-                  <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" />
+                  <img src="https://img.icons8.com/plasticine/48/000000/close-window.png"  alt=''/>
                 </Link>
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function Savannah() {
               })}
             </div>
             <div className={styles.bottom}>
-              <img src={crystal} />
+              <img src={crystal}  alt=''/>
             </div>
           </>
         ) : (

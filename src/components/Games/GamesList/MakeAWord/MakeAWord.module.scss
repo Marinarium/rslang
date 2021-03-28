@@ -1,21 +1,79 @@
-.btn {
-  background-color: cornflowerblue;
-  border: none;
-  margin: 2px;
+@import '../../../../assets/styles/main';
+
+button, i {
   cursor: pointer;
 }
 
-.done {
-  visibility: hidden;
+.make__word {
+  border: 1px solid $lightGrey;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.incorrect {
-  background-color: palevioletred;
+.start__make {
+  border: none;
+  border-radius: 5px;
+  background-color: $fifthColor;
+  margin: 10px;
+  width: 100px;
 }
 
-.input_word {
+.word__description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  & span {
+    margin-right: 20px;
+  }
+
+  & p {
+    color: $darkGrey;
+    font-size: 14px;
+  }
+}
+
+.input__word {
   height: 20px;
   width: 100px;
   border-radius: 5px;
-  border: 1px solid grey;
+  border: 1px solid $lightGrey;
+  margin: 10px;
+}
+
+.word__letters {
+  margin-top: 20px;
+  height: 30px;
+  align-items: center;
+
+  .btn__letter {
+    background-color: $secondColor;
+    border: none;
+    border-radius: 2px;
+    margin: 2px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .done {
+    visibility: hidden;
+  }
+
+  .incorrect {
+    background-color: $accentColor;
+  }
+}
+
+.buttons__footer {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
+
+  & button {
+    border: none;
+    border-radius: 5px;
+  }
 }
