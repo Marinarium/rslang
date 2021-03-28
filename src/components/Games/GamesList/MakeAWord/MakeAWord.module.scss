@@ -1,0 +1,21 @@
+.btn {
+  background-color: cornflowerblue;
+  border: none;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.done {
+  visibility: hidden;
+}
+
+.incorrect {
+  background-color: palevioletred;
+}
+
+.input_word {
+  height: 20px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
