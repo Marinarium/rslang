@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import logo from "./images/logo.svg";
 import styles from './Header.module.scss';
+import {useDispatch} from 'react-redux'
+import {setIsAuthenticated} from '../../redux/authReducer'
 
 export default function Header() {
 
@@ -13,6 +15,14 @@ export default function Header() {
         {name: 'Настройки', linkTo: '/settings'},
         {name: 'Выход', linkTo: '/exit'}
     ];
+    const dispatch = useDispatch()
+
+    //авторизация из LocalStorage. Потом перенесём в другое место (наверное)
+
+    useEffect(() => {
+        const localStorageAuthData = JSON.parse(localStorage.getItem('userData') )
+        localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData))
+    }, [dispatch])
 
     const menu = menuItems.map(({name, linkTo}) => {
         return (
