@@ -1,0 +1,166 @@
+.timer,
+.endGame {
+  display: block;
+  font-size: 75px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timer h1 {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.moveWord {
+  position: absolute;
+  font-size: 60px;
+  color: #fff;
+  text-align: center;
+  text-shadow: rgb(112, 111, 107) 1px 0 10px;
+  width: 100%;
+  z-index: 15;
+  top: 0vh;
+  transition: 0.5s linear all;
+}
+
+.savannah {
+  background-image: url("./images/background.jpg");
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: auto 100%;
+  animation: animatedBackground 500s linear infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 10000px;
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 30;
+  align-self: flex-end;
+}
+.top__exit {
+  z-index: 30;
+}
+.top__health {
+  display: flex;
+  z-index: 30;
+}
+
+.center {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+.button__choise {
+  font-size: 30px;
+  padding: 10px 20px;
+  color: rgb(36, 36, 36);
+  background-color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  text-shadow: rgb(112, 111, 107) 1px 0 10px;
+  cursor: pointer;
+  z-index: 30;
+  transition: 0.5s linear all;
+}
+
+.endGame_body {
+  width: 50%;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.endGame_body_top h1 {
+  font-size: 25px;
+  text-align: center;
+}
+.endGame_body_top h3 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.endGame_body_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_circle {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background-color: rgba(251, 255, 0, 0.74);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.endGame_body_info {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_info p {
+  font-size: 25px;
+  text-align: center;
+}
+
+.endGame_body_bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.endGame_body_bottom button {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  background-color: rgb(253, 89, 89);
+  outline: 0 !important;
+  border: 1px solid wheat;
+  border-radius: 10px;
+}
+.endGame_body_bottom button a {
+  color: #000 !important;
+  text-decoration: none;
+}

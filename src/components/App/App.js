@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import TextBookPage from "../../pages/TextBookPage/TextBookPage";
 import Footer from "../Footer/Footer";
@@ -9,6 +9,7 @@ import {LoginForm} from '../LoginForm/LoginForm'
 import {RegisterForm} from '../RegisterForm/RegisterForm'
 import DifficultWords from '../DifficultWords/DifficultWords'
 import DeletedWords from '../DeletedWords/DeletedWords'
+import GamesPage from "../../pages/GamesPage/GamesPage";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/dictionary/difficult/:unit" component={DifficultWords}/>
                 <Route path="/dictionary/deleted/:unit" component={DeletedWords}/>
                 <Route path="/settings" component={SettingsPage}/>
+                <Route path="/games" component={GamesPage} />
                 <Footer/>
             </div>
         </Router>
