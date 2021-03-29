@@ -47,6 +47,7 @@ function DifficultWordsListContainer({match}) {
 
     return (
         <WordsList
+            container={'Difficult'}
             words={words}
             handlePageClick={handlePageClick}
             currentPage={currentPage}

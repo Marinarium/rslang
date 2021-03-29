@@ -58,6 +58,7 @@ function TextBookListContainer({match}) {
 
     return (
         <WordsList
+            container={'text-book'}
             words={words}
             handlePageClick={handlePageClick}
             currentPage={currentPage}

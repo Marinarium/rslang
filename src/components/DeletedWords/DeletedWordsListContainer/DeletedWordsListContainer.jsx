@@ -45,6 +45,7 @@ function DeletedWordsListContainer({match}) {
 
     return (
         <WordsList
+            container={'Deleted'}
             words={words}
             handlePageClick={handlePageClick}
             currentPage={currentPage}

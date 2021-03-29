@@ -22,7 +22,8 @@ export default function WordItem({
                                      textExampleTranslate,
                                      wordTranslate,
                                      currentPage,
-                                     currentGroup
+                                     currentGroup,
+                                     container
                                  }) {
 
     const dispatch = useDispatch()
@@ -66,7 +67,7 @@ export default function WordItem({
             break
     }
     const difficultButtonHandler = async () => {
-       await dispatch(createUserWord({
+        await dispatch(createUserWord({
             userId,
             wordId: id,
             props: {
@@ -77,7 +78,7 @@ export default function WordItem({
 
 
     }
-    const deleteButtonHandler = async() => {
+    const deleteButtonHandler = async () => {
         await dispatch(createUserWord({
             userId,
             wordId: id,
@@ -91,10 +92,10 @@ export default function WordItem({
         //Получаем слова с учётом удаленных:
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     }
-    const restoreButtonHandler = async() => {
-        await dispatch(deleteUserWord({userId, wordId: id}))
-        //dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
-        dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+    const restoreButtonHandler = async () => {
+        await dispatch(deleteUserWord({userId, wordId: id}));
+        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     }
 
@@ -122,7 +123,8 @@ export default function WordItem({
                         {isWordTranslated && <p className={styles.example_ru}>{textExampleTranslate}</p>}
                     </div>
                 </div>
-                {isWordButtonsShown && <div className={styles.buttons}>
+                 <div className={styles.buttons}>
+                    {container === 'text-book' && isWordButtonsShown &&<>
                     <button
                         className={`${styles.button} ${classes.join(' ')}`}
                         type="button"
@@ -138,15 +140,25 @@ export default function WordItem({
                     >
                         В удалённые слова
                     </button>
+                    </>}
 
-                    <button
-                        className={`${styles.button} ${classesAlt.join(' ')}`}
+                    {container === 'Deleted' && <button
+                        className={`${styles.button} ${classes.join(' ')}`}
                         type="button"
                         onClick={restoreButtonHandler}
                     >
                         Восстановить
-                    </button>
-                </div>}
+                    </button>}
+
+                    {container === 'Difficult' && <button
+                        className={`${styles.button} ${classes.join(' ')}`}
+                        type="button"
+                        onClick={restoreButtonHandler}
+                    >
+                        Убрать из сложных
+                    </button>}
+
+                </div>
             </main>
         </section>
     );
