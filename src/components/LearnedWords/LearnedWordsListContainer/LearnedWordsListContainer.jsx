@@ -6,7 +6,7 @@ import {
     setCurrentLearnedPagesItem, setCurrentLearnedPagesArray,
 } from '../../../redux/appReducer';
 
-import {WordsList} from '../../WordsList/WordsList'
+import {WordsList} from '../../WordsList/WordsList';
 
 
 function LearnedWordsListContainer({match}) {

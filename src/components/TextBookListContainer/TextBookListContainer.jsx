@@ -5,9 +5,10 @@ import {getAllUserWordsWithoutDeletedWords} from '../../redux/wordsReducer';
 import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
 import {WordsList} from '../WordsList/WordsList'
+import Games from '../Games/Games'
 
 
-function TextBookListContainer({match}) {
+function TextBookListContainer({location, match}) {
 
     const dispatch = useDispatch();
     const currentGroup = match.params.unit - 1; // номер текущей группы
@@ -58,6 +59,8 @@ function TextBookListContainer({match}) {
 
     return (
         <WordsList
+            location={location}
+            match={match}
             container={'text-book'}
             words={words}
             handlePageClick={handlePageClick}

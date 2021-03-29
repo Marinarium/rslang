@@ -3,8 +3,12 @@ import styles from './WordsList.module.scss';
 import WordItem from "../WordItem/WordItem";
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 import {Pagination} from '../Pagination/Pagination';
+import {useHistory} from 'react-router-dom';
 
-export function WordsList({words, handlePageClick, currentPage, currentGroup, container}) {
+import {gamesItems} from '../Games/Games';
+
+export function WordsList({words, handlePageClick, currentPage, currentGroup, container, location, match}) {
+    const history = useHistory();
 
     const allWords = words.map(({
                                     id,
@@ -56,6 +60,13 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
             <div className={styles.words}>
                 {allWords}
             </div>
+            {gamesItems.map(({name, linkTo}) => <div
+                    key={name}
+                    onClick={() => history.push(`/${linkTo}`)}>
+                    {name}
+                </div>
+            )
+            }
         </>
     );
 }

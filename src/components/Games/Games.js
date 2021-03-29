@@ -6,13 +6,15 @@ import Audiocall from "./GamesList/Audiocall/Audiocall";
 import Listening from "./GamesList/Listening/Listening";
 import Savannah from "./GamesList/Savannah/Savannah";
 
+export const gamesItems = [
+  { name: "Спринт", linkTo: "games/sprint", page: <Sprint /> },
+  { name: "Саванна", linkTo: "games/savannah", page: <Savannah /> },
+  { name: "Аудиовызов", linkTo: "games/audiocall", page: <Audiocall /> },
+  { name: "Аудирование", linkTo: "games/listening", page: <Listening /> },
+];
+
 export default function Games({ location, match }) {
-  const gamesItems = [
-    { name: "Спринт", linkTo: "games/sprint", page: <Sprint /> },
-    { name: "Саванна", linkTo: "games/savannah", page: <Savannah /> },
-    { name: "Аудиовызов", linkTo: "games/audiocall", page: <Audiocall /> },
-    { name: "Аудирование", linkTo: "games/listening", page: <Listening /> },
-  ];
+
 
   const games = gamesItems.map(({ name, linkTo }) => {
     return (

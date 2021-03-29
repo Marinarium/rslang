@@ -20,7 +20,7 @@ function App() {
                 <Route path="/" exact component={TextBookPage}/>
                 <Route path="/login" exact component={LoginForm}/>
                 <Route path="/register" exact component={RegisterForm}/>
-                <Route path="/text-book/:unit" exact component={TextBookPage}/>  {/*Добавил раздел*/}
+                <Route path="/text-book/:unit" exact component={TextBookPage}/>
                 <Route path="/dictionary" component={DictionaryPage}/>
                 <Route path="/dictionary/difficult/:unit" component={DifficultWords}/>
                 <Route path="/dictionary/deleted/:unit" component={DeletedWords}/>
