@@ -19,10 +19,12 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                                     transcription,
                                     textExample,
                                     textExampleTranslate,
-                                    wordTranslate
+                                    wordTranslate,
+                                    userWord
                                 }) => {
         return (
             <WordItem
+                difficulty={userWord && userWord.difficulty}
                 container={container}
                 key={id}
                 id={id}
