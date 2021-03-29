@@ -4,7 +4,7 @@ import speaker from './images/speaker.svg';
 import {playAudios} from '../../services/utils/playAudio';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    createUserWord, deleteUserWord,
+    createUserWord, deleteUserWord, getLearnedWords,
     getAllUserWordsWithoutDeletedWords, getDeletedWords, getDifficultWords
 } from '../../redux/wordsReducer';
 
@@ -98,6 +98,7 @@ export default function WordItem({
         await dispatch(deleteUserWord({userId, wordId: id}));
         container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
         container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     };
 

@@ -132,6 +132,17 @@ export const wordsApi = {
             }
         )
     },
+    getLearnedWords({group, page, userId}) { //Get learned words
+        return request(
+            `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.difficulty":"hard"},{"userWord.optional.learned":true}]}&group=${group}&page=${page}&wordsPerPage=20`,
+            'GET',
+            true,
+            {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+    },
 
     getUserAggregatedWord({userId, wordId}) { //Get a user aggregated word by id
         return request(
