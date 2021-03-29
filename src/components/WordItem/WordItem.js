@@ -4,8 +4,8 @@ import speaker from './images/speaker.svg';
 import {playAudios} from '../../services/utils/playAudio';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    createUserWord,
-    getAllUserWordsWithoutDeletedWords
+    createUserWord, deleteUserWord,
+    getAllUserWordsWithoutDeletedWords, getDeletedWords, getDifficultWords, updateUserWord
 } from '../../redux/wordsReducer';
 
 export default function WordItem({
@@ -91,6 +91,12 @@ export default function WordItem({
         //Получаем слова с учётом удаленных:
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     }
+    const restoreButtonHandler = async() => {
+        await dispatch(deleteUserWord({userId, wordId: id}))
+        //dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
+        dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+    }
 
     return (
 
@@ -131,6 +137,14 @@ export default function WordItem({
                         onClick={deleteButtonHandler}
                     >
                         В удалённые слова
+                    </button>
+
+                    <button
+                        className={`${styles.button} ${classesAlt.join(' ')}`}
+                        type="button"
+                        onClick={restoreButtonHandler}
+                    >
+                        Восстановить
                     </button>
                 </div>}
             </main>
