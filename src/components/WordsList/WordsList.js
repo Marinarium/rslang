@@ -6,8 +6,8 @@ import {Pagination} from '../Pagination/Pagination';
 import {useHistory} from 'react-router-dom';
 
 import {gamesItems} from '../Games/Games';
-import {createUserWord, getAllUserWordsWithoutDeletedWords} from '../../redux/wordsReducer'
-import {useDispatch, useSelector} from 'react-redux'
+import {createUserWord, getAllUserWordsWithoutDeletedWords, updateUserWord} from '../../redux/wordsReducer';
+import {useDispatch, useSelector} from 'react-redux';
 
 export function WordsList({words, handlePageClick, currentPage, currentGroup, container, location, match}) {
     const history = useHistory();
@@ -34,6 +34,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                                 }) => {
         return (
             <WordItem
+                userWord={userWord}
                 difficulty={userWord && userWord.difficulty}
                 container={container}
                 key={id}
@@ -57,12 +58,28 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     });
 
     const startGameHandler = async (linkTo) => {
-        await words.map(i=>{
-             dispatch(createUserWord({
+        await words.map(i => {
+             !i.userWord && dispatch(createUserWord({
                 userId,
                 wordId: i.id,
                 props: {
                     'optional': {
+                        'learned': true,
+                        'count':{
+                            'good': 0,
+                            'bad': 0
+                        }
+
+                    }
+                }
+            }));
+            const learned = i.userWord && i.userWord.optional && i.userWord.optional.learned
+             !learned && dispatch(updateUserWord({
+                userId,
+                wordId: i.id,
+                props: {
+                    'optional': {
+                        'learned': true,
                         'count':{
                             'good': 0,
                             'bad': 0
@@ -72,7 +89,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                 }
             }));
         })
-        setTimeout(()=> {
+        setTimeout(()=> {//!!!!!!!!!!!!!!!!!!!!!!!!!!!
             dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
         },3000)
 

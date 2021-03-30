@@ -5,7 +5,7 @@ import {playAudios} from '../../services/utils/playAudio';
 import {useDispatch, useSelector} from 'react-redux';
 import {
     createUserWord, deleteUserWord, getLearnedWords,
-    getAllUserWordsWithoutDeletedWords, getDeletedWords, getDifficultWords
+    getAllUserWordsWithoutDeletedWords, getDeletedWords, getDifficultWords, updateUserWord
 } from '../../redux/wordsReducer';
 
 export default function WordItem({
@@ -24,7 +24,10 @@ export default function WordItem({
                                      currentPage,
                                      currentGroup,
                                      container,
-                                     difficulty
+                                     difficulty,
+                                     userWord
+
+
                                  }) {
 
 
@@ -69,28 +72,48 @@ export default function WordItem({
             break
     }
     const difficultButtonHandler = async () => {
-        await dispatch(createUserWord({
-            userId,
-            wordId: id,
-            props: {
-                "difficulty": "hard",
-                "optional": {}
-            }
-        }));
+        if (userWord) {
+            await dispatch(updateUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "difficulty": "hard"
+                }
+            }));
+        } else {
+            await dispatch(createUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "difficulty": "hard"
+                }
+            }));
+        }
         //Получаем слова с учётом сложных:
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     };
     const deleteButtonHandler = async () => {
-        await dispatch(createUserWord({
-            userId,
-            wordId: id,
-            props: {
-                "difficulty": "easy",
-                "optional": {
-                    "deleted": true
+        if (userWord) {
+            await dispatch(updateUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "optional": {
+                        "deleted": true
+                    }
                 }
-            }
-        }));
+            }));
+        } else {
+            await dispatch(createUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "optional": {
+                        "deleted": true
+                    }
+                }
+            }));
+        }
         //Получаем слова с учётом удаленных:
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
     };

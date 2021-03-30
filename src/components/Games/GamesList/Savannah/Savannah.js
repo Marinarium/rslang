@@ -111,7 +111,6 @@ export default function Savannah() {
     } else {
       setTrueAnswer(trueAnswer + 1);
       goodCount(userId, currentWordId, words);// записываем правильный ответ
-
     }
     setNewWord(true);
     setMoveWord(RETURN_START_WORD);

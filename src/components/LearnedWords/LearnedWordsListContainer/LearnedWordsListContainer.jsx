@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getDeletedWords, getLearnedWords} from '../../../redux/wordsReducer';
+import {getLearnedWords} from '../../../redux/wordsReducer';
 import {
     setCurrentLearnedPagesItem, setCurrentLearnedPagesArray,
 } from '../../../redux/appReducer';
