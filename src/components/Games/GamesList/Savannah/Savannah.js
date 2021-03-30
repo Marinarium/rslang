@@ -2,12 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Savannah.module.scss";
 import { Link } from "react-router-dom";
 import crystal from "./images/crystal.svg";
+import {useDispatch, useSelector} from 'react-redux';
+import {updateUserWord} from '../../../../redux/wordsReducer';
 
 const SPEED_WORD = 4;
 const LIMIT_WORD = 60;
 const RETURN_START_WORD = -20;
 
 export default function Savannah() {
+
+  const dispatch = useDispatch();
+
+  const words = useSelector(state => state.words.items);
+  const userId = useSelector(state => state.auth.userId);
+
+  const [currentWordId, setCurrentWordId] = useState('');
   const [health, setHealth] = useState(5);
   const [activeWord, setActiveWord] = useState(0);
   const [moveWord, setMoveWord] = useState(0);
@@ -17,6 +26,7 @@ export default function Savannah() {
   const [seconds, setSeconds] = useState(5);
   const [trueAnswer, setTrueAnswer] = useState(0);
   const [newWord, setNewWord] = useState(false);
+
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -37,21 +47,28 @@ export default function Savannah() {
   }
 
   useEffect(() => {
-    fetch("https://react-lang-app.herokuapp.com/words")
-      .then((data) => data.json())
-      .then((data) => {
-        setArrWords(data);
-        return data;
-      });
-  }, []);
+    // fetch("https://react-lang-app.herokuapp.com/words")
+    //   .then((data) => data.json())
+    //   .then((data) => {
+    //     setArrWords(data);
+    //     return data;
+    //   });
+  setArrWords([...words]);
+  }, [words]);
+
+  useEffect(() => {
+    const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+    activeWordObj && setCurrentWordId(activeWordObj.id)
+  }, [words, activeWord]);
+
 
   useEffect(() => {
     setRandomWords(
-      arrWords
+        arrWords
         .sort(() => Math.random() - 0.5)
         .reduce((result, el) => {
           result[el.word] = [
-            [el.wordTranslate, true],
+            [el.wordTranslate, true, el.id],
             ...arrWords
               .sort(() => 0.5 - Math.random())
               .filter((elF) => elF.word !== el.word)
@@ -76,6 +93,7 @@ export default function Savannah() {
       setNewWord(true);
       setTimeout(() => {
         setActiveWord(activeWord + 1);
+
       }, 500);
       setTimeout(() => {
         setNewWord(false);
@@ -94,9 +112,37 @@ export default function Savannah() {
 
   const clickButtonChoise = (el) => {
     if (!el[1]) {
+      dispatch(updateUserWord({
+            userId,
+            wordId: currentWordId,
+            props: {
+              'optional': {
+                'count': {
+                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.bad,
+                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.good + 1
+                }
+              }
+            }
+          }
+
+      ))
       setHealth(health - 1);
     } else {
       setTrueAnswer(trueAnswer + 1);
+      dispatch(updateUserWord({
+            userId,
+            wordId: currentWordId,
+            props: {
+              'optional': {
+                'count': {
+                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1,
+                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.good
+                }
+              }
+            }
+          }
+
+      ))
     }
     setNewWord(true);
     setMoveWord(RETURN_START_WORD);
