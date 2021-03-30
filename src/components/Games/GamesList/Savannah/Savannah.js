@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Savannah.module.scss";
 import { Link } from "react-router-dom";
 import crystal from "./images/crystal.svg";
-import {useDispatch, useSelector} from 'react-redux';
-import {updateUserWord} from '../../../../redux/wordsReducer';
+import {useSelector} from 'react-redux';
+import {useGameData} from '../../../../hooks/gameDataHook';
 
 const SPEED_WORD = 4;
 const LIMIT_WORD = 60;
@@ -11,9 +11,10 @@ const RETURN_START_WORD = -20;
 
 export default function Savannah() {
 
-  const dispatch = useDispatch();
+  const {goodCount, badCount} = useGameData();
 
-  const words = useSelector(state => state.words.items);
+  const words = useSelector(state => state.words.items);//!!!слова берем из уже имеющихся в сторе,
+                                                          // они соответствуют странице учебника, на которой находимся
   const userId = useSelector(state => state.auth.userId);
 
   const [currentWordId, setCurrentWordId] = useState('');
@@ -46,16 +47,10 @@ export default function Savannah() {
   }
 
   useEffect(() => {
-    // fetch("https://react-lang-app.herokuapp.com/words")
-    //   .then((data) => data.json())
-    //   .then((data) => {
-    //     setArrWords(data);
-    //     return data;
-    //   });
-  setArrWords([...words]);
+    setArrWords([...words]);
   }, [words]);
 
-  useEffect(() => {
+  useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
     const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
     activeWordObj && setCurrentWordId(activeWordObj.id)
   }, [words, activeWord, randomWords]);
@@ -87,22 +82,7 @@ export default function Savannah() {
     }
     if (moveWord > LIMIT_WORD) {
       setMoveWord(RETURN_START_WORD);
-
-      dispatch(updateUserWord({
-            userId,
-            wordId: currentWordId,
-            props: {
-              'optional': {
-                'count': {
-                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.good,
-                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1
-                }
-              }
-            }
-          }
-
-      ))
-
+      badCount(userId, currentWordId, words);// записываем неправильный ответ
       setHealth(health - 1);
       setNewWord(true);
       setTimeout(() => {
@@ -116,7 +96,7 @@ export default function Savannah() {
     }
   }, 500);
 
-		useInterval(() => {
+  useInterval(() => {
     if (seconds > 0) {
       if (Object.keys(randomWords).length !== 0) {
         setSeconds(seconds - 1);
@@ -126,37 +106,12 @@ export default function Savannah() {
 
   const clickButtonChoise = (el) => {
     if (!el[1]) {
-      dispatch(updateUserWord({
-            userId,
-            wordId: currentWordId,
-            props: {
-              'optional': {
-                'count': {
-                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.good,
-                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1
-                }
-              }
-            }
-          }
-
-      ))
+      badCount(userId, currentWordId, words);// записываем неправильный ответ
       setHealth(health - 1);
     } else {
       setTrueAnswer(trueAnswer + 1);
-      dispatch(updateUserWord({
-            userId,
-            wordId: currentWordId,
-            props: {
-              'optional': {
-                'count': {
-                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.good + 1,
-                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad
-                }
-              }
-            }
-          }
+      goodCount(userId, currentWordId, words);// записываем правильный ответ
 
-      ))
     }
     setNewWord(true);
     setMoveWord(RETURN_START_WORD);
