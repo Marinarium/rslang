@@ -53,6 +53,7 @@ export default function MakeAWord() {
       console.log('FINISH')
       setGameStatus(() => false);
     }
+    setAnswer(() => '');
     return arrRef.current = arrRef.current.slice(1);
   }
 
