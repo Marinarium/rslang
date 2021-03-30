@@ -57,41 +57,46 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
         );
     });
 
-    const startGameHandler = async (linkTo) => {
-        await words.map(i => {
-             !i.userWord && dispatch(createUserWord({
-                userId,
-                wordId: i.id,
-                props: {
-                    'optional': {
-                        'learned': true,
-                        'count':{
-                            'good': 0,
-                            'bad': 0
-                        }
+    const startGameHandler = (linkTo) => {
+        words.map(i => {
+            !i.userWord && dispatch(createUserWord({
+                    userId,
+                    wordId: i.id,
+                    props: {
+                        'optional': {
+                            'learned': true,
+                            'count': {
+                                'good': 0,
+                                'bad': 0
+                            }
 
-                    }
-                }
-            }));
-            const learned = i.userWord && i.userWord.optional && i.userWord.optional.learned
-             !learned && dispatch(updateUserWord({
-                userId,
-                wordId: i.id,
-                props: {
-                    'optional': {
-                        'learned': true,
-                        'count':{
-                            'good': 0,
-                            'bad': 0
                         }
-
                     }
-                }
-            }));
+                }));
+                const learned = i.userWord && i.userWord.optional && i.userWord.optional.learned
+                !learned && dispatch(updateUserWord({
+                    userId,
+                    wordId: i.id,
+                    props: {
+                        'optional': {
+                            'learned': true,
+                            'count': {
+                                'good': 0,
+                                'bad': 0
+                            }
+
+                        }
+                    }
+                }));
+
+
         })
-        setTimeout(()=> {//!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
-        },3000)
+        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({
+            group: currentGroup,
+            page: currentPage,
+            userId
+        }));
+
 
         history.push(`/${linkTo}`)
     };

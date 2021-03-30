@@ -179,19 +179,19 @@ const wordsReducer = createSlice({
         [getDifficultWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                userItems: action.payload
+                items: action.payload
             }
         },
         [getDeletedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                userItems: action.payload
+                items: action.payload
             }
         },
         [getLearnedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                userItems: action.payload
+                items: action.payload
             }
         },
         [getAllUserWordsWithoutUserWords.fulfilled]: (state, action) => {

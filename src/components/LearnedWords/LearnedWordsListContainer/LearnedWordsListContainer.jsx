@@ -13,7 +13,7 @@ function LearnedWordsListContainer({match}) {
     const dispatch = useDispatch();
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentLearnedPagesArray[currentGroup]); // номер текущей страницы
-    const words = useSelector(state => state.words.userItems);
+    const words = useSelector(state => state.words.items);
     const currentLearnedPagesArray = useSelector(state => state.app.currentLearnedPagesArray);
     const userId = useSelector(state => state.auth.userId);
 

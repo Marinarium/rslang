@@ -4,8 +4,8 @@ import {withRouter} from 'react-router-dom';
 import {getAllUserWordsWithoutDeletedWords} from '../../redux/wordsReducer';
 import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
-import {WordsList} from '../WordsList/WordsList'
-import Games from '../Games/Games'
+import {WordsList} from '../WordsList/WordsList';
+
 
 
 function TextBookListContainer({location, match}) {
