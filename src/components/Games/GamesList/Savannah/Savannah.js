@@ -27,7 +27,6 @@ export default function Savannah() {
   const [trueAnswer, setTrueAnswer] = useState(0);
   const [newWord, setNewWord] = useState(false);
 
-
   function useInterval(callback, delay) {
     const savedCallback = useRef();
 
@@ -59,7 +58,7 @@ export default function Savannah() {
   useEffect(() => {
     const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
     activeWordObj && setCurrentWordId(activeWordObj.id)
-  }, [words, activeWord]);
+  }, [words, activeWord, randomWords]);
 
 
   useEffect(() => {
@@ -77,7 +76,6 @@ export default function Savannah() {
                 return [el.wordTranslate, false];
               }),
           ].sort(() => Math.random() - 0.5);
-
           return result;
         }, {})
     );
@@ -89,6 +87,22 @@ export default function Savannah() {
     }
     if (moveWord > LIMIT_WORD) {
       setMoveWord(RETURN_START_WORD);
+
+      dispatch(updateUserWord({
+            userId,
+            wordId: currentWordId,
+            props: {
+              'optional': {
+                'count': {
+                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.good,
+                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1
+                }
+              }
+            }
+          }
+
+      ))
+
       setHealth(health - 1);
       setNewWord(true);
       setTimeout(() => {
@@ -118,8 +132,8 @@ export default function Savannah() {
             props: {
               'optional': {
                 'count': {
-                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.bad,
-                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.good + 1
+                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.good,
+                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1
                 }
               }
             }
@@ -135,8 +149,8 @@ export default function Savannah() {
             props: {
               'optional': {
                 'count': {
-                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1,
-                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.good
+                  'good': words.find(i => i.id===currentWordId).userWord.optional.count.good + 1,
+                  'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad
                 }
               }
             }
