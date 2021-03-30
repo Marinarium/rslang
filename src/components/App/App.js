@@ -10,13 +10,16 @@ import {RegisterForm} from '../RegisterForm/RegisterForm'
 import DifficultWords from '../DifficultWords/DifficultWords'
 import DeletedWords from '../DeletedWords/DeletedWords'
 import GamesPage from "../../pages/GamesPage/GamesPage";
+import PromoPage from "../../pages/PromoPage/PromoPage";
+
+import styles from './App.module.scss'
 
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div className={styles.app}>
                 <Header/>
-                <Route path="/" exact component={TextBookPage}/>
+                <Route path="/" exact component={PromoPage}/>
                 <Route path="/login" exact component={LoginForm}/>
                 <Route path="/register" exact component={RegisterForm}/>
                 <Route path="/text-book/:unit" exact component={TextBookPage}/>  {/*Добавил раздел*/}
