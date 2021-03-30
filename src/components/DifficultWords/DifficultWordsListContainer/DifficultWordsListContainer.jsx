@@ -17,11 +17,9 @@ function DifficultWordsListContainer({match}) {
     const userId = useSelector(state => state.auth.userId);
 
     useEffect(() => {
-
         // Записываем массив текущих страниц из LS в store
         const lSPagesArray = JSON.parse(localStorage.getItem('currentDifficultPagesArray'))
         lSPagesArray && dispatch(setCurrentDifficultPagesArray(lSPagesArray))
-
 
     }, [dispatch]);
     useEffect(() => { // Загружаем сложные слова

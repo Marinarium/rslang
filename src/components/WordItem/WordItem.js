@@ -36,6 +36,8 @@ export default function WordItem({
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
     const userId = useSelector(state => state.auth.userId);
+    const goodGameResults  = userWord?.optional?.count?.good || 0;
+    const badGameResults  =  userWord?.optional?.count?.bad || 0;
 
     const playHandler = () => {
         playAudios(audio, audioMeaning, audioExample);
@@ -129,7 +131,7 @@ export default function WordItem({
 
         <section className={styles.card}>
             <header className={`${styles.head} ${classes.join(' ')}`}>
-                <p>7/3</p>
+                <p>{goodGameResults}/{badGameResults}</p>
 
             </header>
             <main className={styles.main}>
