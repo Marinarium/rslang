@@ -4,7 +4,7 @@ import styles from "../MakeAWord.module.scss";
 export default function InputWord({answer}) {
 
   return (
-    <div className={styles.input__word}>
+    <div className={styles.input_word}>
       {answer}
     </div>
   )

@@ -1,0 +1,39 @@
+function wordPlay() {
+    console.log('sound can be play')
+  }
+
+  function deleteWord() {
+    console.log('delete Word from dictionary')
+  }
+
+  function toLose() {
+    setAnswer(() => arrWords[0].word); //--------------------- DATA
+    setGameStatus(() => false)
+  }
+
+            <span onClick={gameStatus ? null : wordPlay()}>
+              {gameStatus ? null : <i className="fas fa-volume-up"/>}
+            </span>
+
+  <p>Collect a word from letters</p>
+
+    <span onClick={deleteWord}><i className="fas fa-trash-alt"/></span>
+    <button onClick={toLose}>Enter</button>
+
+
+
+    1. Перемешивается массив
+    2. Старт игры
+    	-первое слово из массива выводится:
+    		*создаётся массив букв,
+    		*создаётся правильный массив для сверки,
+    		*статус игры ТРУ
+    	-слово разгадано:
+    		*статус игры ФОЛС
+    		*появляется кнопка звука, картинка, контекст, транскрипция и
+    		кнопка Далее
+
+    			*клик по Далее: массив сокращается на одно слово, Старт игры
+
+    	-кнопка пропустить: массив сокращается на одно слово, Старт игры
+
