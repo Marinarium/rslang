@@ -1,0 +1,62 @@
+@import '../../assets/styles/main';
+
+.wrap {
+  margin-bottom: 80px;
+  color: $dark;
+}
+
+.section_title {
+  @include title-font(32px);
+  margin-bottom: 40px;
+}
+
+.box {
+  margin-bottom: 60px;
+  display: flex;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:nth-child(2n) {
+    .image {
+      margin-right: 52px;
+    }
+  }
+
+  &:nth-child(2n+1) {
+    flex-direction: row-reverse;
+    .image {
+      margin-left: 52px;
+    }
+  }
+}
+
+.image {
+  width: 504px;
+  height: 334px;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.text_wrap {
+  flex-basis: 440px;
+}
+
+.title {
+  @include title-font(26px);
+  margin-bottom: 28px;
+}
+
+.text {
+  @include text-font(14px, normal, 140%);
+  max-width: 440px;
+}
+
+.p {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

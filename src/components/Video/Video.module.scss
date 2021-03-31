@@ -1,0 +1,17 @@
+@import '../../assets/styles/main';
+
+.video {
+  margin-bottom: 80px;
+}
+
+.title {
+  @include title-font(32px);
+  color: $dark;
+  margin-bottom: 40px;
+}
+
+.player {
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
