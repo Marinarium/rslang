@@ -31,7 +31,13 @@ export default function WordItem({
                                  }) {
 
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const getWordsByContainer = () => {
+        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
+    }
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
@@ -91,8 +97,8 @@ export default function WordItem({
                 }
             }));
         }
-        //Получаем слова с учётом сложных:
-        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        getWordsByContainer();
+
     };
     const deleteButtonHandler = async () => {
         if (userWord) {
@@ -116,15 +122,11 @@ export default function WordItem({
                 }
             }));
         }
-        //Получаем слова с учётом удаленных:
-        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        getWordsByContainer();
     };
-    const restoreButtonHandler = async () => {
-        await dispatch(deleteUserWord({userId, wordId: id}));
-        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
-        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+    const restoreButtonHandler = () => {
+        dispatch(deleteUserWord({userId, wordId: id}));
+        getWordsByContainer();
     };
 
     return (
@@ -197,7 +199,6 @@ export default function WordItem({
                     >
                         Убрать из сложных
                     </button>}
-
                 </div>
             </main>
         </section>

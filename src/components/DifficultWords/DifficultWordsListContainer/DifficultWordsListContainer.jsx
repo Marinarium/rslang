@@ -5,6 +5,7 @@ import {getDifficultWords} from '../../../redux/wordsReducer';
 import {setCurrentDifficultPagesArray} from '../../../redux/appReducer';
 import { setCurrentDifficultPagesItem} from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
+import {authApi} from '../../../api/authApi'
 
 
 function DifficultWordsListContainer({match}) {
