@@ -4,6 +4,7 @@ const initialState = {
     currentPagesArray: ['0', '0', '0', '0', '0', '0'],
     currentDifficultPagesArray: ['0', '0', '0', '0', '0', '0'],
     currentDeletedPagesArray: ['0', '0', '0', '0', '0', '0'],
+    currentLearnedPagesArray: ['0', '0', '0', '0', '0', '0'],
     activeUnit: {},
     isWordTranslated: true,
     isWordButtonsShown: true
@@ -53,6 +54,18 @@ const appReducer = createSlice({
 
             }
         },
+        setCurrentLearnedPagesItem: (state, action) => {
+            return {
+                ...state,
+                currentDeletedPagesArray: state.currentDeletedPagesArray.map((i, index) => {
+                    if (index === action.payload.currentGroup) {
+                        return action.payload.currentPage
+                    }
+                    return i
+                }),
+
+            }
+        },
         setCurrentPagesArray: (state, action) => {
 
             return {
@@ -74,6 +87,14 @@ const appReducer = createSlice({
             return {
                 ...state,
                 currentDeletePagesArray: action.payload,
+
+            }
+        },
+        setCurrentLearnedPagesArray: (state, action) => {
+
+            return {
+                ...state,
+                currentLearnedPagesArray: action.payload,
 
             }
         },
@@ -111,7 +132,9 @@ export const {
     setCurrentDifficultPagesArray,
     setCurrentDifficultPagesItem,
     setCurrentDeletedPagesArray,
-    setCurrentDeletedPagesItem
+    setCurrentDeletedPagesItem,
+    setCurrentLearnedPagesArray,
+    setCurrentLearnedPagesItem
 
 
 } = appReducer.actions

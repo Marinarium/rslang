@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './WordItem.module.scss';
 import speaker from './images/speaker.svg';
 import {playAudios} from '../../services/utils/playAudio';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    createUserWord,
-    getAllUserWordsWithoutDeletedWords
+    createUserWord, deleteUserWord, getLearnedWords,
+    getAllUserWordsWithoutDeletedWords, getDeletedWords, getDifficultWords, updateUserWord
 } from '../../redux/wordsReducer';
 
 export default function WordItem({
@@ -22,14 +22,22 @@ export default function WordItem({
                                      textExampleTranslate,
                                      wordTranslate,
                                      currentPage,
-                                     currentGroup
+                                     currentGroup,
+                                     container,
+                                     difficulty,
+                                     userWord
+
+
                                  }) {
+
 
     const dispatch = useDispatch()
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
     const userId = useSelector(state => state.auth.userId);
+    const goodGameResults  = userWord?.optional?.count?.good || 0;
+    const badGameResults  =  userWord?.optional?.count?.bad || 0;
 
     const playHandler = () => {
         playAudios(audio, audioMeaning, audioExample);
@@ -66,36 +74,66 @@ export default function WordItem({
             break
     }
     const difficultButtonHandler = async () => {
-       await dispatch(createUserWord({
-            userId,
-            wordId: id,
-            props: {
-                "difficulty": "hard",
-                "optional": {}
-            }
-        }))
-
-
-    }
-    const deleteButtonHandler = async() => {
-        await dispatch(createUserWord({
-            userId,
-            wordId: id,
-            props: {
-                "difficulty": "easy",
-                "optional": {
-                    "deleted": true
+        if (userWord) {
+            await dispatch(updateUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "difficulty": "hard"
                 }
-            }
-        }))
+            }));
+        } else {
+            await dispatch(createUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "difficulty": "hard"
+                }
+            }));
+        }
+        //Получаем слова с учётом сложных:
+        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+    };
+    const deleteButtonHandler = async () => {
+        if (userWord) {
+            await dispatch(updateUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "optional": {
+                        "deleted": true
+                    }
+                }
+            }));
+        } else {
+            await dispatch(createUserWord({
+                userId,
+                wordId: id,
+                props: {
+                    "optional": {
+                        "deleted": true
+                    }
+                }
+            }));
+        }
         //Получаем слова с учётом удаленных:
         dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
-    }
+    };
+    const restoreButtonHandler = async () => {
+        await dispatch(deleteUserWord({userId, wordId: id}));
+        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
+        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+    };
 
     return (
 
         <section className={styles.card}>
-            <header className={`${styles.head} ${classes.join(' ')}`}>7/3</header>
+            <header className={`${styles.head} ${classes.join(' ')}`}>
+                <p>{goodGameResults}/{badGameResults}</p>
+
+            </header>
             <main className={styles.main}>
                 <div className={styles.main_info}>
                     <img src={image} alt={word} className={styles.image}/>
@@ -103,6 +141,10 @@ export default function WordItem({
                         <img src={speaker} alt="audio" className={styles.speaker} onClick={playHandler}/>
                         <h4 className={`${styles.word} ${classesAlt.join(' ')}`}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
+
+                        {difficulty === 'hard' && <p style={{color: 'red', marginLeft: 50}}>СЛОЖНОЕ СЛОВО</p>}
+
+
                         {isWordTranslated && <span className={styles.translation}>{wordTranslate}</span>}
                     </div>
                 </div>
@@ -116,24 +158,48 @@ export default function WordItem({
                         {isWordTranslated && <p className={styles.example_ru}>{textExampleTranslate}</p>}
                     </div>
                 </div>
-                {isWordButtonsShown && <div className={styles.buttons}>
-                    <button
+                <div className={styles.buttons}>
+                    {
+                        container === 'text-book'
+                        && isWordButtonsShown
+                        && difficulty !== 'hard'
+                        && <>
+                            <button
+                                className={`${styles.button} ${classesAlt.join(' ')}`}
+                                type="button"
+                                onClick={deleteButtonHandler}
+                            >
+                                В удалённые слова
+                            </button>
+                            <button
+                                className={`${styles.button} ${classes.join(' ')}`}
+                                type="button"
+                                onClick={difficultButtonHandler}
+                            >
+                                В сложные слова
+                            </button>
+
+                        </>
+                    }
+
+                    {container === 'Deleted' && <button
                         className={`${styles.button} ${classes.join(' ')}`}
                         type="button"
-                        onClick={difficultButtonHandler}
+                        onClick={restoreButtonHandler}
                     >
-                        В сложные слова
-                    </button>
+                        Восстановить
+                    </button>}
 
-                    <button
-                        className={`${styles.button} ${classesAlt.join(' ')}`}
+                    {(container === 'Difficult' || difficulty === 'hard') && <button
+                        className={`${styles.button} ${classes.join(' ')}`}
                         type="button"
-                        onClick={deleteButtonHandler}
+                        onClick={restoreButtonHandler}
                     >
-                        В удалённые слова
-                    </button>
-                </div>}
+                        Убрать из сложных
+                    </button>}
+
+                </div>
             </main>
         </section>
     );
-}
+};
