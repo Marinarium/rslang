@@ -1,10 +1,10 @@
 import React from "react";
 import styles from './ChessStructure.module.scss';
 
-export default function ChessStructure({contentItems, title }) {
+export default function ChessStructure({contentItems, title, appereance }) {
     const content = contentItems.map(({img, id, title, text}) => {
         return (
-            <div className={styles.box} key={id}>
+            <div className={appereance === 'dev' ? `${styles.box} ${styles.dev}` : styles.box} key={id}>
                 <img className={styles.image} src={img} alt={title}/>
                 <div className={styles.text_wrap}>
                     <h4 className={styles.title}>{title}</h4>
