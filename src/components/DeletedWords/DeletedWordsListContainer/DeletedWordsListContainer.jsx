@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getDeletedWords} from '../../../redux/wordsReducer';
+import {getDeletedWords, getDifficultWords} from '../../../redux/wordsReducer';
 import {
     setCurrentDeletedPagesArray,
-    setCurrentDeletedPagesItem,
+    setCurrentDeletedPagesItem, setCurrentDifficultPagesArray, setCurrentDifficultPagesItem,
 } from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
-import {usePageNumber} from '../../../hooks/pageNumberHook'
+import {useDictionaryPage, usePageNumber} from '../../../hooks/dictionaryPageHook'
 
 
 function DeletedWordsListContainer({match}) {
@@ -16,11 +16,19 @@ function DeletedWordsListContainer({match}) {
     const currentPage = useSelector(state => state.app.currentDeletedPagesArray[currentGroup]); // номер текущей страницы
     const words = useSelector(state => state.words.items);
     //const currentDeletedPagesArray = useSelector(state => state.app.currentDeletedPagesArray);
-    const userId = useSelector(state => state.auth.userId);
-    usePageNumber(
+    //const userId = useSelector(state => state.auth.userId);
+    // usePageNumber(
+    //     'currentDeletedPagesArray',
+    //     'currentDeletedPagesArray',
+    //     setCurrentDeletedPagesArray
+    // );
+    useDictionaryPage(
         'currentDeletedPagesArray',
         'currentDeletedPagesArray',
-        setCurrentDeletedPagesArray
+        setCurrentDeletedPagesArray,
+        getDeletedWords,
+        setCurrentDeletedPagesItem,
+        match
     );
     // useEffect(() => {
     //
@@ -30,11 +38,11 @@ function DeletedWordsListContainer({match}) {
     //
     //
     // }, [dispatch]);
-    useEffect(() => { // Загружаем удаленные слова
-
-        userId && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
-
-    }, [dispatch, userId, currentGroup, currentPage]);
+    // useEffect(() => { // Загружаем удаленные слова
+    //
+    //     userId && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+    //
+    // }, [dispatch, userId, currentGroup, currentPage]);
 
     // useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
     //

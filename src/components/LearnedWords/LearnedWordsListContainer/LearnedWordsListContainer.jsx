@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getLearnedWords} from '../../../redux/wordsReducer';
-import {setCurrentLearnedPagesItem, setCurrentLearnedPagesArray} from '../../../redux/appReducer';
+import {getDifficultWords, getLearnedWords} from '../../../redux/wordsReducer';
+import {
+    setCurrentLearnedPagesItem,
+    setCurrentLearnedPagesArray,
+    setCurrentDifficultPagesArray, setCurrentDifficultPagesItem
+} from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
-import {usePageNumber} from '../../../hooks/pageNumberHook';
+import {useDictionaryPage, usePageNumber} from '../../../hooks/dictionaryPageHook';
 
 
 function LearnedWordsListContainer({match}) {
@@ -14,11 +18,19 @@ function LearnedWordsListContainer({match}) {
     const currentPage = useSelector(state => state.app.currentLearnedPagesArray[currentGroup]); // номер текущей страницы
     const words = useSelector(state => state.words.items);
     //const currentLearnedPagesArray = useSelector(state => state.app.currentLearnedPagesArray);
-    const userId = useSelector(state => state.auth.userId);
-    usePageNumber(
+    //const userId = useSelector(state => state.auth.userId);
+    // usePageNumber(
+    //     'currentLearnedPagesArray',
+    //     'currentLearnedPagesArray',
+    //     setCurrentLearnedPagesArray
+    // );
+    useDictionaryPage(
         'currentLearnedPagesArray',
         'currentLearnedPagesArray',
-        setCurrentLearnedPagesArray
+        setCurrentLearnedPagesArray,
+        getLearnedWords,
+        setCurrentLearnedPagesItem,
+        match
     );
     // useEffect(() => {
     //
@@ -28,11 +40,11 @@ function LearnedWordsListContainer({match}) {
     //
     //
     // }, [dispatch]);
-    useEffect(() => { // Загружаем изучаемые слова
-
-        userId && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
-
-    }, [dispatch, userId, currentGroup, currentPage]);
+    // useEffect(() => { // Загружаем изучаемые слова
+    //
+    //     userId && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
+    //
+    // }, [dispatch, userId, currentGroup, currentPage]);
 
     // useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
     //

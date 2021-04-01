@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {getDifficultWords} from '../../../redux/wordsReducer';
 import {setCurrentDifficultPagesArray, setCurrentDifficultPagesItem} from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
-import {usePageNumber} from '../../../hooks/pageNumberHook';
+import {useDictionaryPage, usePageNumber} from '../../../hooks/dictionaryPageHook';
 
 
 
@@ -15,11 +15,14 @@ function DifficultWordsListContainer({match}) {
     const currentPage = useSelector(state => state.app.currentDifficultPagesArray[currentGroup]); // номер текущей страницы
     const words = useSelector(state => state.words.items);
     //const currentDifficultPagesArray = useSelector(state => state.app.currentDifficultPagesArray);
-    const userId = useSelector(state => state.auth.userId);
-    usePageNumber(
+    // const userId = useSelector(state => state.auth.userId);
+    useDictionaryPage(
         'currentDifficultPagesArray',
         'currentDifficultPagesArray',
-        setCurrentDifficultPagesArray
+        setCurrentDifficultPagesArray,
+        getDifficultWords,
+        setCurrentDifficultPagesItem,
+        match
         );
     // useEffect(() => {
     //     // Записываем массив текущих страниц из LS в store
@@ -27,11 +30,11 @@ function DifficultWordsListContainer({match}) {
     //     lSPagesArray && dispatch(setCurrentDifficultPagesArray(lSPagesArray))
     //
     // }, [dispatch]);
-    useEffect(() => { // Загружаем сложные слова
-
-        userId && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
-
-    }, [dispatch, userId, currentGroup, currentPage]);
+    // useEffect(() => { // Загружаем сложные слова
+    //
+    //     userId && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
+    //
+    // }, [dispatch, userId, currentGroup, currentPage]);
 
     // useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
     //
@@ -40,7 +43,6 @@ function DifficultWordsListContainer({match}) {
     // }, [currentDifficultPagesArray]);
 
     const handlePageClick = (e) => { // Обработка нажатия на кнопку пагинации
-
         dispatch(setCurrentDifficultPagesItem({
             currentGroup: currentGroup,
             currentPage: e.selected.toString()
