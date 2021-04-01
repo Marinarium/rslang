@@ -31,7 +31,13 @@ export default function WordItem({
                                  }) {
 
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const getWordsByContainer = () => {
+        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
+        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
+    };
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
@@ -47,31 +53,31 @@ export default function WordItem({
 
     switch (activeUnit.name) { //тут сократить, думаю, как-то можно, или по-другому сделать и в CSS по норм сделать
         case '1 раздел' :// и вообще без массива, через переменную, но пока оставляю так, может по-другому будет
-            classes.push(styles.unit1)
-            classesAlt.push(styles.unit1_alt)
-            break
+            classes.push(styles.unit1);
+            classesAlt.push(styles.unit1_alt);
+            break;
         case '2 раздел' :
-            classes.push(styles.unit2)
-            classesAlt.push(styles.unit2_alt)
-            break
+            classes.push(styles.unit2);
+            classesAlt.push(styles.unit2_alt);
+            break;
         case '3 раздел' :
-            classes.push(styles.unit3)
-            classesAlt.push(styles.unit3_alt)
-            break
+            classes.push(styles.unit3);
+            classesAlt.push(styles.unit3_alt);
+            break;
         case '4 раздел' :
-            classes.push(styles.unit4)
-            classesAlt.push(styles.unit4_alt)
-            break
+            classes.push(styles.unit4);
+            classesAlt.push(styles.unit4_alt);
+            break;
         case '5 раздел' :
-            classes.push(styles.unit5)
-            classesAlt.push(styles.unit5_alt)
-            break
+            classes.push(styles.unit5);
+            classesAlt.push(styles.unit5_alt);
+            break;
         case '6 раздел' :
-            classes.push(styles.unit6)
-            classesAlt.push(styles.unit6_alt)
-            break
+            classes.push(styles.unit6);
+            classesAlt.push(styles.unit6_alt);
+            break;
         default:
-            break
+            break;
     }
     const difficultButtonHandler = async () => {
         if (userWord) {
@@ -91,8 +97,8 @@ export default function WordItem({
                 }
             }));
         }
-        //Получаем слова с учётом сложных:
-        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        getWordsByContainer();
+
     };
     const deleteButtonHandler = async () => {
         if (userWord) {
@@ -116,15 +122,11 @@ export default function WordItem({
                 }
             }));
         }
-        //Получаем слова с учётом удаленных:
-        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        getWordsByContainer();
     };
     const restoreButtonHandler = async () => {
         await dispatch(deleteUserWord({userId, wordId: id}));
-        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
-        dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        getWordsByContainer();
     };
 
     return (
@@ -197,7 +199,6 @@ export default function WordItem({
                     >
                         Убрать из сложных
                     </button>}
-
                 </div>
             </main>
         </section>

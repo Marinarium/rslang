@@ -12,7 +12,6 @@ export const authApi = {
                 'Authorization': `Bearer ${token}`
             }
         )
-
     },
 
     login(loginForm) {
@@ -38,5 +37,7 @@ export const authApi = {
         )
 
     },
+
+
 
 }

@@ -57,8 +57,9 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     });
 
     const startGameHandler = (linkTo) => {
-        words.map(i => {
-            !i.userWord && dispatch(createUserWord({
+        words.map(async i => {
+            const learned = i.userWord?.optional?.learned;
+            !i.userWord && await dispatch(createUserWord({
                 userId,
                 wordId: i.id,
                 props: {
@@ -72,8 +73,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                     }
                 }
             }));
-            const learned = i.userWord && i.userWord.optional && i.userWord.optional.learned
-            !learned && dispatch(updateUserWord({
+            !learned && await dispatch(updateUserWord({
                 userId,
                 wordId: i.id,
                 props: {

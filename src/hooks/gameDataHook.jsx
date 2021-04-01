@@ -10,8 +10,8 @@ export const useGameData = () => {
                 'optional': {
                     'learned': true,
                     'count': {
-                        'good': words.find(i => i.id===currentWordId).userWord.optional.count.good,
-                        'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad + 1
+                        'good': words.find(i => i.id===currentWordId).userWord?.optional?.count?.good,
+                        'bad': words.find(i => i.id===currentWordId).userWord?.optional?.count?.bad + 1
                     }
                 }
             }
@@ -26,8 +26,8 @@ export const useGameData = () => {
                 'optional': {
                     'learned': true,
                     'count': {
-                        'good': words.find(i => i.id===currentWordId).userWord.optional.count.good + 1,
-                        'bad': words.find(i => i.id===currentWordId).userWord.optional.count.bad
+                        'good': words.find(i => i.id===currentWordId).userWord?.optional?.count?.good + 1,
+                        'bad': words.find(i => i.id===currentWordId).userWord?.optional?.count?.bad
                     }
                 }
             }

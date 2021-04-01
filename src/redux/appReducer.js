@@ -57,7 +57,7 @@ const appReducer = createSlice({
         setCurrentLearnedPagesItem: (state, action) => {
             return {
                 ...state,
-                currentDeletedPagesArray: state.currentDeletedPagesArray.map((i, index) => {
+                currentLearnedPagesArray: state.currentLearnedPagesArray.map((i, index) => {
                     if (index === action.payload.currentGroup) {
                         return action.payload.currentPage
                     }
@@ -86,7 +86,7 @@ const appReducer = createSlice({
 
             return {
                 ...state,
-                currentDeletePagesArray: action.payload,
+                currentDeletedPagesArray: action.payload,
 
             }
         },
