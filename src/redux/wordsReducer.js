@@ -11,7 +11,7 @@ const initialState = {
 }
 
 export const fetchWords = createAsyncThunk(
-    'wordsReducer/fetchWords ',
+    'wordsReducer/fetchWords',
     async ({group, page}) => {
         const data = await wordsApi.fetchWords({group, page})
             .then((res) => res && res.json())
@@ -25,7 +25,7 @@ export const fetchWords = createAsyncThunk(
 )
 
 export const getDifficultWords = createAsyncThunk(
-    'wordsReducer/getDifficultWords ',
+    'wordsReducer/getDifficultWords',
     async ({group, page, userId}) => {
         const data = await wordsApi.getDifficultWords({group, page, userId})
             .then((res) => res && res.json())
@@ -46,9 +46,29 @@ export const getDifficultWords = createAsyncThunk(
 )
 
 export const getDeletedWords = createAsyncThunk(
-    'wordsReducer/getDeletedWords ',
+    'wordsReducer/getDeletedWords',
     async ({group, page, userId}) => {
         const data = await wordsApi.getDeletedWords({group, page, userId})
+            .then((res) => res && res.json())
+
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        const modifiedData = data[0].paginatedResults.map(word => {
+            const obj = {id: word._id, ...word}
+            delete obj['_id']
+            return obj
+
+        })
+
+        return modifiedData
+
+    }
+)
+export const getLearnedWords = createAsyncThunk(
+    'wordsReducer/getLearnedWords',
+    async ({group, page, userId}) => {
+        const data = await wordsApi.getLearnedWords({group, page, userId})
             .then((res) => res && res.json())
 
         if (!data) {
@@ -113,6 +133,28 @@ export const createUserWord = createAsyncThunk(
         return data
     }
 )
+export const deleteUserWord = createAsyncThunk(
+    'wordsReducer/deleteUserWord',
+    async ({userId, wordId}) => {
+        const data = await wordsApi.deleteUserWord({userId, wordId})
+            .then((res) => res && res.json())
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        return data
+    }
+)
+export const updateUserWord = createAsyncThunk(
+    'wordsReducer/updateUserWord',
+    async ({userId, wordId, props}) => {
+        const data = await wordsApi.updateUserWord({userId, wordId, props})
+            .then((res) => res && res.json())
+        if (!data) {
+            throw new Error(data.message || 'Something went wrong!')
+        }
+        return data
+    }
+)
 
 
 const wordsReducer = createSlice({
@@ -137,13 +179,19 @@ const wordsReducer = createSlice({
         [getDifficultWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                userItems: action.payload
+                items: action.payload
             }
         },
         [getDeletedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                userItems: action.payload
+                items: action.payload
+            }
+        },
+        [getLearnedWords.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                items: action.payload
             }
         },
         [getAllUserWordsWithoutUserWords.fulfilled]: (state, action) => {
@@ -159,6 +207,17 @@ const wordsReducer = createSlice({
             }
         },
         [createUserWord.fulfilled]: (state, action) => {
+            return {
+                ...state
+            }
+        },
+
+        [updateUserWord.fulfilled]: (state, action) => {
+            return {
+                ...state
+            }
+        },
+        [deleteUserWord.fulfilled]: (state, action) => {
             return {
                 ...state
             }

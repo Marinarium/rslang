@@ -1,38 +1,29 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { getDeletedWords} from '../../../redux/wordsReducer';
-import {setCurrentDeletedPagesArray, setCurrentDeletedPagesItem} from '../../../redux/appReducer';
+import {getDeletedWords} from '../../../redux/wordsReducer';
+import {
+    setCurrentDeletedPagesArray,
+    setCurrentDeletedPagesItem,
+} from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
+import {useDictionaryPage} from '../../../hooks/dictionaryPageHook'
 
 
 function DeletedWordsListContainer({match}) {
     const dispatch = useDispatch();
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentDeletedPagesArray[currentGroup]); // номер текущей страницы
-    const words = useSelector(state => state.words.userItems);
-    const currentDeletedPagesArray = useSelector(state => state.app.currentDeletedPagesArray);
-    const userId = useSelector(state => state.auth.userId);
+    const words = useSelector(state => state.words.items);
 
-    useEffect(() => {
-
-        // Записываем массив текущих страниц из LS в store
-        const lSPagesArray = JSON.parse(localStorage.getItem('currentDeletedPagesArray'))
-        lSPagesArray && dispatch(setCurrentDeletedPagesArray(lSPagesArray))
-
-
-    }, [dispatch]);
-    useEffect(() => { // Загружаем удаленные слова
-
-        userId && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
-
-    }, [dispatch, userId, currentGroup, currentPage]);
-
-    useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
-
-        localStorage.setItem('currentDeletedPagesArray', JSON.stringify(currentDeletedPagesArray));
-
-    }, [currentDeletedPagesArray]);
+    useDictionaryPage(
+        'currentDeletedPagesArray',
+        'currentDeletedPagesArray',
+        setCurrentDeletedPagesArray,
+        getDeletedWords,
+        setCurrentDeletedPagesItem,
+        match
+    );
 
     const handlePageClick = (e) => { // Обработка нажатия на кнопку пагинации
 
@@ -42,9 +33,9 @@ function DeletedWordsListContainer({match}) {
         }));
 
     };
-
     return (
         <WordsList
+            container={'Deleted'}
             words={words}
             handlePageClick={handlePageClick}
             currentPage={currentPage}
@@ -53,8 +44,5 @@ function DeletedWordsListContainer({match}) {
     );
 }
 
-
-
-
-export default withRouter(DeletedWordsListContainer)
+export default withRouter(DeletedWordsListContainer);
 

@@ -6,7 +6,6 @@ import Audiocall from "./GamesList/Audiocall/Audiocall";
 import MakeAWord from "./GamesList/MakeAWord/MakeAWord";
 import Savannah from "./GamesList/Savannah/Savannah";
 
-export default function Games({ location, match }) {
   const gamesItems = [
     { name: "Спринт", linkTo: "games/sprint", page: <Sprint /> },
     { name: "Саванна", linkTo: "games/savannah", page: <Savannah /> },
