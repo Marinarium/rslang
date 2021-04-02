@@ -8,26 +8,13 @@ button, i {
   border: 1px solid $lightGrey;
   border-radius: 10px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-}
 
-.start_make {
-  border: none;
-  border-radius: 5px;
-  background-color: $fifthColor;
-  margin: 10px;
-  width: 100px;
-}
-
-.word_description {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-
-  & span {
-    margin-right: 20px;
+  .start_make {
+    border: none;
+    border-radius: 5px;
+    background-color: $fifthColor;
+    margin: 10px 0 20px;
+    width: 90px;
   }
 
   & p {
@@ -36,18 +23,39 @@ button, i {
   }
 }
 
+.game_block_vis {
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game_block_none {
+  visibility: hidden;
+}
+
+.word_description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & span {
+    margin-right: 20px;
+  }
+}
+
 .input_word {
   height: 20px;
-  width: 100px;
+  width: 120px;
   border-radius: 5px;
   border: 1px solid $lightGrey;
-  margin: 10px;
 }
 
 .word_letters {
-  margin-top: 20px;
   height: 30px;
   align-items: center;
+  display: flex;
 }
 
 .btn_letter {
@@ -57,11 +65,11 @@ button, i {
   margin: 2px;
   width: 25px;
   height: 25px;
-  visibility: visible;
+  display: block;
 }
 
 .done {
-  visibility: hidden;
+  display: none;
 }
 
 .incorrect {
@@ -71,7 +79,6 @@ button, i {
 .buttons_footer {
   display: flex;
   justify-content: space-evenly;
-  margin: 10px;
 
   & button {
     border: none;

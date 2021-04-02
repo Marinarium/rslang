@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from "../MakeAWord.module.scss";
 
-export default function Letter({letter, reset, correctLettersArr, setCorrectLettersArr, concatenate, endGame}) {
+export default function Letter({letter, correctLettersArr, setCorrectLettersArr, concatenate, endWord}) {
 
   const [done, setDone] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
@@ -19,7 +19,7 @@ export default function Letter({letter, reset, correctLettersArr, setCorrectLett
       setDone(() => true);
       concatenate(el);
       setCorrectLettersArr((wordArr) => wordArr.slice(1));
-      if (correctLettersArr.length === 1) endGame();
+      if (correctLettersArr.length === 1) endWord();
     } else showIncorrect();
   }
 
@@ -32,10 +32,10 @@ export default function Letter({letter, reset, correctLettersArr, setCorrectLett
 
   return (
     <button
-      className={reset ? classes : classes.join(' ')}
+      className={classes.join(' ')}
       onClick={() => checkDone(letter)}
     >
       {letter}
     </button>
   )
-};
+}

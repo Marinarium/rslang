@@ -10,22 +10,20 @@ export default function MakeAWord() {
   const [gameWord, setGameWord] = useState([]); // угадываемое слово
   const [correctLettersArr, setCorrectLettersArr] = useState([]); // правильное угадываемое слово в виде массива
   const [gameWordTranslate, setGameWordTranslate] = useState([]); // перевод угадываемого слова
-  const [gameStatus, setGameStatus] = useState(false); // игра идёт или завершена
-  const [reset, setReset] = useState(false);
+  const [gameWordDescription, setGameWordDescription] = useState([]); // перевод угадываемого слова
+  const [gameWordTranscription, setGameWordTranscription] = useState([]); // перевод угадываемого слова
+  const [wordComplete, setWordComplete] = useState(false); // игра идёт или завершена
+  const [gameActive, setGameActive] = useState(false); // игра создана или нет
   const arrRef = useRef(arrWords);
-
-  // let qqq = true;
 
   useEffect(() => {
     fetch("https://react-lang-app.herokuapp.com/words")
       .then((data) => data.json())
       .then((data) => {
-        if (data !== null) {
-          data = data.sort(() => 0.5 - Math.random());
-          setArrWords(data);
-          arrRef.current = data;
-          return data;
-        } else console.log('ERROR!!!!!!!!!')
+        data = data.sort(() => 0.5 - Math.random());
+        setArrWords(data);
+        arrRef.current = data;
+        return data;
       })
   }, []);
 
@@ -51,7 +49,8 @@ export default function MakeAWord() {
     console.log('shrinkArr')
     if (arrRef.current.length === 1) {
       console.log('FINISH')
-      setGameStatus(() => false);
+      setWordComplete(() => false);
+      setGameActive(() => false);
     }
     setAnswer(() => '');
     return arrRef.current = arrRef.current.slice(1);
@@ -73,74 +72,88 @@ export default function MakeAWord() {
     return setGameWordTranslate(() => word);
   }
 
-  function endGame() {
-    console.log('endGame');
-    setGameStatus(() => false);
+  function getDescription(word) {
+    return setGameWordDescription(() => word);
+  }
+
+  function getTranscription(word) {
+    return setGameWordTranscription(() => word);
+  }
+
+  function endWord() {
+    console.log('endWord');
+    console.log(arrRef.current[0].audio);
+    const audio = new Audio(arrRef.current[0].audio);
+    audio.play();
+    getDescription(arrRef.current[0].textMeaning);
+    getTranscription(arrRef.current[0].transcription)
   }
 
   return (
     <section className={styles.make_word}>
+      <h3>Collect a word from letters</h3>
+
       <button
         className={styles.start_make}
         onClick={() => {
+          setGameActive(() => true);
+          setWordComplete(() => true);
           shuffleLetters(arrRef.current[0].word);
           getLettersArr(arrRef.current[0].word);
           getTranslate(arrRef.current[0].wordTranslate);
-          setGameStatus(() => true)
         }}
-        disabled={gameStatus ? "disabled" : null}
-      >Start Game
+        disabled={wordComplete ? "disabled" : null}
+      >
+        Start Game
       </button>
 
-      <div>
+      <div className={gameActive ? styles.game_block_vis : styles.game_block_none}>
+
         <div className={styles.word_description}>
-          <div>
-            <div>{gameStatus ? gameWordTranslate : null}</div>
-          </div>
+          {gameWordTranslate}
         </div>
 
+
         <InputWord answer={answer}/>
+        <p>{wordComplete ? gameWordTranscription : null}</p>
 
         <div className={styles.word_letters}>
           {gameWord.map((letter, index) => (
             <Letter
               key={index}
               letter={letter}
-              reset={reset}
               correctLettersArr={correctLettersArr}
               setCorrectLettersArr={setCorrectLettersArr}
               concatenate={concatenate}
-              endGame={endGame}
+              endWord={endWord}
             />
           ))}
         </div>
 
+        <p>{wordComplete ? gameWordDescription : null}</p>
+
         <div className={styles.buttons_footer}>
           <button
             onClick={() => {
+
+              console.log(arrRef.current);
               shrinkArr();
-              console.log(arrRef.current)
               if (arrRef.current.length === 0) {
                 anotherNewGame();
                 return;
               }
-              // сбрасываются стили буковок до btn_letter
-              setReset(() => true)
+              setWordComplete(() => false);
+              // сбрасываются стили букв до btn_letter
               shuffleLetters(arrRef.current[0].word);
               getLettersArr(arrRef.current[0].word);
               getTranslate(arrRef.current[0].wordTranslate);
             }}
-          >{gameStatus ? 'skip :(' : 'next'}</button>
+          >
+            Next word
+          </button>
         </div>
 
-        {/*        <button
-          onClick={() => {qqq = false;this.forceUpdate();}}
-          className={styles.btn_letter} style={{visibility: qqq ? 'visible' : 'hidden' }}>
-          TEST
-        </button>*/}
-
       </div>
-
     </section>
   )
 };

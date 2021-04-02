@@ -15,7 +15,6 @@ function wordPlay() {
               {gameStatus ? null : <i className="fas fa-volume-up"/>}
             </span>
 
-  <p>Collect a word from letters</p>
 
     <span onClick={deleteWord}><i className="fas fa-trash-alt"/></span>
     <button onClick={toLose}>Enter</button>
