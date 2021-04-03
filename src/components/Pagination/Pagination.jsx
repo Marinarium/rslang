@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-
+import styles from './Pagination.module.scss';
 export const Pagination = ({handlePageClick, currentPage}) => {
-
     return (
-
         <ReactPaginate
             previousLabel={'previous'}
             nextLabel={'next'}
@@ -15,9 +13,8 @@ export const Pagination = ({handlePageClick, currentPage}) => {
             pageRangeDisplayed={5}
             onPageChange={handlePageClick}
             containerClassName={'pagination'}
-            activeClassName={'active'}
-            initialPage={currentPage}
+            activeClassName={styles.active}
+            initialPage={+currentPage}
         />
-
     );
 };

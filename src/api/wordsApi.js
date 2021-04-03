@@ -22,9 +22,10 @@ export const wordsApi = {
             }
         )
     },
+//{"$or":{"userWord.optional.deleted":null},{"userWord.optional.deleted":false}}
     getAllUserWordsWithoutDeletedWords({group, page, userId}) { //Get all not deleted words by group & page
         return request(
-            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted": null}&group=${group}&page=${page}&wordsPerPage=20`,
+            `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.optional.deleted":null},{"userWord.optional.deleted":false}]}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
             true,
             {
@@ -59,6 +60,20 @@ export const wordsApi = {
         )
 
     },
+    updateUserWord({userId, wordId, props}) {
+        return request(
+            `users/${userId}/words/${wordId}`,
+            'PUT',
+            true,
+            {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            JSON.stringify(props)
+        )
+
+    },
     getUserWord(id) { //Get a user word by id
         return request(
             `users/${id}/words`,
@@ -83,10 +98,10 @@ export const wordsApi = {
         )
 
     },
-    deleteUserWords({userId, wordId}) { //Delete user word
+    deleteUserWord({userId, wordId}) { //Delete user word
         return request(
             `users/${userId}/words/${wordId}`,
-            'GET',
+            'DELETE',
             true,
             {
                 'Accept': 'application/json',
@@ -109,6 +124,17 @@ export const wordsApi = {
     getDeletedWords({group, page, userId}) { //Get deleted words
         return request(
             `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted":true}&group=${group}&page=${page}&wordsPerPage=20`,
+            'GET',
+            true,
+            {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+    },
+    getLearnedWords({group, page, userId}) { //Get learned words
+        return request(
+            `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.difficulty":"hard"},{"userWord.optional.learned":true}]}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
             true,
             {
