@@ -6,15 +6,15 @@ import Audiocall from "./GamesList/Audiocall/Audiocall";
 import MakeAWord from "./GamesList/MakeAWord/MakeAWord";
 import Savannah from "./GamesList/Savannah/Savannah";
 
-export default function Games({ location, match }) {
-  const gamesItems = [
+export const gamesItems = [
     { name: "Спринт", linkTo: "games/sprint", page: <Sprint /> },
     { name: "Саванна", linkTo: "games/savannah", page: <Savannah /> },
     { name: "Аудиовызов", linkTo: "games/audiocall", page: <Audiocall /> },
     { name: "Составь слово", linkTo: "games/make-a-word", page: <MakeAWord /> },
   ];
 
-  const games = gamesItems.map(({ name, linkTo }) => {
+  export default function Games({ location, match }) {
+    const games = gamesItems.map(({ name, linkTo }) => {
     return (
       <li className={styles.item} key={name}>
         <Link to={linkTo} className={styles.link}>
