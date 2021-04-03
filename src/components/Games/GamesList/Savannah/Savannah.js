@@ -59,11 +59,11 @@ export default function Savannah() {
   useEffect(() => {
     setRandomWords(
         arrWords
-        .sort(() => Math.random() - 0.5)
         .reduce((result, el) => {
+									const clonedArray = JSON.parse(JSON.stringify(arrWords))
           result[el.word] = [
             [el.wordTranslate, true, el.id],
-            ...arrWords
+            ...clonedArray
               .sort(() => 0.5 - Math.random())
               .filter((elF) => elF.word !== el.word)
               .slice(0, 3)
