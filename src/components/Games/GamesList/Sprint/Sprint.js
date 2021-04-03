@@ -112,7 +112,7 @@ export default function Sprint() {
 
 	let trueLevel = [];
 	for (let i = 0; i < 3; i++) {
-		trueLevel.push(<div>{boost % 4 > i ? <div className={styles.sprint__center_level_full}></div>
+		trueLevel.push(<div key={i}>{boost % 4 > i ? <div className={styles.sprint__center_level_full}></div>
 			: <div className={styles.sprint__center_level_clear}></div>}</div>);
 	}
 	const clickChoice = (click) => {
