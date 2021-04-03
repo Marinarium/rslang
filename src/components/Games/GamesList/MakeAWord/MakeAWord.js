@@ -10,8 +10,8 @@ export default function MakeAWord() {
   const [gameWord, setGameWord] = useState([]); // угадываемое слово
   const [correctLettersArr, setCorrectLettersArr] = useState([]); // правильное угадываемое слово в виде массива
   const [gameWordTranslate, setGameWordTranslate] = useState([]); // перевод угадываемого слова
-  const [gameWordDescription, setGameWordDescription] = useState([]); // перевод угадываемого слова
-  const [gameWordTranscription, setGameWordTranscription] = useState([]); // перевод угадываемого слова
+  const [gameWordDescription, setGameWordDescription] = useState([]); // описание угадываемого слова
+  const [gameWordTranscription, setGameWordTranscription] = useState([]); // транскр угадываемого слова
   const [wordComplete, setWordComplete] = useState(false); // игра идёт или завершена
   const [gameActive, setGameActive] = useState(false); // игра создана или нет
   const arrRef = useRef(arrWords);
@@ -113,7 +113,6 @@ export default function MakeAWord() {
           {gameWordTranslate}
         </div>
 
-
         <InputWord answer={answer}/>
         <p>{wordComplete ? gameWordTranscription : null}</p>
 
@@ -135,7 +134,6 @@ export default function MakeAWord() {
         <div className={styles.buttons_footer}>
           <button
             onClick={() => {
-
               console.log(arrRef.current);
               shrinkArr();
               if (arrRef.current.length === 0) {

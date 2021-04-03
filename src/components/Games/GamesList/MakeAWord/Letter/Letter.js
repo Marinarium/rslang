@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from "../MakeAWord.module.scss";
 
 export default function Letter({letter, correctLettersArr, setCorrectLettersArr, concatenate, endWord}) {
@@ -7,9 +7,12 @@ export default function Letter({letter, correctLettersArr, setCorrectLettersArr,
   const [incorrect, setIncorrect] = useState(false);
 
   const classes = [styles.btn_letter];
+  const doneCls = [styles.done];
+
   if (done) {
     classes.push(styles.done)
   }
+
   if (incorrect) {
     classes.push(styles.incorrect)
   }
@@ -32,7 +35,7 @@ export default function Letter({letter, correctLettersArr, setCorrectLettersArr,
 
   return (
     <button
-      className={classes.join(' ')}
+      className={done ? doneCls : classes}
       onClick={() => checkDone(letter)}
     >
       {letter}
