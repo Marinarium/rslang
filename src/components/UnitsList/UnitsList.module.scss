@@ -6,6 +6,17 @@
   justify-content: flex-start;
   margin-bottom: 50px;
   flex-wrap: wrap;
+  @media (max-width: 1000px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+  }
+
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+  }
 }
 
 .unit {
@@ -41,6 +52,11 @@
     background-color: $sixthColor;
     margin-right: 0;
   }
+
+  @media (max-width: 1000px) {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
 }
 
 .link {
@@ -53,6 +69,11 @@
   &:focus {
     outline: none;
     transform: scale(1.1);
+  }
+
+  @media (max-width: 1000px) {
+    font-size: 16px;
+    padding: 12px 17px;
   }
 }
 

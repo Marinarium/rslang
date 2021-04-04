@@ -5,7 +5,7 @@ import styles from "./Video.module.scss"
 export default function Video() {
     return (
         <section className={styles.video}>
-            <h3 className={styles.title}>Видео с демонстрацией работы приложения</h3>
+            <h3 className={styles.title}>Демонстрация работы приложения</h3>
             <div>
                 <video className={styles.player} width="320" height="240" controls>
                     <source

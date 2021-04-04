@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import styles from '../UnitsList/UnitsList.module.scss';
 import {Link, withRouter, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {setActiveDictionaryUnit} from '../../redux/dictionaryReducer';
 
+import styles from './DictionaryUnitsList.module.scss'
 
 const DictionaryUnitsList = () => {
 
@@ -23,8 +23,8 @@ const DictionaryUnitsList = () => {
 
     const units = dictionaryItems.map(({name, unit}) => {
         return (
-            <li className={''} key={unit}>
-                <Link to={`/dictionary/${unit}/1`} className={''}>
+            <li className={styles.unit} key={unit}>
+                <Link to={`/dictionary/${unit}/1`} className={styles.link}>
                     {name}
                 </Link>
             </li>
@@ -34,10 +34,10 @@ const DictionaryUnitsList = () => {
     return (
         <div>
             <>
-                <ul className={''}>
+                <ul className={styles.units}>
                     {units}
                 </ul>
-                <h2 className={''}>Список слов —&nbsp;
+                <h2 className={styles.title}>Список слов —&nbsp;
                     <span className={styles.current_unit}>{activeDictionaryUnit.name}</span>
                 </h2>
             </>

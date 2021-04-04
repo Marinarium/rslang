@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import logo from "./images/logo.svg";
 import styles from './Header.module.scss';
@@ -24,6 +24,17 @@ export default function Header() {
         localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData))
     }, [dispatch])
 
+    const [menuState, setMenu] = useState(false);
+
+    const changeOverflow = () => {
+        menuState ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
+    };
+
+    const showMenu = () => {
+        document.body.classList.toggle('overflow-hidden');
+        setMenu(!menuState);
+    };
+
     const menu = menuItems.map(({name, linkTo}) => {
         return (
             <li className={styles.item} key={name}>
@@ -40,13 +51,13 @@ export default function Header() {
                 <img src={logo} alt="Logo RSLang" className={styles.logo} />
             </Link>
             <nav className={styles.menu}>
-                <div className={styles.burger}>
+                <div className={!menuState ? `${styles.burger}` : `${styles.burger} ${styles.active}`} onClick={showMenu}>
                     <span></span>
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-                <ul className={styles.list}>
+                <ul className={!menuState ? `${styles.list}` : `${styles.list} ${styles.active}`}>
                     {menu}
                 </ul>
             </nav>

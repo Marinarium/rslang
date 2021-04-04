@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 70px;
+  position: relative;
   @include wrapper;
 
   &:before {
@@ -75,5 +76,120 @@
     transition-duration: 500ms;
     left: 0;
     outline: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .burger {
+    position: relative;
+    width: 35px;
+    height: 28px;
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  .burger span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+    height: 3px;
+    background-color: $light;
+    box-shadow: 0 1px 2px rgba(0, 73, 142, 0.2);
+
+    &:nth-child(1) {
+      top: 0;
+
+      .menu-show & {
+        top: 12px;
+        width: 0;
+        left: 50%;
+      }
+    }
+
+    &:nth-child(2) {
+      top: 12px;
+
+      .menu-show & {
+        transform: rotate(45deg);
+      }
+    }
+
+    &:nth-child(3) {
+      top: 12px;
+
+      .menu-show & {
+        transform: rotate(-45deg);
+      }
+    }
+
+    &:nth-child(4) {
+      top: 25px;
+
+      .menu-show & {
+        top: 10px;
+        width: 0;
+        left: 50%;
+      }
+    }
+  }
+
+  .burger.active {
+
+    & span:nth-child(1) {
+      top: 12px;
+      width: 0;
+      left: 50%;
+    }
+
+    & span:nth-child(2) {
+      transform: rotate(45deg);
+    }
+
+    & span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+
+    & span:nth-child(4) {
+      top: 12px;
+      width: 0;
+      left: 50%;
+    }
+  }
+
+  .list {
+    @include visually-hidden;
+    top: 90px;
+    right: -100vw;
+    transition-property: right;
+    transition-duration: 300ms;
+    background-repeat: repeat;
+
+    &.active {
+      @include remove-visually-hidden;
+      background: linear-gradient(90deg, rgba(19,128,238,1) 0%, rgba(141,98,213,1) 50%, rgba(181,60,138,1) 100%);
+      width: 100%;
+      position: absolute;
+      height: calc(100vh - 90px);
+      text-align: center;
+      box-sizing: border-box;
+      padding-top: 50px;
+      padding-bottom: 20px;
+      overflow: auto;
+      right: 0;
+      flex-direction: column;
+    }
+  }
+
+  .item {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .link {
+    font-size: 20px;
   }
 }
