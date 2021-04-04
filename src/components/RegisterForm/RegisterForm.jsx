@@ -1,6 +1,9 @@
 import React, {useRef} from 'react'
 import {authRegister, registerFormChange} from '../../redux/authReducer'
 import {useDispatch, useSelector} from 'react-redux'
+import MainTitle from "../MainTitle/MainTitle";
+
+import styles from './RegisterForm.module.scss'
 
 export const RegisterForm = () => {
     const dispatch = useDispatch()
@@ -21,23 +24,33 @@ export const RegisterForm = () => {
         dispatch(authRegister(formData))
     }
     return (
-        <form>
-            Регистрация:<br/>
-            Enter Email<br/>
-            <input onChange={changeHandler} name='email'/><br/>
-            Enter Password<br/>
-            <input onChange={changeHandler} name='password'/><br/>
-            Enter Name<br/>
-            <input onChange={changeHandler} name='name'/><br/>
-            <input
+        <form className={styles.form}>
+            <MainTitle text={'Регистрация'}/>
+            <div className={styles.field}>
+                <label className={styles.label} htmlFor="mail">Email</label>
+                <input className={styles.input} onChange={changeHandler} name='email' id='mail'/>
+                <div className={styles.line}/>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.label} htmlFor="password">Пароль</label>
+                <input className={styles.input} onChange={changeHandler} name='password' id='password'/>
+                <div className={styles.line}/>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.label} htmlFor="name">Никнейм</label>
+                <input className={styles.input} onChange={changeHandler} name='name' id='name'/>
+                <div className={styles.line}/>
+            </div>
+            <label className={styles.label} htmlFor="img">Аватарка</label>
+            <input className={styles.avatar}
+                id="img"
                 accept=".jpg, .jpeg, .png"
                 type="file"
                 ref={(input) => {
                     fileInput = input;
                 }}
             />
-            <button onClick={submitHandler}>Load</button>
-            <br/><br/>
+            <button className={styles.button} onClick={submitHandler}>Зарегистироваться</button>
         </form>
     )
 }
