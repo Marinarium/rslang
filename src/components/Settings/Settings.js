@@ -1,7 +1,9 @@
-
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {setIsWordTranslated, setIsWordButtonsShown} from '../../redux/appReducer';
+
+import styles from './Settings.module.scss'
+import MainTitle from "../MainTitle/MainTitle";
 
 export default function Settings() {
     const dispatch = useDispatch();
@@ -20,22 +22,31 @@ export default function Settings() {
 
     return (
         <>
-            <h2>Настройки</h2>
-            Показывать перевод?
-            <input
-                type="checkbox"
-                name='translation'
-                defaultChecked={isWordTranslated}
-                onChange={checkHandler}
-            />
-            <br/>
-            Показывать кнопки "Сложные слова" и "Удалённые слова"?
-            <input
-                type="checkbox"
-                name='actionButtons'
-                defaultChecked={isWordButtonsShown}
-                onChange={checkHandler}
-            />
+            <div className={styles.wrap}>
+                <MainTitle text={'Настройки'}/>
+                <label htmlFor='translation' className={styles.label}>
+                    Показывать перевод:</label>
+                <input
+                    id='translation'
+                    type="checkbox"
+                    name='translation'
+                    defaultChecked={isWordTranslated}
+                    onChange={checkHandler}
+                    className={styles.input}
+                />
+            </div>
+            <div className={styles.wrap}>
+                <label htmlFor='buttons' className={styles.label}>
+                    Показывать кнопки "Сложные слова" и "Удалённые слова":</label>
+                <input
+                    id='buttons'
+                    type="checkbox"
+                    name='actionButtons'
+                    defaultChecked={isWordButtonsShown}
+                    onChange={checkHandler}
+                    className={styles.input}
+                />
+            </div>
         </>
     );
 }

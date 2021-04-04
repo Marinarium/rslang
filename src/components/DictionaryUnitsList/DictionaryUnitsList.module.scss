@@ -1,0 +1,62 @@
+@import '../../assets/styles/main';
+
+.units {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+  @media (max-width: 1050px) {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 15px;
+  }
+}
+
+.unit {
+  margin-right: 15px;
+  background-color: $firstColor;
+  border-radius: 50px;
+  display: inline-block;
+  margin-bottom: 10px;
+  transition-duration: 500ms;
+
+  @media (max-width: 1050px) {
+    margin: 0;
+  }
+
+  &:hover {
+    filter: saturate(200%);
+    cursor: pointer;
+  }
+
+  &:nth-child(2) {
+    background-color: $accentColor;
+  }
+
+  &:nth-child(3) {
+    background-color: $deletedWords;
+  }
+}
+
+.title {
+  @include title-font(26px)
+}
+
+.link {
+  @include title-font(24px, 500, 120%);
+  color: $light;
+  text-decoration: none;
+  display: inline-block;
+  padding: 12px 37px;
+
+  @media (max-width: 1050px) {
+    font-size: 16px;
+    padding: 12px 17px;
+  }
+
+  &:focus {
+    outline: none;
+    transform: scale(1.1);
+  }
+}

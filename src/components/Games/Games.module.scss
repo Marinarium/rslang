@@ -11,6 +11,11 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 32px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 32px;
+  }
 }
 
 .item {
@@ -95,6 +100,10 @@
   padding: 40px;
   z-index: 5;
   position: relative;
+
+  @media (max-width: 600px) {
+    font-size: 25px;
+  }
 
   &:after {
     content: '';
