@@ -28,25 +28,30 @@ export default function Games({ location, match }) {
 
   let pages = games;
 
-  switch (location.pathname) {
-    case "/games":
-      pages = games;
-      break;
-    case `/${gamesItems[0].linkTo}`:
-      pages = gamesItems[0].page;
-      break;
-    case `/${gamesItems[1].linkTo}`:
-      pages = gamesItems[1].page;
-      break;
-    case `/${gamesItems[2].linkTo}`:
-      pages = gamesItems[2].page;
-      break;
-    case `/${gamesItems[3].linkTo}`:
-      pages = gamesItems[3].page;
-      break;
-    default:
-      pages = <h1>Не найдено</h1>;
-  }
+  // switch (location.pathname) {
+  //   case "/games":
+  //     pages = games;
+  //     break;
+  //   case `/${gamesItems[0].linkTo}`:
+  //     pages = gamesItems[0].page;
+  //     break;
+  //   case `/${gamesItems[1].linkTo}`:
+  //     pages = gamesItems[1].page;
+  //     break;
+  //   case `/${gamesItems[2].linkTo}`:
+  //     pages = gamesItems[2].page;
+  //     break;
+  //   case `/${gamesItems[3].linkTo}`:
+  //     pages = gamesItems[3].page;
+  //     break;
+  //   default:
+  //     pages = <h1>Не найдено</h1>;
+  // }
 
-  return <main className={styles.main}>{pages}</main>;
+  return (
+      <main className={styles.main}>
+        <h3 className={styles.title}>Учись играя!</h3>
+        <ul className={styles.list}>{pages}</ul>
+      </main>
+  );
 }

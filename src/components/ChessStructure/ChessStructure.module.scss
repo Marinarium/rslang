@@ -1,0 +1,74 @@
+@import '../../assets/styles/main';
+
+.wrap {
+  margin-bottom: 80px;
+  color: $dark;
+}
+
+.section_title {
+  @include title-font(32px);
+  margin-bottom: 40px;
+}
+
+.box {
+  margin-bottom: 60px;
+  display: flex;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:nth-child(2n) {
+    .image {
+      margin-right: 52px;
+    }
+  }
+
+  &:nth-child(2n+1) {
+    flex-direction: row-reverse;
+    .image {
+      margin-left: 52px;
+    }
+  }
+}
+
+.image {
+  width: 604px;
+  height: 434px;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.dev {
+  .image {
+    width: 504px;
+    height: 434px;
+    object-position: center;
+  }
+
+  .text_wrap {
+    flex-basis: 440px;
+  }
+}
+
+.text_wrap {
+  flex-basis: 640px;
+}
+
+.title {
+  @include title-font(26px);
+  margin-bottom: 20px;
+}
+
+.text {
+  @include text-font(14px, normal, 140%);
+}
+
+.p {
+  margin-bottom: 20px;
+  line-height: 150%;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

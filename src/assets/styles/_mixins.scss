@@ -24,3 +24,14 @@
     padding-right: 12%;
   }
 }
+
+@mixin main {
+  flex-grow: 1;
+  padding-bottom: 60px;
+}
+
+@mixin clearfix {
+  content: "";
+  display: table;
+  clear: both;
+}

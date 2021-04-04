@@ -1,13 +1,12 @@
 import React from 'react';
 import Dictionary from '../../components/Dictionary/Dictionary';
 
-// import styles from './TextBook.module.scss';
+import styles from './DictionaryPage.module.scss';
 
 export default function DictionaryPage() {
     return (
-        <main>
+        <main className={styles.main}>
             <Dictionary/>
-            {/*Games*/}
         </main>
     );
 }
