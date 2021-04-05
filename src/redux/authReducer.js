@@ -24,7 +24,7 @@ const initialState = {
 
 
 export const authLogin = createAsyncThunk(
-    'authReducer/authLogin ',
+    'authReducer/authLogin',
     async (loginForm) => {
 
         const data = await authApi.login(loginForm)
@@ -95,6 +95,7 @@ const authReducer = createSlice({
                 ...state,
                 token: '',
                 userId: '',
+                name: '',
                 isAuthenticated: false,
                 loginForm: {
                     ...state.loginForm,
@@ -106,7 +107,7 @@ const authReducer = createSlice({
     },
     extraReducers: {
 
-        [authRegister.fulfilled.type]: (state, action) => {
+        [authRegister.fulfilled]: (state, action) => {
 
             return {
                 ...state,
@@ -116,7 +117,7 @@ const authReducer = createSlice({
 
         },
 
-        [authLogin.fulfilled.type]: (state, action) => {
+        [authLogin.fulfilled]: (state, action) => {
 
             return {
                 ...state,
