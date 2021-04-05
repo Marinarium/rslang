@@ -93,7 +93,9 @@
   z-index: 30;
   transition: 0.5s linear all;
 }
-
+.bottom img {
+	z-index:1000;
+}
 .endGame_body {
   width: 50%;
   height: 50%;

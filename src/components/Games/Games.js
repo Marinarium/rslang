@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Games.module.scss";
-import Sprint from "./GamesList/Sprint/Spint";
+import Sprint from "./GamesList/Sprint/Sprint";
 import Audiocall from "./GamesList/Audiocall/Audiocall";
 import Listening from "./GamesList/Listening/Listening";
 import Savannah from "./GamesList/Savannah/Savannah";
@@ -14,8 +14,6 @@ export const gamesItems = [
 ];
 
 export default function Games({ location, match }) {
-
-
   const games = gamesItems.map(({ name, linkTo }) => {
     return (
       <li className={styles.item} key={name}>
