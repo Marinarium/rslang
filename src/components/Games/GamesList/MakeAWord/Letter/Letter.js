@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styles from "../MakeAWord.module.scss";
 
-export default function Letter({letter, correctLettersArr, setCorrectLettersArr, concatenate, endWord, totalDone, setTotalDone, setWordComplete}) {
+export default function Letter({letter, correctLettersArr,
+                                 setCorrectLettersArr, concatenate,
+                                 endWord, totalDone, setTotalDone,
+                                 setWordComplete, setTrueCount}) {
 
   const [done, setDone] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
@@ -27,6 +30,7 @@ export default function Letter({letter, correctLettersArr, setCorrectLettersArr,
       if (correctLettersArr.length === 1) {
         endWord();
         setWordComplete(true);
+        setTrueCount((prev) => prev + 1);
       }
     } else showIncorrect();
     setTotalDone(false);

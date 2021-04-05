@@ -78,10 +78,94 @@ button, i {
 
 .buttons_footer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   & button {
     border: none;
     border-radius: 5px;
   }
+}
+
+//.endGame {
+//  display: block;
+//  font-size: 75px;
+//  position: fixed;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//}
+
+.endGame_body {
+  width: 50%;
+  height: 50%;
+  background-color: $light;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.endGame_body_top h1 {
+  font-size: 25px;
+  text-align: center;
+}
+.endGame_body_top h3 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.endGame_body_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_circle {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background-color: $thirdColor opacity(0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.endGame_body_info {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: $light;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_info p {
+  font-size: 25px;
+  text-align: center;
+}
+
+.endGame_body_bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.endGame_body_bottom button {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  background-color: $fifthColor;
+  outline: 0 !important;
+  border: 1px solid $lightGrey;
+  border-radius: 10px;
+}
+.endGame_body_bottom button a {
+  color: $dark !important;
+  text-decoration: none;
 }
