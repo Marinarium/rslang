@@ -69,23 +69,11 @@ button, i {
 }
 
 .done {
-  background-color: $secondColor;
-  border: none;
-  border-radius: 2px;
-  margin: 2px;
-  width: 25px;
-  height: 25px;
   display: none;
 }
 
 .incorrect {
-  background-color: $secondColor;
-  border: none;
-  border-radius: 2px;
-  margin: 2px;
-  width: 25px;
-  height: 25px;
-  display: block;
+  background-color: $accentColor;
 }
 
 .buttons_footer {

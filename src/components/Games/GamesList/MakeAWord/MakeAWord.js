@@ -10,11 +10,12 @@ export default function MakeAWord() {
   const [gameWord, setGameWord] = useState([]); // угадываемое слово
   const [correctLettersArr, setCorrectLettersArr] = useState([]); // правильное угадываемое слово в виде массива
   const [gameWordTranslate, setGameWordTranslate] = useState([]); // перевод угадываемого слова
-  const [gameWordDescription, setGameWordDescription] = useState([]); // описание угадываемого слова
-  const [gameWordTranscription, setGameWordTranscription] = useState([]); // транскр угадываемого слова
+  const [gameWordDescription, setGameWordDescription] = useState([]); // перевод угадываемого слова
+  const [gameWordTranscription, setGameWordTranscription] = useState([]); // перевод угадываемого слова
   const [wordComplete, setWordComplete] = useState(false); // игра идёт или завершена
   const [gameActive, setGameActive] = useState(false); // игра создана или нет
   const arrRef = useRef(arrWords);
+  const [totalDone, setTotalDone] = useState(false);
 
   useEffect(() => {
     fetch("https://react-lang-app.herokuapp.com/words")
@@ -81,6 +82,7 @@ export default function MakeAWord() {
   }
 
   function endWord() {
+    setTotalDone(true);
     console.log('endWord');
     console.log(arrRef.current[0].audio);
     const audio = new Audio(arrRef.current[0].audio);
@@ -113,6 +115,7 @@ export default function MakeAWord() {
           {gameWordTranslate}
         </div>
 
+
         <InputWord answer={answer}/>
         <p>{wordComplete ? gameWordTranscription : null}</p>
 
@@ -125,15 +128,17 @@ export default function MakeAWord() {
               setCorrectLettersArr={setCorrectLettersArr}
               concatenate={concatenate}
               endWord={endWord}
+              totalDone={totalDone}
+              setTotalDone={setTotalDone}
+              setWordComplete={setWordComplete}
             />
           ))}
         </div>
-
         <p>{wordComplete ? gameWordDescription : null}</p>
-
         <div className={styles.buttons_footer}>
           <button
             onClick={() => {
+              setTotalDone(true);
               console.log(arrRef.current);
               shrinkArr();
               if (arrRef.current.length === 0) {
