@@ -22,7 +22,7 @@ export const wordsApi = {
             }
         )
     },
-//{"$or":{"userWord.optional.deleted":null},{"userWord.optional.deleted":false}}
+
     getAllUserWordsWithoutDeletedWords({group, page, userId}) { //Get all not deleted words by group & page
         return request(
             `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.optional.deleted":null},{"userWord.optional.deleted":false}]}&group=${group}&page=${page}&wordsPerPage=20`,

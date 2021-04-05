@@ -1,23 +1,24 @@
-import React from 'react'
-import {fetchWords, pageFormChange} from '../../redux/wordsReducer'
-import {useDispatch, useSelector} from 'react-redux'
-import {authLogin, loginFormChange} from '../../redux/authReducer'
+import React from 'react';
+import {useHistory} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {authLogin, loginFormChange} from '../../redux/authReducer';
 import styles from "../RegisterForm/RegisterForm.module.scss";
 import MainTitle from "../MainTitle/MainTitle";
 
 
 export const LoginForm = () => {
-    const dispatch = useDispatch()
-    const loginForm = useSelector(state => state.auth.loginForm)
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const loginForm = useSelector(state => state.auth.loginForm);
     const changeHandler = (event) => {
-        dispatch(loginFormChange({[event.target.name]: event.target.value}))
-    }
+        dispatch(loginFormChange({[event.target.name]: event.target.value}));
+    };
 
-    const submitHandler = () => {
-        console.log('loginForm', loginForm)
-        dispatch(authLogin(loginForm))
-
-    }
+    const submitHandler = (event) => {
+        event.preventDefault();
+        dispatch(authLogin(loginForm));
+        history.push('/');
+    };
     return (
         <form className={styles.form}>
             <MainTitle text={'Вход'}/>
@@ -34,4 +35,4 @@ export const LoginForm = () => {
             <button className={styles.button} onClick={submitHandler}>Войти</button>
         </form>
     )
-}
+};
