@@ -5,17 +5,17 @@ import Letter from "./Letter/Letter";
 import InputWord from "./InputWord/InputWord";
 
 export default function MakeAWord() {
-  const [arrWords, setArrWords] = useState([]); // массив слов
-  const [answer, setAnswer] = useState(''); // ответ для вывода и для toLose
-  const [gameWord, setGameWord] = useState([]); // угадываемое слово
-  const [correctLettersArr, setCorrectLettersArr] = useState([]); // правильное угадываемое слово в виде массива
-  const [gameWordTranslate, setGameWordTranslate] = useState([]); // перевод угадываемого слова
-  const [gameWordDescription, setGameWordDescription] = useState([]); // перевод угадываемого слова
-  const [gameWordTranscription, setGameWordTranscription] = useState([]); // перевод угадываемого слова
-  const [wordComplete, setWordComplete] = useState(false); // игра идёт или завершена
-  const [gameActive, setGameActive] = useState(false); // игра создана или нет
-  const arrRef = useRef(arrWords);
+  const [arrWords, setArrWords] = useState([]);
+  const [answer, setAnswer] = useState('');
+  const [gameWord, setGameWord] = useState([]);
+  const [correctLettersArr, setCorrectLettersArr] = useState([]);
+  const [gameWordTranslate, setGameWordTranslate] = useState([]);
+  const [gameWordDescription, setGameWordDescription] = useState([]);
+  const [gameWordTranscription, setGameWordTranscription] = useState([]);
+  const [wordComplete, setWordComplete] = useState(false);
+  const [gameActive, setGameActive] = useState(false);
   const [totalDone, setTotalDone] = useState(false);
+  const arrRef = useRef(arrWords);
 
   useEffect(() => {
     fetch("https://react-lang-app.herokuapp.com/words")
@@ -39,7 +39,6 @@ export default function MakeAWord() {
   }
 
   function shuffleLetters(word) {
-    console.log('shuffleLetters')
     return setGameWord((prev) => word
       .toLowerCase()
       .split('')
@@ -47,9 +46,7 @@ export default function MakeAWord() {
   }
 
   function shrinkArr() {
-    console.log('shrinkArr')
     if (arrRef.current.length === 1) {
-      console.log('FINISH')
       setWordComplete(() => false);
       setGameActive(() => false);
     }
@@ -58,14 +55,12 @@ export default function MakeAWord() {
   }
 
   function getLettersArr(word) {
-    console.log('getLettersArr')
     return setCorrectLettersArr((prev) =>
       word.toLowerCase().split('')
     )
   }
 
   function concatenate(letter) {
-    console.log('concatenate')
     return setAnswer((prev) => prev + letter)
   }
 
@@ -83,8 +78,6 @@ export default function MakeAWord() {
 
   function endWord() {
     setTotalDone(true);
-    console.log('endWord');
-    console.log(arrRef.current[0].audio);
     const audio = new Audio(arrRef.current[0].audio);
     audio.play();
     getDescription(arrRef.current[0].textMeaning);
@@ -115,7 +108,6 @@ export default function MakeAWord() {
           {gameWordTranslate}
         </div>
 
-
         <InputWord answer={answer}/>
         <p>{wordComplete ? gameWordTranscription : null}</p>
 
@@ -134,19 +126,19 @@ export default function MakeAWord() {
             />
           ))}
         </div>
+
         <p>{wordComplete ? gameWordDescription : null}</p>
+
         <div className={styles.buttons_footer}>
           <button
             onClick={() => {
-              setTotalDone(true);
-              console.log(arrRef.current);
               shrinkArr();
               if (arrRef.current.length === 0) {
                 anotherNewGame();
                 return;
               }
+              setTotalDone(() => true);
               setWordComplete(() => false);
-              // сбрасываются стили букв до btn_letter
               shuffleLetters(arrRef.current[0].word);
               getLettersArr(arrRef.current[0].word);
               getTranslate(arrRef.current[0].wordTranslate);
