@@ -3,12 +3,16 @@ import {Link} from 'react-router-dom';
 import logo from "./images/logo.svg";
 import styles from './Header.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
-import {authLogout, setIsAuthenticated} from '../../redux/authReducer';
+import {authLogout, getUser, setIsAuthenticated} from '../../redux/authReducer';
+import {baseUrl} from '../../services/baseUrl/baseUrl';
 
 export default function Header() {
 
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const avatar = useSelector(state => state.auth.avatar);
+    const name = useSelector(state => state.auth.name);
+    const userId = useSelector(state => state.auth.userId);
     const menuItems = [
         {name: 'Электронный учебник', linkTo: '/text-book/1'},
         {name: 'Словарь', linkTo: '/dictionary'},
@@ -22,8 +26,13 @@ export default function Header() {
 
     useEffect(() => {
         const localStorageAuthData = JSON.parse(localStorage.getItem('userData'));
-        localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData))
+        localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData));
     }, [dispatch]);
+
+    useEffect(() => {
+
+        isAuthenticated && dispatch(getUser(userId))
+    }, [dispatch, isAuthenticated]);
 
     const [menuState, setMenu] = useState(false);
 
@@ -40,7 +49,7 @@ export default function Header() {
         document.body.classList.toggle('overflow-hidden');
         setMenu(!menuState);
     };
-    
+
     !isAuthenticated && menuItems.splice(menuItems.indexOf(menuItems.find(i => i.name === 'Выход')), 1);
     isAuthenticated && menuItems.splice(menuItems.indexOf(menuItems.find(i => i.name === 'Вход')), 2);
 
@@ -66,6 +75,8 @@ export default function Header() {
             <Link to="/" className={styles.logo}>
                 <img src={logo} alt="Logo RSLang" className={styles.logo}/>
             </Link>
+            {isAuthenticated && avatar && <div className={styles.avatar}><img src={baseUrl+avatar}  alt={'avatar'}/> </div>}
+            {isAuthenticated && <div className={styles.name}>{name}</div>}
             <nav className={styles.menu}>
                 <div className={!menuState ? `${styles.burger}` : `${styles.burger} ${styles.active}`}
                      onClick={showMenu}>
@@ -78,6 +89,7 @@ export default function Header() {
                     {menu}
                 </ul>
             </nav>
+
         </header>
     );
 }

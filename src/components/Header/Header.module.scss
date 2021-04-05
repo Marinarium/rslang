@@ -79,6 +79,16 @@
   }
 }
 
+.avatar img{
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.name{
+  color: $light;
+}
+
 @media (max-width: 1000px) {
   .burger {
     position: relative;
