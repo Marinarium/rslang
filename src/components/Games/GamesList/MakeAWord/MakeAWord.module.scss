@@ -18,12 +18,15 @@ button, i {
     }
   }
 
-  .start_make {
+  & .start_make {
+    visibility: visible;
     border: none;
     border-radius: 5px;
     background-color: $fifthColor;
-    margin: 10px 0 20px;
-    width: 90px;
+  }
+
+  & .start_make_dis {
+    visibility: hidden;
   }
 
   & p {
@@ -32,7 +35,7 @@ button, i {
   }
 }
 
-.game_block {
+.make_word_game {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,35 +52,10 @@ button, i {
   }
 }
 
-.input_word {
-  height: 20px;
-  width: 120px;
-  border-radius: 5px;
-  border: 1px solid $lightGrey;
-}
-
 .word_letters {
   height: 30px;
   align-items: center;
   display: flex;
-}
-
-.btn_letter {
-  background-color: $secondColor;
-  border: none;
-  border-radius: 2px;
-  margin: 2px;
-  width: 25px;
-  height: 25px;
-  display: block;
-}
-
-.done {
-  display: none;
-}
-
-.incorrect {
-  background-color: $accentColor;
 }
 
 .buttons_footer {

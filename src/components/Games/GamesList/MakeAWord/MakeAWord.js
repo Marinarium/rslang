@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 // import {useSelector} from "react-redux";
 // import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
@@ -6,7 +7,7 @@ import styles from "./MakeAWord.module.scss";
 
 import Letter from "./Letter/Letter";
 import InputWord from "./InputWord/InputWord";
-import ModalFinish from "./ModalFinish/ModalFinish";
+import ModalFinish from "../../ModalFinish/ModalFinish";
 
 export default function MakeAWord() {
   const [arrWords, setArrWords] = useState([]);
@@ -23,6 +24,7 @@ export default function MakeAWord() {
   const [looseCount, setLooseCount] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const arrRef = useRef(arrWords);
+  const handle = useFullScreenHandle();
 
   /* const {goodCount, badCount} = useGameData();
    const words = useSelector(state => state.words.items);
@@ -60,10 +62,15 @@ export default function MakeAWord() {
   }
 
   function shuffleLetters(word) {
-    return setGameWord((prev) => word
-      .toLowerCase()
-      .split('')
-      .sort(() => 0.5 - Math.random()))
+    word = word.toLowerCase().split('');
+    let j, temp;
+    for (let i = word.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      temp = word[j];
+      word[j] = word[i];
+      word[i] = temp;
+    }
+    return setGameWord(() => word)
   }
 
   function shrinkArr() {
@@ -126,20 +133,24 @@ export default function MakeAWord() {
 
   return (
     <section className={styles.make_word}>
-      <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
-
-      <button
-        className={styles.start_make}
-        onClick={startGame}
-        disabled={gameActive ? "disabled" : null}
-      >
-        Начать тренировку
+      <button onClick={handle.enter}>
+        Enter fullscreen
       </button>
 
-      {gameActive ? (
-        <main className={styles.game_block}>
-          <InputWord answer={answer}/>
-          <div>
+      <FullScreen handle={handle}>
+        <button
+          className={gameActive ? styles.start_make_dis : styles.start_make}
+          onClick={startGame}
+          disabled={gameActive ? "disabled" : null}
+        >
+          Начать тренировку
+        </button>
+
+        <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
+
+        {gameActive ? (
+          <main className={styles.make_word_game}>
+            <InputWord answer={answer}/>
             {wordComplete ? (
               <div>
                 <div>Transcription: {gameWordTranscription}</div>
@@ -164,24 +175,25 @@ export default function MakeAWord() {
                 ))}
               </div>
             )}
-          </div>
-          <div className={styles.buttons_footer}>
-            <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
-              Сдаться
-            </button>
+            <div className={styles.buttons_footer}>
+              <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
+                Сдаться
+              </button>
 
-            <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
-              Дальше
-            </button>
-          </div>
-        </main>
-      ) : (
-        <ModalFinish
-          trueCount={trueCount}
-          looseCount={looseCount}
-          startGame={startGame}
-        />
-      )}
+              <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
+                Дальше
+              </button>
+            </div>
+          </main>
+        ) : (
+          <ModalFinish
+            trueCount={trueCount}
+            looseCount={looseCount}
+            startGame={startGame}
+          />
+        )}
+      </FullScreen>
+
     </section>
   )
 };

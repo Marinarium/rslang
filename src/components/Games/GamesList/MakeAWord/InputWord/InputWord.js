@@ -1,5 +1,5 @@
 import React, {} from 'react';
-import styles from "../MakeAWord.module.scss";
+import styles from "../InputWord/InputWord.module.scss";
 
 export default function InputWord({answer}) {
 
