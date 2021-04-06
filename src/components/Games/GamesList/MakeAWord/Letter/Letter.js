@@ -4,7 +4,7 @@ import styles from "../MakeAWord.module.scss";
 export default function Letter({letter, correctLettersArr,
                                  setCorrectLettersArr, concatenate,
                                  endWord, totalDone, setTotalDone,
-                                 setWordComplete, setTrueCount}) {
+                                 setWordComplete, setWordLoose, setTrueCount}) {
 
   const [done, setDone] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
@@ -29,7 +29,8 @@ export default function Letter({letter, correctLettersArr,
       setCorrectLettersArr((wordArr) => wordArr.slice(1));
       if (correctLettersArr.length === 1) {
         endWord();
-        setWordComplete(true);
+        setWordComplete(() => true);
+        setWordLoose(() => true);
         setTrueCount((prev) => prev + 1);
       }
     } else showIncorrect();

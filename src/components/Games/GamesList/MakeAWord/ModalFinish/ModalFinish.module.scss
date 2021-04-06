@@ -1,0 +1,60 @@
+@import '../../../../../assets/styles/main';
+
+button, i {
+  cursor: pointer;
+}
+
+//.endGame {
+//  font-size: 75px;
+//  position: fixed;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//}
+
+.endGame_body {
+  width: 50%;
+  height: 50%;
+  background-color: $light;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.endGame_body_top {
+
+  & h1 {
+    font-size: 25px;
+    text-align: center;
+  }
+
+  & h3 {
+    font-size: 20px;
+    text-align: center;
+  }
+}
+
+.endGame_body_bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  & button {
+    width: 150px;
+    height: 40px;
+    background-color: $fifthColor;
+    border-radius: 10px;
+    border: none;
+
+    & a {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+}
