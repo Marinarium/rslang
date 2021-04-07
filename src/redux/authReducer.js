@@ -52,19 +52,6 @@ export const authRegister = createAsyncThunk(
 
     }
 )
-export const getUser = createAsyncThunk(
-    'authReducer/getUser',
-    async (id) => {
-        const data = await authApi.getUser(id)
-            .then((res) => res && res.json())
-
-        if (!data) {
-            throw new Error(data.message || 'Something went wrong!')
-        }
-
-        return data
-    }
-)
 
 
 const authReducer = createSlice({
@@ -160,15 +147,6 @@ const authReducer = createSlice({
                 name: action.payload.name,
                 avatar: action.payload.avatar
 
-            }
-
-        },
-        [getUser.fulfilled]: (state, action) => {
-
-            return {
-                ...state,
-                name: action.payload.name,
-                avatar: action.payload.avatar
             }
 
         },

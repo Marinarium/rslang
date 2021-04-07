@@ -14,6 +14,7 @@ function TextBookListContainer({location, match}) {
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
     const userId = useSelector(state => state.auth.userId);
+    const token = useSelector(state => state.auth.token);
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -41,7 +42,7 @@ function TextBookListContainer({location, match}) {
         && dispatch(fetchWords({group: currentGroup, page: currentPage}));
         isAuthenticated
         && userId
-        && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId, token}));
 
     }, [dispatch, currentPage, currentGroup, userId, isAuthenticated]);
 

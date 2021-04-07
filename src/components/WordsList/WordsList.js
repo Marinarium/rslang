@@ -13,6 +13,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     const dispatch = useDispatch();
     const [totalPageResult, setTotalPageResult] = useState({})
     const userId = useSelector(state => state.auth.userId);
+    const token = useSelector(state => state.auth.token);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
 
@@ -72,7 +73,8 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                         }
 
                     }
-                }
+                },
+                token
             }));
             !learned && await dispatch(updateUserWord({
                 userId,
@@ -85,14 +87,16 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                             'bad': 0
                         }
                     }
-                }
+                },
+                token
             }));
 
         })
-        isAuthenticated  && (container === 'text-book') && dispatch(getAllUserWordsWithoutDeletedWords({
+        isAuthenticated && (container === 'text-book') && dispatch(getAllUserWordsWithoutDeletedWords({
             group: currentGroup,
             page: currentPage,
-            userId
+            userId,
+            token
         }));
         history.push(`/${linkTo}`)
     };

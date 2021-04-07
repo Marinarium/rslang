@@ -1,10 +1,8 @@
-import {request, token} from './request'
-
+import {request} from './request'
 
 export const authApi = {
 
-    getUser(id) {
-        console.log('token', token)
+    getUser(id, token) {
         return request(
             `users/${id}`,
             'GET',
@@ -38,8 +36,5 @@ export const authApi = {
             formData
         )
 
-    },
-
-
-
+    }
 }
