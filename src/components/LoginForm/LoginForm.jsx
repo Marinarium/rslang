@@ -31,13 +31,26 @@ export const LoginForm = () => {
             <MainTitle text={'Вход'}/>
             <div className={styles.field}>
                 <label className={styles.label} htmlFor="mail">Email</label>
-                <input type="email" className={styles.input} onChange={changeHandler} name='email' id='mail' required/>
+                <input
+                    className={styles.input}
+                    onChange={changeHandler}
+                    name='email'
+                    id='mail'
+                    value={loginForm.email}
+                    required
+                />
                 <div className={styles.line}/>
             </div>
             <div className={styles.field}>
                 <label className={styles.label} htmlFor="password">Пароль</label>
-                <input type="password" className={styles.input} onChange={changeHandler} name='password' id='password'
-                       required/>
+                <input
+                    className={styles.input}
+                    onChange={changeHandler}
+                    name='password'
+                    id='password'
+                    value={loginForm.password}
+                    required
+                />
                 <div className={styles.line}/>
             </div>
             <button className={styles.button} onClick={submitHandler}>Войти</button>

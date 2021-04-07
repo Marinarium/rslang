@@ -10,6 +10,7 @@ const initialState = {
     avatar: '',
     name: '',
     isAuthenticated: false,
+    isRegistered: false,
     registerMessage: '',
     loginForm: {
         email: '',
@@ -44,9 +45,10 @@ export const authLogin = createAsyncThunk(
 export const authRegister = createAsyncThunk(
     'authReducer/authRegister',
     async (formData) => {
-        return await authApi.register(formData)
+        const data = await authApi.register(formData)
             .then((res) => res && res.json())
 
+        return data
 
     }
 )
@@ -81,13 +83,36 @@ const authReducer = createSlice({
                 registerForm: {...state.registerForm, ...action.payload}
             }
         },
+        // cleanLoginForm: (state, action) => {
+        //     return {
+        //         ...state,
+        //         loginForm: {...state.registerForm, ...action.payload}
+        //     }
+        // },
+        // cleanRegisterForm: (state, action) => {
+        //     return {
+        //         ...state,
+        //         registerForm: {...state.registerForm, ...action.payload}
+        //     }
+        // },
         setIsAuthenticated: (state, action) => {
             return {
                 ...state,
                 token: action.payload.token,
                 userId: action.payload.userId,
                 name: action.payload.name,
-                isAuthenticated: !!action.payload.token
+                isAuthenticated: !!action.payload.token,
+                loginForm: {
+                    ...state.loginForm,
+                    email: '',
+                    password: ''
+                }
+            }
+        },
+        setIsRegistered: (state, action) => {
+            return {
+                ...state,
+                isRegistered: action.payload,
             }
         },
         authLogout: (state) => {
@@ -102,6 +127,7 @@ const authReducer = createSlice({
                     email: '',
                     password: ''
                 }
+
             }
         }
     },
@@ -110,7 +136,14 @@ const authReducer = createSlice({
         [authRegister.fulfilled]: (state, action) => {
 
             return {
-                ...state
+                ...state,
+                isRegistered: true,
+                registerForm: {
+                    ...state.registerForm,
+                    email: '',
+                    password: '',
+                    name: ''
+                }
             }
 
         },
@@ -147,6 +180,8 @@ export const {
     loginFormChange,
     registerFormChange,
     setIsAuthenticated,
+    setIsRegistered,
+
 
 } = authReducer.actions
 
