@@ -110,9 +110,7 @@ const authReducer = createSlice({
         [authRegister.fulfilled]: (state, action) => {
 
             return {
-                ...state,
-                registerMessage: action.payload.message,
-
+                ...state
             }
 
         },
@@ -125,7 +123,8 @@ const authReducer = createSlice({
                 userId: action.payload.userId,
                 isAuthenticated: !!action.payload.token,
                 authError: '',
-                name: action.payload.name
+                name: action.payload.name,
+                avatar: action.payload.avatar
 
             }
 

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import logo from "./images/logo.svg";
 import styles from './Header.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
-import {authLogout, getUser, setIsAuthenticated} from '../../redux/authReducer';
+import {authLogout, setIsAuthenticated} from '../../redux/authReducer';
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 
 export default function Header() {
@@ -28,11 +28,6 @@ export default function Header() {
         const localStorageAuthData = JSON.parse(localStorage.getItem('userData'));
         localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData));
     }, [dispatch]);
-
-    useEffect(() => {
-
-        isAuthenticated && dispatch(getUser(userId))
-    }, [dispatch, isAuthenticated]);
 
     const [menuState, setMenu] = useState(false);
 
@@ -75,7 +70,8 @@ export default function Header() {
             <Link to="/" className={styles.logo}>
                 <img src={logo} alt="Logo RSLang" className={styles.logo}/>
             </Link>
-            {isAuthenticated && avatar && <div className={styles.avatar}><img src={baseUrl+avatar}  alt={'avatar'}/> </div>}
+            {isAuthenticated && avatar &&
+            <div className={styles.avatar}><img src={baseUrl + avatar} alt={'avatar'}/></div>}
             {isAuthenticated && <div className={styles.name}>{name}</div>}
             <nav className={styles.menu}>
                 <div className={!menuState ? `${styles.burger}` : `${styles.burger} ${styles.active}`}

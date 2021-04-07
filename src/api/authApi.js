@@ -1,12 +1,14 @@
 import {request, token} from './request'
 
+
 export const authApi = {
 
     getUser(id) {
+        console.log('token', token)
         return request(
             `users/${id}`,
             'GET',
-            null,
+            true,
             {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`
