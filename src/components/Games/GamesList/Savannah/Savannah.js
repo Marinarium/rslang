@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import styles from "./Savannah.module.scss";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import crystal from "./images/crystal.svg";
 import {useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
@@ -11,212 +11,215 @@ const RETURN_START_WORD = -20;
 
 export default function Savannah() {
 
-  const {goodCount, badCount} = useGameData();
+    const {goodCount, badCount} = useGameData();
 
-  const words = useSelector(state => state.words.items);//!!!слова берем из уже имеющихся в сторе,
-                                                          // они соответствуют странице учебника, на которой находимся
-  const userId = useSelector(state => state.auth.userId);
+    const words = useSelector(state => state.words.items);//!!!слова берем из уже имеющихся в сторе,
+    // они соответствуют странице учебника, на которой находимся
+    const userId = useSelector(state => state.auth.userId);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
-  const [currentWordId, setCurrentWordId] = useState('');
-  const [health, setHealth] = useState(5);
-  const [activeWord, setActiveWord] = useState(0);
-  const [moveWord, setMoveWord] = useState(0);
-  const [numberWords, setNumberWords] = useState(15);
-  const [arrWords, setArrWords] = useState([]);
-  const [randomWords, setRandomWords] = useState([]);
-  const [seconds, setSeconds] = useState(5);
-  const [trueAnswer, setTrueAnswer] = useState(0);
-  const [newWord, setNewWord] = useState(false);
+    const [currentWordId, setCurrentWordId] = useState('');
+    const [health, setHealth] = useState(5);
+    const [activeWord, setActiveWord] = useState(0);
+    const [moveWord, setMoveWord] = useState(0);
+    const [numberWords, setNumberWords] = useState(15);
+    const [arrWords, setArrWords] = useState([]);
+    const [randomWords, setRandomWords] = useState([]);
+    const [seconds, setSeconds] = useState(5);
+    const [trueAnswer, setTrueAnswer] = useState(0);
+    const [newWord, setNewWord] = useState(false);
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
+
+        useEffect(() => {
+            savedCallback.current = callback;
+        }, [callback]);
+
+        useEffect(() => {
+            function tick() {
+                savedCallback.current();
+            }
+
+            if (delay !== null) {
+                let id = setInterval(tick, delay);
+                return () => clearInterval(id);
+            }
+        }, [delay]);
+    }
 
     useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
+        setArrWords([...words]);
+    }, [words]);
+
+    useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
+        const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+        activeWordObj && setCurrentWordId(activeWordObj.id)
+    }, [words, activeWord, randomWords]);
+
 
     useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
+        setRandomWords(
+            arrWords
+                .reduce((result, el) => {
+                    const clonedArray = JSON.parse(JSON.stringify(arrWords))
+                    result[el.word] = [
+                        [el.wordTranslate, true, el.id],
+                        ...clonedArray
+                            .sort(() => 0.5 - Math.random())
+                            .filter((elF) => elF.word !== el.word)
+                            .slice(0, 3)
+                            .map((el) => {
+                                return [el.wordTranslate, false];
+                            }),
+                    ].sort(() => Math.random() - 0.5);
+                    return result;
+                }, {})
+        );
+    }, [arrWords]);
 
-  useEffect(() => {
-    setArrWords([...words]);
-  }, [words]);
+    useInterval(() => {
+        if (seconds <= 0) {
+            setMoveWord(moveWord + SPEED_WORD);
+        }
+        if (moveWord > LIMIT_WORD) {
+            setMoveWord(RETURN_START_WORD);
+            isAuthenticated && badCount(userId, currentWordId, words);// записываем неправильный ответ
+            setHealth(health - 1);
+            setNewWord(true);
+            setTimeout(() => {
+                setActiveWord(activeWord + 1);
 
-  useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
-    const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
-    activeWordObj && setCurrentWordId(activeWordObj.id)
-  }, [words, activeWord, randomWords]);
-
-
-  useEffect(() => {
-    setRandomWords(
-        arrWords
-        .reduce((result, el) => {
-									const clonedArray = JSON.parse(JSON.stringify(arrWords))
-          result[el.word] = [
-            [el.wordTranslate, true, el.id],
-            ...clonedArray
-              .sort(() => 0.5 - Math.random())
-              .filter((elF) => elF.word !== el.word)
-              .slice(0, 3)
-              .map((el) => {
-                return [el.wordTranslate, false];
-              }),
-          ].sort(() => Math.random() - 0.5);
-          return result;
-        }, {})
-    );
-  }, [arrWords]);
-
-  useInterval(() => {
-    if (seconds <= 0) {
-      setMoveWord(moveWord + SPEED_WORD);
-    }
-    if (moveWord > LIMIT_WORD) {
-      setMoveWord(RETURN_START_WORD);
-      badCount(userId, currentWordId, words);// записываем неправильный ответ
-      setHealth(health - 1);
-      setNewWord(true);
-      setTimeout(() => {
-        setActiveWord(activeWord + 1);
-
-      }, 500);
-      setTimeout(() => {
-        setNewWord(false);
-        setActiveWord(activeWord + 1);
-      }, 1000);
-    }
-  }, 500);
-
-  useInterval(() => {
-    if (seconds > 0) {
-      if (Object.keys(randomWords).length !== 0) {
-        setSeconds(seconds - 1);
-      }
-    }
-  }, 1000);
-
-  const clickButtonChoise = (el) => {
-    if (!el[1]) {
-      badCount(userId, currentWordId, words);// записываем неправильный ответ
-      setHealth(health - 1);
-    } else {
-      setTrueAnswer(trueAnswer + 1);
-      goodCount(userId, currentWordId, words);// записываем правильный ответ
-    }
-    setNewWord(true);
-    setMoveWord(RETURN_START_WORD);
-    setTimeout(() => {
-      setActiveWord(activeWord + 1);
+            }, 500);
+            setTimeout(() => {
+                setNewWord(false);
+                setActiveWord(activeWord + 1);
+            }, 1000);
+        }
     }, 500);
-    setTimeout(() => {
-      setNewWord(false);
+
+    useInterval(() => {
+        if (seconds > 0) {
+            if (Object.keys(randomWords).length !== 0) {
+                setSeconds(seconds - 1);
+            }
+        }
     }, 1000);
-  };
 
-  let hp = [];
-  for (let i = 0; i < 5; i++) {
-    hp.push(
-      <div>
-        {health > i ? (
-          <img src="https://img.icons8.com/android/32/fa314a/hearts.png" />
-        ) : (
-          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png" />
-        )}
-      </div>
-    );
-  }
+    const clickButtonChoise = (el) => {
+        if (!el[1]) {
+            isAuthenticated && badCount(userId, currentWordId, words);// записываем неправильный ответ
+            setHealth(health - 1);
+        } else {
+            setTrueAnswer(trueAnswer + 1);
+            isAuthenticated && goodCount(userId, currentWordId, words);// записываем правильный ответ
+        }
+        setNewWord(true);
+        setMoveWord(RETURN_START_WORD);
+        setTimeout(() => {
+            setActiveWord(activeWord + 1);
+        }, 500);
+        setTimeout(() => {
+            setNewWord(false);
+        }, 1000);
+    };
 
-  const startNewGame = () => {
-    setHealth(5);
-    setActiveWord(0);
-    setMoveWord(0);
-    setNumberWords(15);
-    setSeconds(5);
-    setTrueAnswer(0);
-  };
+    let hp = [];
+    for (let i = 0; i < 5; i++) {
+        hp.push(
+            <div>
+                {health > i ? (
+                    <img src="https://img.icons8.com/android/32/fa314a/hearts.png"/>
+                ) : (
+                    <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png"/>
+                )}
+            </div>
+        );
+    }
 
-  return Object.keys(randomWords).length !== 0 ? (
-    <div className={styles.savannah}>
-      {seconds === 0 ? (
-        health > 0 && activeWord < Object.keys(randomWords).length ? (
-          <>
-            <div className={styles.moveWord} style={{ top: `${moveWord}vh`, transform: newWord ? "scale(0)" : "scale(1)" }}>
-              {Object.keys(randomWords)[activeWord]}
-            </div>
-            <div className={styles.top}>
-              <div className={styles.top__health}>{hp}</div>
-              <div className={styles.top__exit}>
-                <Link to="/games">
-                  <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" />
-                </Link>
-              </div>
-            </div>
-            <div className={styles.center}>
-              {randomWords[Object.keys(randomWords)[activeWord]].map((el) => {
-                return (
-                  <div
-                    style={{ transform: newWord ? "scale(0)" : "scale(1)" }}
-                    key={el[0]}
-                    className={styles.button__choise}
-                    onClick={() => clickButtonChoise(el)}
-                  >
-                    {el[0]}
-                  </div>
-                );
-              })}
-            </div>
-            <div className={styles.bottom}>
-              <img src={crystal} />
-            </div>
-          </>
-        ) : (
-          <div className={styles.endGame}>
-            <div className={styles.endGame_body}>
-              <div className={styles.endGame_body_top}>
-                <h1>Круто,отличный результат!</h1>
-                <h3>
-                  {trueAnswer} слов изучено,
-                  {Object.keys(randomWords).length - trueAnswer} на изучении
-                </h3>
-              </div>
-              <div className={styles.endGame_body_center}>
-                <div className={styles.endGame_body_circle}>
-                  <div className={styles.endGame_body_info}>
-                    <p>
-                      {Math.floor(
-                        (100 / Object.keys(randomWords).length) * trueAnswer
-                      )}
-                      %
-                    </p>
-                    <p>Правильных ответов</p>
-                  </div>
+    const startNewGame = () => {
+        setHealth(5);
+        setActiveWord(0);
+        setMoveWord(0);
+        setNumberWords(15);
+        setSeconds(5);
+        setTrueAnswer(0);
+    };
+
+    return Object.keys(randomWords).length !== 0 ? (
+        <div className={styles.savannah}>
+            {seconds === 0 ? (
+                health > 0 && activeWord < Object.keys(randomWords).length ? (
+                    <>
+                        <div className={styles.moveWord}
+                             style={{top: `${moveWord}vh`, transform: newWord ? "scale(0)" : "scale(1)"}}>
+                            {Object.keys(randomWords)[activeWord]}
+                        </div>
+                        <div className={styles.top}>
+                            <div className={styles.top__health}>{hp}</div>
+                            <div className={styles.top__exit}>
+                                <Link to="/games">
+                                    <img src="https://img.icons8.com/plasticine/48/000000/close-window.png"/>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className={styles.center}>
+                            {randomWords[Object.keys(randomWords)[activeWord]].map((el) => {
+                                return (
+                                    <div
+                                        style={{transform: newWord ? "scale(0)" : "scale(1)"}}
+                                        key={el[0]}
+                                        className={styles.button__choise}
+                                        onClick={() => clickButtonChoise(el)}
+                                    >
+                                        {el[0]}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className={styles.bottom}>
+                            <img src={crystal}/>
+                        </div>
+                    </>
+                ) : (
+                    <div className={styles.endGame}>
+                        <div className={styles.endGame_body}>
+                            <div className={styles.endGame_body_top}>
+                                <h1>Круто,отличный результат!</h1>
+                                <h3>
+                                    {trueAnswer} слов изучено,
+                                    {Object.keys(randomWords).length - trueAnswer} на изучении
+                                </h3>
+                            </div>
+                            <div className={styles.endGame_body_center}>
+                                <div className={styles.endGame_body_circle}>
+                                    <div className={styles.endGame_body_info}>
+                                        <p>
+                                            {Math.floor(
+                                                (100 / Object.keys(randomWords).length) * trueAnswer
+                                            )}
+                                            %
+                                        </p>
+                                        <p>Правильных ответов</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.endGame_body_bottom}>
+                                <button>
+                                    <Link to="/games">К списку тренировок</Link>
+                                </button>
+                                <button onClick={startNewGame}>Повторить тренировку</button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            ) : (
+                <div className={styles.timer}>
+                    <h1>{seconds}</h1>
                 </div>
-              </div>
-              <div className={styles.endGame_body_bottom}>
-                <button>
-                  <Link to="/games">К списку тренировок</Link>
-                </button>
-                <button onClick={startNewGame}>Повторить тренировку</button>
-              </div>
-            </div>
-          </div>
-        )
-      ) : (
-        <div className={styles.timer}>
-          <h1>{seconds}</h1>
+            )}
         </div>
-      )}
-    </div>
-  ) : (
-    <h1>Loading</h1>
-  );
+    ) : (
+        <h1>Loading</h1>
+    );
 }

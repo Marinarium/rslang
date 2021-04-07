@@ -13,6 +13,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     const dispatch = useDispatch();
     const [totalPageResult, setTotalPageResult] = useState({})
     const userId = useSelector(state => state.auth.userId);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
 
     const allWords = words.map(({
@@ -57,7 +58,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     });
 
     const startGameHandler = (linkTo) => {
-        words.map(async i => {
+        isAuthenticated && words.map(async i => {
             const learned = i.userWord?.optional?.learned;
             !i.userWord && await dispatch(createUserWord({
                 userId,
@@ -88,7 +89,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
             }));
 
         })
-        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({
+        isAuthenticated  && (container === 'text-book') && dispatch(getAllUserWordsWithoutDeletedWords({
             group: currentGroup,
             page: currentPage,
             userId

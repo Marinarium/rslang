@@ -14,6 +14,7 @@ import LearnedWords from '../LearnedWords/LearnedWords'
 import PromoPage from "../../pages/PromoPage/PromoPage";
 
 import styles from './App.module.scss'
+import Savannah from "../Games/GamesList/Savannah/Savannah";
 
 function App() {
     return (
@@ -29,7 +30,9 @@ function App() {
                 <Route path="/dictionary/deleted/:unit" component={DeletedWords}/>
                 <Route path="/dictionary/learned/:unit" component={LearnedWords}/>
                 <Route path="/settings" component={SettingsPage}/>
-                <Route path="/games" component={GamesPage} />
+                <Route path="/games" exact component={GamesPage} />
+                {/*Если тут вносите изменения, убедитесь, что игры работают!!!!*/}
+                <Route path="/games/savannah" component={Savannah} />
                 <Footer/>
             </div>
         </Router>
