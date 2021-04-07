@@ -36,7 +36,7 @@ export const authLogin = createAsyncThunk(
         }
 
         localStorage.setItem('userData', JSON.stringify({
-            userId: data.userId, token: data.token, name: data.name
+            userId: data.userId, token: data.token, name: data.name, avatar: data.avatar
         }))
         return data
 
@@ -101,6 +101,7 @@ const authReducer = createSlice({
                 token: action.payload.token,
                 userId: action.payload.userId,
                 name: action.payload.name,
+                avatar: action.payload.avatar,
                 isAuthenticated: !!action.payload.token,
                 loginForm: {
                     ...state.loginForm,
