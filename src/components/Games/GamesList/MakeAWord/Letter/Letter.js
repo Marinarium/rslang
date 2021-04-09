@@ -33,7 +33,7 @@ export default function Letter({letter, correctLettersArr,
         setWordComplete(() => true);
         setWordLoose(() => true);
         setTrueCount((prev) => prev + 1);
-        goodCount(userId, currentWordId, words); // записываем правильный ответ
+        //goodCount(userId, currentWordId, words); // записываем правильный ответ
       }
     } else showIncorrect();
     setTotalDone(false);

@@ -32,10 +32,10 @@ export default function MakeAWord() {
   const words = useSelector(state => state.words.items);
   const userId = useSelector(state => state.auth.userId);
 
-  useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
-    const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
-    activeWordObj && setCurrentWordId(activeWordObj.id)
-  }, [words, activeWord, randomWords]);
+  // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
+  //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+  //   activeWordObj && setCurrentWordId(activeWordObj.id)
+  // }, [words, activeWord, randomWords]);
 
   useEffect(() => {
     fetch("https://react-lang-app.herokuapp.com/words")
@@ -112,7 +112,7 @@ export default function MakeAWord() {
 
   function toLoose() {
     setLooseCount((prev) => prev + 1);
-    badCount(userId, currentWordId, words); // записываем неправильный ответ
+    //badCount(userId, currentWordId, words); // записываем неправильный ответ
     setWordComplete(() => true);
     setWordLoose(() => true);
     setAnswer(() => arrRef.current[0].word);
