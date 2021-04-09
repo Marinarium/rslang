@@ -17,6 +17,7 @@ export default function Savannah() {
     // они соответствуют странице учебника, на которой находимся
     const userId = useSelector(state => state.auth.userId);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const token = useSelector(state => state.auth.token);
 
     const [currentWordId, setCurrentWordId] = useState('');
     const [health, setHealth] = useState(5);
@@ -84,7 +85,7 @@ export default function Savannah() {
         }
         if (moveWord > LIMIT_WORD) {
             setMoveWord(RETURN_START_WORD);
-            isAuthenticated && badCount(userId, currentWordId, words);// записываем неправильный ответ
+            isAuthenticated && badCount(userId, currentWordId, words, token);// записываем неправильный ответ
             setHealth(health - 1);
             setNewWord(true);
             setTimeout(() => {
@@ -108,11 +109,11 @@ export default function Savannah() {
 
     const clickButtonChoise = (el) => {
         if (!el[1]) {
-            isAuthenticated && badCount(userId, currentWordId, words);// записываем неправильный ответ
+            isAuthenticated && badCount(userId, currentWordId, words, token);// записываем неправильный ответ
             setHealth(health - 1);
         } else {
             setTrueAnswer(trueAnswer + 1);
-            isAuthenticated && goodCount(userId, currentWordId, words);// записываем правильный ответ
+            isAuthenticated && goodCount(userId, currentWordId, words, token);// записываем правильный ответ
         }
         setNewWord(true);
         setMoveWord(RETURN_START_WORD);

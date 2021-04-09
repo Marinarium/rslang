@@ -24,7 +24,7 @@ export const wordsApi = {
     },
 
     getAllUserWordsWithoutDeletedWords({group, page, userId, token}) { //Get all not deleted words by group & page
-
+        console.log('token', token)
         return request(
             `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.optional.deleted":null},{"userWord.optional.deleted":false}]}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',

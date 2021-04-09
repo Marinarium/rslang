@@ -32,12 +32,7 @@ export default function WordItem({
 
 
     const dispatch = useDispatch();
-    const getWordsByContainer = () => {
-        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
-    };
+
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
@@ -46,6 +41,12 @@ export default function WordItem({
     const goodGameResults  = userWord?.optional?.count?.good || 0;
     const badGameResults  =  userWord?.optional?.count?.bad || 0;
 
+    const getWordsByContainer = () => {
+        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId, token}));
+        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId, token}));
+        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId, token}));
+        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId, token}));
+    };
     const playHandler = () => {
         playAudios(audio, audioMeaning, audioExample);
     };
