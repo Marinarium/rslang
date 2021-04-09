@@ -4,16 +4,13 @@ import WordItem from "../WordItem/WordItem";
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 import {Pagination} from '../Pagination/Pagination';
 import {useHistory} from 'react-router-dom';
-import {gamesItems} from '../Games/Games';
-import {createUserWord, getAllUserWordsWithoutDeletedWords, updateUserWord} from '../../redux/wordsReducer';
-import {useDispatch, useSelector} from 'react-redux';
+import Games from '../Games/Games';
+import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
 
 export function WordsList({words, handlePageClick, currentPage, currentGroup, container, location, match}) {
     const history = useHistory();
-    const dispatch = useDispatch();
     const [totalPageResult, setTotalPageResult] = useState({})
-    const userId = useSelector(state => state.auth.userId);
-
+    const {setUserWords, getWords} = useStartGameWithAuth();
 
     const allWords = words.map(({
                                     id,
@@ -57,42 +54,8 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     });
 
     const startGameHandler = (linkTo) => {
-        words.map(async i => {
-            const learned = i.userWord?.optional?.learned;
-            !i.userWord && await dispatch(createUserWord({
-                userId,
-                wordId: i.id,
-                props: {
-                    'optional': {
-                        'learned': true,
-                        'count': {
-                            'good': 0,
-                            'bad': 0
-                        }
-
-                    }
-                }
-            }));
-            !learned && await dispatch(updateUserWord({
-                userId,
-                wordId: i.id,
-                props: {
-                    'optional': {
-                        'learned': true,
-                        'count': {
-                            'good': 0,
-                            'bad': 0
-                        }
-                    }
-                }
-            }));
-
-        })
-        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({
-            group: currentGroup,
-            page: currentPage,
-            userId
-        }));
+        setUserWords(words);
+        (container === 'text-book') && getWords(currentPage, currentGroup)
         history.push(`/${linkTo}`)
     };
 
@@ -119,13 +82,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
 
     return (
         <>
-            {gamesItems.map(({name, linkTo}) => <div
-                    key={name}
-                    onClick={() => startGameHandler(linkTo)}>
-                    {name}
-                </div>
-            )
-            }
+            <Games startGameHandler={startGameHandler}/>
             <Pagination handlePageClick={handlePageClick} currentPage={currentPage}/>
             <section className={styles.statistic_page}>
                 <h3>слов на странице: {words.length}</h3>

@@ -8,7 +8,7 @@ export default function TextBookPage() {
     return (
         <main className={styles.main}>
             <TextBook/>
-            <Games/>
+
         </main>
     );
 }

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getAllUserWordsWithoutDeletedWords} from '../../redux/wordsReducer';
+import {fetchWords, getAllUserWordsWithoutDeletedWords} from '../../redux/wordsReducer';
 import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
 import {WordsList} from '../WordsList/WordsList';
@@ -14,9 +14,11 @@ function TextBookListContainer({location, match}) {
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
     const userId = useSelector(state => state.auth.userId);
+    const token = useSelector(state => state.auth.token);
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
-
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    console.log('currentPage', currentPage)
     useEffect(() => {
 
         // Записываем массив текущих страниц из LS в store
@@ -36,10 +38,13 @@ function TextBookListContainer({location, match}) {
 
     useEffect(() => { // Загружаем слова
 
-        //dispatch(fetchWords({group: currentGroup, page: currentPage}));
-        userId && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
+        !isAuthenticated
+        && dispatch(fetchWords({group: currentGroup, page: currentPage}));
+        isAuthenticated
+        && userId
+        && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId, token}));
 
-    }, [dispatch, currentPage, currentGroup, userId]);
+    }, [dispatch, currentPage, currentGroup, userId, isAuthenticated]);
 
     useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
 

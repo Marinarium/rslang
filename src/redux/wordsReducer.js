@@ -26,8 +26,8 @@ export const fetchWords = createAsyncThunk(
 
 export const getDifficultWords = createAsyncThunk(
     'wordsReducer/getDifficultWords',
-    async ({group, page, userId}) => {
-        const data = await wordsApi.getDifficultWords({group, page, userId})
+    async ({group, page, userId, token}) => {
+        const data = await wordsApi.getDifficultWords({group, page, userId, token})
             .then((res) => res && res.json())
 
         if (!data) {
@@ -47,8 +47,8 @@ export const getDifficultWords = createAsyncThunk(
 
 export const getDeletedWords = createAsyncThunk(
     'wordsReducer/getDeletedWords',
-    async ({group, page, userId}) => {
-        const data = await wordsApi.getDeletedWords({group, page, userId})
+    async ({group, page, userId, token}) => {
+        const data = await wordsApi.getDeletedWords({group, page, userId, token})
             .then((res) => res && res.json())
 
         if (!data) {
@@ -67,8 +67,8 @@ export const getDeletedWords = createAsyncThunk(
 )
 export const getLearnedWords = createAsyncThunk(
     'wordsReducer/getLearnedWords',
-    async ({group, page, userId}) => {
-        const data = await wordsApi.getLearnedWords({group, page, userId})
+    async ({group, page, userId, token}) => {
+        const data = await wordsApi.getLearnedWords({group, page, userId, token})
             .then((res) => res && res.json())
 
         if (!data) {
@@ -87,8 +87,8 @@ export const getLearnedWords = createAsyncThunk(
 )
 export const getAllUserWordsWithoutUserWords = createAsyncThunk(
     'wordsReducer/getAllUserWordsWithoutUserWords',
-    async ({group, page, userId}) => {
-        const data = await wordsApi.getAllUserWordsWithoutUserWords({group, page, userId})
+    async ({group, page, userId, token}) => {
+        const data = await wordsApi.getAllUserWordsWithoutUserWords({group, page, userId, token})
             .then((res) => res && res.json())
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
@@ -105,8 +105,8 @@ export const getAllUserWordsWithoutUserWords = createAsyncThunk(
 )
 export const getAllUserWordsWithoutDeletedWords = createAsyncThunk(
     'wordsReducer/getAllUserWordsWithoutDeletedWords',
-    async ({group, page, userId}) => {
-        const data = await wordsApi.getAllUserWordsWithoutDeletedWords({group, page, userId})
+    async ({group, page, userId, token}) => {
+        const data = await wordsApi.getAllUserWordsWithoutDeletedWords({group, page, userId, token})
             .then((res) => res && res.json())
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
@@ -124,8 +124,8 @@ export const getAllUserWordsWithoutDeletedWords = createAsyncThunk(
 
 export const createUserWord = createAsyncThunk(
     'wordsReducer/createUserWord',
-    async ({userId, wordId, props}) => {
-        const data = await wordsApi.createUserWord({userId, wordId, props})
+    async ({userId, wordId, props, token}) => {
+        const data = await wordsApi.createUserWord({userId, wordId, props, token})
             .then((res) => res && res.json())
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
@@ -135,8 +135,8 @@ export const createUserWord = createAsyncThunk(
 )
 export const deleteUserWord = createAsyncThunk(
     'wordsReducer/deleteUserWord',
-    async ({userId, wordId}) => {
-        const data = await wordsApi.deleteUserWord({userId, wordId})
+    async ({userId, wordId, token}) => {
+        const data = await wordsApi.deleteUserWord({userId, wordId, token})
             .then((res) => res && res.json())
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
@@ -146,8 +146,8 @@ export const deleteUserWord = createAsyncThunk(
 )
 export const updateUserWord = createAsyncThunk(
     'wordsReducer/updateUserWord',
-    async ({userId, wordId, props}) => {
-        const data = await wordsApi.updateUserWord({userId, wordId, props})
+    async ({userId, wordId, props, token}) => {
+        const data = await wordsApi.updateUserWord({userId, wordId, props, token})
             .then((res) => res && res.json())
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')

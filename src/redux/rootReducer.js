@@ -10,5 +10,9 @@ export default configureStore({
       auth: authReducer,
       app: appReducer,
       dictionary: dictionaryReducer
-  }
+  },
+    // middleware: (getDefaultMiddleware) =>
+    // getDefaultMiddleware({
+    //     serializableCheck: false,
+    // }),
 })

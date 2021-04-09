@@ -1,4 +1,4 @@
-import {request, token} from './request'
+import {request} from './request'
 
 export const wordsApi = {
     fetchWords({group, page}) {
@@ -11,7 +11,7 @@ export const wordsApi = {
 
     },
 
-    getAllUserWordsWithoutUserWords({group, page, userId}) { //Get all not user words by group & page
+    getAllUserWordsWithoutUserWords({group, page, userId, token}) { //Get all not user words by group & page
         return request(
             `users/${userId}/aggregatedWords?filter={"userWord":null}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
@@ -23,7 +23,8 @@ export const wordsApi = {
         )
     },
 
-    getAllUserWordsWithoutDeletedWords({group, page, userId}) { //Get all not deleted words by group & page
+    getAllUserWordsWithoutDeletedWords({group, page, userId, token}) { //Get all not deleted words by group & page
+        console.log('token', token)
         return request(
             `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.optional.deleted":null},{"userWord.optional.deleted":false}]}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
@@ -34,7 +35,7 @@ export const wordsApi = {
             }
         )
     },
-    getWordById(id) {
+    getWordById(id, token) {
         return request(
             `words/${id}`,
             'GET',
@@ -46,7 +47,7 @@ export const wordsApi = {
         )
 
     },
-    createUserWord({userId, wordId, props}) {
+    createUserWord({userId, wordId, props, token}) {
         return request(
             `users/${userId}/words/${wordId}`,
             'POST',
@@ -60,7 +61,7 @@ export const wordsApi = {
         )
 
     },
-    updateUserWord({userId, wordId, props}) {
+    updateUserWord({userId, wordId, props, token}) {
         return request(
             `users/${userId}/words/${wordId}`,
             'PUT',
@@ -74,7 +75,7 @@ export const wordsApi = {
         )
 
     },
-    getUserWord(id) { //Get a user word by id
+    getUserWord(id, token) { //Get a user word by id
         return request(
             `users/${id}/words`,
             'GET',
@@ -86,7 +87,7 @@ export const wordsApi = {
         )
 
     },
-    getAllUserWords(userId) { //Get all user words
+    getAllUserWords(userId, token) { //Get all user words
         return request(
             `users/${userId}/words`,
             'GET',
@@ -98,7 +99,7 @@ export const wordsApi = {
         )
 
     },
-    deleteUserWord({userId, wordId}) { //Delete user word
+    deleteUserWord({userId, wordId, token}) { //Delete user word
         return request(
             `users/${userId}/words/${wordId}`,
             'DELETE',
@@ -110,7 +111,7 @@ export const wordsApi = {
         )
 
     },
-    getDifficultWords({group, page, userId}) { //Get difficult words
+    getDifficultWords({group, page, userId, token}) { //Get difficult words
         return request(
             `users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
@@ -121,7 +122,7 @@ export const wordsApi = {
             }
         )
     },
-    getDeletedWords({group, page, userId}) { //Get deleted words
+    getDeletedWords({group, page, userId, token}) { //Get deleted words
         return request(
             `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted":true}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
@@ -132,7 +133,7 @@ export const wordsApi = {
             }
         )
     },
-    getLearnedWords({group, page, userId}) { //Get learned words
+    getLearnedWords({group, page, userId, token}) { //Get learned words
         return request(
             `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.difficulty":"hard"},{"userWord.optional.learned":true}]}&group=${group}&page=${page}&wordsPerPage=20`,
             'GET',
@@ -144,7 +145,7 @@ export const wordsApi = {
         )
     },
 
-    getUserAggregatedWord({userId, wordId}) { //Get a user aggregated word by id
+    getUserAggregatedWord({userId, wordId, token}) { //Get a user aggregated word by id
         return request(
             `users/${userId}/aggregatedWords/${wordId}`,
             'GET',
@@ -155,6 +156,5 @@ export const wordsApi = {
             }
         )
     },
-
 
 }
