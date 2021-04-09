@@ -4,7 +4,8 @@ import styles from "../Letter/Letter.module.scss";
 export default function Letter({letter, correctLettersArr,
                                  setCorrectLettersArr, concatenate,
                                  endWord, totalDone, setTotalDone,
-                                 setWordComplete, setWordLoose, setTrueCount}) {
+                                 setWordComplete, setWordLoose,
+                                 setTrueCount, goodCount}) {
 
   const [done, setDone] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
@@ -32,6 +33,7 @@ export default function Letter({letter, correctLettersArr,
         setWordComplete(() => true);
         setWordLoose(() => true);
         setTrueCount((prev) => prev + 1);
+        goodCount(userId, currentWordId, words); // записываем правильный ответ
       }
     } else showIncorrect();
     setTotalDone(false);
