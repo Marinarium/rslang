@@ -1,4 +1,4 @@
-import {request, token} from './request'
+import {request} from './request'
 
 export const statApi = {
 
@@ -12,7 +12,7 @@ export const statApi = {
 
     },
 
-    putStatistics({userId, stats}) {
+    putStatistics({userId, stats, token}) {
         return request(
             `users/${userId}/statistics`,
             'PUT',

@@ -16,7 +16,6 @@ const appReducer = createSlice({
     initialState,
     reducers: {
         setCurrentPagesItem: (state, action) => {
-
             return {
                 ...state,
                 currentPagesArray: state.currentPagesArray.map((i, index) => {
@@ -29,7 +28,6 @@ const appReducer = createSlice({
             }
         },
         setCurrentDifficultPagesItem: (state, action) => {
-
             return {
                 ...state,
                 currentDifficultPagesArray: state.currentDifficultPagesArray.map((i, index) => {

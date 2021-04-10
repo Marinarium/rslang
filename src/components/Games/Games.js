@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Games.module.scss";
-import Sprint from "./GamesList/Sprint/Spint";
+import Sprint from "./GamesList/Sprint/Sprint";
 import Audiocall from "./GamesList/Audiocall/Audiocall";
 import MakeAWord from "./GamesList/MakeAWord/MakeAWord";
 import Savannah from "./GamesList/Savannah/Savannah";
@@ -13,38 +13,24 @@ export const gamesItems = [
     { name: "Составь слово", linkTo: "games/make-a-word", page: <MakeAWord /> },
   ];
 
-  export default function Games({ location, match }) {
+
+export default function Games({ location, match, startGameHandler }) {
     const games = gamesItems.map(({ name, linkTo }) => {
+        return (
+            <li className={styles.item} key={name}>
+                <div className={styles.link} onClick={() => startGameHandler(linkTo)}>
+                    {name}
+                </div>
+            </li>
+        );
+    });
+
+    let pages = games;
+
     return (
-      <li className={styles.item} key={name}>
-        <Link to={linkTo} className={styles.link}>
-          {name}
-        </Link>
-      </li>
+        <main className={styles.main}>
+            <h3 className={styles.title}>Учись играя!</h3>
+            <ul className={styles.list}>{pages}</ul>
+        </main>
     );
-  });
-
-  let pages = games;
-
-  switch (location.pathname) {
-    case "/games":
-      pages = games;
-      break;
-    case `/${gamesItems[0].linkTo}`:
-      pages = gamesItems[0].page;
-      break;
-    case `/${gamesItems[1].linkTo}`:
-      pages = gamesItems[1].page;
-      break;
-    case `/${gamesItems[2].linkTo}`:
-      pages = gamesItems[2].page;
-      break;
-    case `/${gamesItems[3].linkTo}`:
-      pages = gamesItems[3].page;
-      break;
-    default:
-      pages = <h1>Не найдено</h1>;
-  }
-
-  return <main className={styles.main}>{pages}</main>;
 }

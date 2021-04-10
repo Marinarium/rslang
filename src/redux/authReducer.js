@@ -10,6 +10,7 @@ const initialState = {
     avatar: '',
     name: '',
     isAuthenticated: false,
+    isRegistered: false,
     registerMessage: '',
     loginForm: {
         email: '',
@@ -24,7 +25,7 @@ const initialState = {
 
 
 export const authLogin = createAsyncThunk(
-    'authReducer/authLogin ',
+    'authReducer/authLogin',
     async (loginForm) => {
 
         const data = await authApi.login(loginForm)
@@ -35,7 +36,7 @@ export const authLogin = createAsyncThunk(
         }
 
         localStorage.setItem('userData', JSON.stringify({
-            userId: data.userId, token: data.token, name: data.name
+            userId: data.userId, token: data.token, name: data.name, avatar: data.avatar
         }))
         return data
 
@@ -44,25 +45,13 @@ export const authLogin = createAsyncThunk(
 export const authRegister = createAsyncThunk(
     'authReducer/authRegister',
     async (formData) => {
-        return await authApi.register(formData)
+        const data = await authApi.register(formData)
             .then((res) => res && res.json())
 
+        return data
 
     }
 )
-// export const getUser = createAsyncThunk(
-//     'authReducer/getUser ',
-//     async (id) => {
-//         const data = await authApi.getUser(id)
-//             .then((res) => res && res.json())
-//
-//         if (!data) {
-//             throw new Error(data.message || 'Something went wrong!')
-//         }
-//
-//         return data
-//     }
-// )
 
 
 const authReducer = createSlice({
@@ -81,13 +70,37 @@ const authReducer = createSlice({
                 registerForm: {...state.registerForm, ...action.payload}
             }
         },
+        // cleanLoginForm: (state, action) => {
+        //     return {
+        //         ...state,
+        //         loginForm: {...state.registerForm, ...action.payload}
+        //     }
+        // },
+        // cleanRegisterForm: (state, action) => {
+        //     return {
+        //         ...state,
+        //         registerForm: {...state.registerForm, ...action.payload}
+        //     }
+        // },
         setIsAuthenticated: (state, action) => {
             return {
                 ...state,
                 token: action.payload.token,
                 userId: action.payload.userId,
                 name: action.payload.name,
-                isAuthenticated: !!action.payload.token
+                avatar: action.payload.avatar,
+                isAuthenticated: !!action.payload.token,
+                loginForm: {
+                    ...state.loginForm,
+                    email: '',
+                    password: ''
+                }
+            }
+        },
+        setIsRegistered: (state, action) => {
+            return {
+                ...state,
+                isRegistered: action.payload,
             }
         },
         authLogout: (state) => {
@@ -95,28 +108,35 @@ const authReducer = createSlice({
                 ...state,
                 token: '',
                 userId: '',
+                name: '',
                 isAuthenticated: false,
                 loginForm: {
                     ...state.loginForm,
                     email: '',
                     password: ''
                 }
+
             }
         }
     },
     extraReducers: {
 
-        [authRegister.fulfilled.type]: (state, action) => {
+        [authRegister.fulfilled]: (state, action) => {
 
             return {
                 ...state,
-                registerMessage: action.payload.message,
-
+                isRegistered: true,
+                registerForm: {
+                    ...state.registerForm,
+                    email: '',
+                    password: '',
+                    name: ''
+                }
             }
 
         },
 
-        [authLogin.fulfilled.type]: (state, action) => {
+        [authLogin.fulfilled]: (state, action) => {
 
             return {
                 ...state,
@@ -124,7 +144,8 @@ const authReducer = createSlice({
                 userId: action.payload.userId,
                 isAuthenticated: !!action.payload.token,
                 authError: '',
-                name: action.payload.name
+                name: action.payload.name,
+                avatar: action.payload.avatar
 
             }
 
@@ -138,6 +159,8 @@ export const {
     loginFormChange,
     registerFormChange,
     setIsAuthenticated,
+    setIsRegistered,
+
 
 } = authReducer.actions
 

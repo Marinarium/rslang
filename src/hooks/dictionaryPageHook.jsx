@@ -9,6 +9,7 @@ export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, s
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app[pagesArray][currentGroup]); // номер текущей страницы
     const userId = useSelector(state => state.auth.userId);
+    const token = useSelector(state => state.auth.token);
     useEffect(() => {
         // Записываем массив текущих страниц из LS в store
         const lSPagesArray = JSON.parse(localStorage.getItem(storageName))
@@ -24,7 +25,7 @@ export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, s
 
     useEffect(() => { // Загружаем сложные слова
 
-        userId && dispatch(getWords({group: currentGroup, page: currentPage, userId}));
+        userId && dispatch(getWords({group: currentGroup, page: currentPage, userId, token}));
 
     }, [dispatch, userId, currentGroup, currentPage]);
 

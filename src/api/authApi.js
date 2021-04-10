@@ -1,12 +1,12 @@
-import {request, token} from './request'
+import {request} from './request'
 
 export const authApi = {
 
-    getUser(id) {
+    getUser(id, token) {
         return request(
             `users/${id}`,
             'GET',
-            null,
+            true,
             {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -36,8 +36,5 @@ export const authApi = {
             formData
         )
 
-    },
-
-
-
+    }
 }

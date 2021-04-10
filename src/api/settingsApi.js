@@ -1,4 +1,4 @@
-import {request, token} from './request'
+import {request} from './request'
 
 export const settingsApi = {
 
@@ -12,7 +12,7 @@ export const settingsApi = {
 
     },
 
-    putSettings({userId, stats}) {
+    putSettings({userId, stats, token}) {
         return request(
             `users/${userId}/settings`,
             'PUT',

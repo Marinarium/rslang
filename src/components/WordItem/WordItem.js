@@ -32,19 +32,21 @@ export default function WordItem({
 
 
     const dispatch = useDispatch();
-    const getWordsByContainer = () => {
-        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId}));
-        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId}));
-    };
+
     const activeUnit = useSelector(state => state.app.activeUnit);
     const isWordTranslated = useSelector(state => state.app.isWordTranslated);
     const isWordButtonsShown = useSelector(state => state.app.isWordButtonsShown);
     const userId = useSelector(state => state.auth.userId);
+    const token = useSelector(state => state.auth.token);
     const goodGameResults  = userWord?.optional?.count?.good || 0;
     const badGameResults  =  userWord?.optional?.count?.bad || 0;
 
+    const getWordsByContainer = () => {
+        container === 'text-book' && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId, token}));
+        container === 'Learned' && dispatch(getLearnedWords({group: currentGroup, page: currentPage, userId, token}));
+        container === 'Deleted' && dispatch(getDeletedWords({group: currentGroup, page: currentPage, userId, token}));
+        container === 'Difficult' && dispatch(getDifficultWords({group: currentGroup, page: currentPage, userId, token}));
+    };
     const playHandler = () => {
         playAudios(audio, audioMeaning, audioExample);
     };
@@ -86,7 +88,8 @@ export default function WordItem({
                 wordId: id,
                 props: {
                     "difficulty": "hard"
-                }
+                },
+                token
             }));
         } else {
             await dispatch(createUserWord({
@@ -94,7 +97,8 @@ export default function WordItem({
                 wordId: id,
                 props: {
                     "difficulty": "hard"
-                }
+                },
+                token
             }));
         }
         getWordsByContainer();
@@ -109,7 +113,8 @@ export default function WordItem({
                     "optional": {
                         "deleted": true
                     }
-                }
+                },
+                token
             }));
         } else {
             await dispatch(createUserWord({
@@ -119,13 +124,14 @@ export default function WordItem({
                     "optional": {
                         "deleted": true
                     }
-                }
+                },
+                token
             }));
         }
         getWordsByContainer();
     };
     const restoreButtonHandler = async () => {
-        await dispatch(deleteUserWord({userId, wordId: id}));
+        await dispatch(deleteUserWord({userId, wordId: id, token}));
         getWordsByContainer();
     };
 

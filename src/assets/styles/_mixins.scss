@@ -24,3 +24,40 @@
     padding-right: 12%;
   }
 }
+
+@mixin main {
+  flex-grow: 1;
+  padding-bottom: 60px;
+}
+
+@mixin clearfix {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@mixin visually-hidden() {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  margin: -1px;
+}
+
+@mixin remove-visually-hidden() {
+  position: static;
+  white-space: normal;
+  width: auto;
+  height: auto;
+  overflow: auto;
+  border: none;
+  padding: 0;
+  clip: auto;
+  clip-path: none;
+  margin: 0;
+}

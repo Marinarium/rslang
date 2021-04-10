@@ -11,13 +11,17 @@ import DifficultWords from '../DifficultWords/DifficultWords'
 import DeletedWords from '../DeletedWords/DeletedWords'
 import GamesPage from "../../pages/GamesPage/GamesPage";
 import LearnedWords from '../LearnedWords/LearnedWords'
+import PromoPage from "../../pages/PromoPage/PromoPage";
+
+import styles from './App.module.scss'
+import Savannah from "../Games/GamesList/Savannah/Savannah";
 
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div className={styles.app}>
                 <Header/>
-                <Route path="/" exact component={TextBookPage}/>
+                <Route path="/" exact component={PromoPage}/>
                 <Route path="/login" exact component={LoginForm}/>
                 <Route path="/register" exact component={RegisterForm}/>
                 <Route path="/text-book/:unit" exact component={TextBookPage}/>
@@ -26,7 +30,9 @@ function App() {
                 <Route path="/dictionary/deleted/:unit" component={DeletedWords}/>
                 <Route path="/dictionary/learned/:unit" component={LearnedWords}/>
                 <Route path="/settings" component={SettingsPage}/>
-                <Route path="/games" component={GamesPage} />
+                <Route path="/games" exact component={GamesPage} />
+                {/*Если тут вносите изменения, убедитесь, что игры работают!!!!*/}
+                <Route path="/games/savannah" component={Savannah} />
                 <Footer/>
             </div>
         </Router>

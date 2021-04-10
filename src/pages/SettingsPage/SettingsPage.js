@@ -1,11 +1,11 @@
 import React from 'react';
-
-// import styles from './TextBook.module.scss';
 import Settings from "../../components/Settings/Settings";
+
+import styles from "./SettingsPage.module.scss";
 
 export default function SettingsPage() {
     return (
-        <main>
+        <main className={styles.main}>
             <Settings/>
         </main>
     );
