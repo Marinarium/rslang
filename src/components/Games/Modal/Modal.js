@@ -12,8 +12,7 @@ export default function Modal({modalActive, setModalActive, children}) {
   }
 
   return (
-    <div className={modal.join(' ')}
-         onClick={() => setModalActive(false)}>
+    <div className={modal.join(' ')}>
       <div
         className={modalContent.join(' ')}
         onClick={(event) => event.stopPropagation()}>
