@@ -18,19 +18,18 @@ function TextBookListContainer({location, match}) {
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    console.log('currentPage', currentPage)
     useEffect(() => {
 
         // Записываем массив текущих страниц из LS в store
         // Может кто предложет вариант по-лучше, мне этот не очень по душе, то же самое нужно сделать по-хорошему
         // ещё для 3-х страниц, выходит очень громоздко, или хотя бы это как-то отрефакторить
 
-        const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'))
-        lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray))
+        const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'));
+        lSPagesArray && dispatch(setCurrentPagesArray(lSPagesArray));
 
         // Записываем настройки букв из LS в store
-        const lSWordSettings = JSON.parse(localStorage.getItem('wordSettings'))
-        lSWordSettings && dispatch(setIsWordTranslated(lSWordSettings.isWordTranslated))
+        const lSWordSettings = JSON.parse(localStorage.getItem('wordSettings'));
+        lSWordSettings && dispatch(setIsWordTranslated(lSWordSettings.isWordTranslated));
         lSWordSettings && dispatch(setIsWordButtonsShown(lSWordSettings.isWordButtonsShown))
 
     }, [dispatch]);

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 import Games from "../../components/Games/Games";
 import {useHistory} from 'react-router-dom';
 import styles from "./GamesPage.module.scss";
@@ -9,7 +9,6 @@ import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
 export default function GamesPage({location, match}) {
     const history = useHistory();
     const page = useMemo(() => Math.ceil(Math.random() * 19), []);
-    console.log('page', page)
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [link, setLink] = useState(null);
     const dispatch = useDispatch();

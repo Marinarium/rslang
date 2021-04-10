@@ -10,12 +10,11 @@ import styles from './RegisterForm.module.scss'
 export const RegisterForm = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const registerForm = useSelector(state => state.auth.registerForm)
-    console.log('registerForm', registerForm)
-    const isRegistered = useSelector(state => state.auth.isRegistered)
+    const registerForm = useSelector(state => state.auth.registerForm);
+    const isRegistered = useSelector(state => state.auth.isRegistered);
     const changeHandler = (event) => {
         dispatch(registerFormChange({[event.target.name]: event.target.value}))
-    }
+    };
     let fileInput = useRef(null);
 
     useEffect(() => {
@@ -31,7 +30,7 @@ export const RegisterForm = () => {
         formData.append("name", registerForm.name);
         formData.append("avatar", fileInput.files[0]);
         dispatch(authRegister(formData))
-    }
+    };
     return (
         <form className={styles.form}>
             <MainTitle text={'Регистрация'}/>
@@ -83,4 +82,4 @@ export const RegisterForm = () => {
             <button className={styles.button} onClick={submitHandler}>Зарегистироваться</button>
         </form>
     )
-}
+};

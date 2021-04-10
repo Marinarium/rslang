@@ -76,10 +76,10 @@ export default function Header() {
             <nav className={styles.menu}>
                 <div className={!menuState ? `${styles.burger}` : `${styles.burger} ${styles.active}`}
                      onClick={showMenu}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span/>
+                    <span/>
+                    <span/>
+                    <span/>
                 </div>
                 <ul className={!menuState ? `${styles.list}` : `${styles.list} ${styles.active}`}>
                     {menu}
