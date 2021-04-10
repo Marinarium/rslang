@@ -1,0 +1,13 @@
+@import '../../../../../assets/styles/main';
+
+.answer_btn {
+  border: 1px solid $lightGrey;
+  border-radius: 10px;
+  padding: 2px 5px;
+}
+
+.answer_btn_dis {
+  border: 2px solid red;
+  border-radius: 10px;
+  padding: 2px 5px;
+}

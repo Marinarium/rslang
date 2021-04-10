@@ -1,9 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Answer from "./Answer/Answer";
 import styles from "./Audiocall.module.scss";
-import Info from "./Info/Info";
-// import {useGameData} from "../../../../hooks/gameDataHook";
-// import {useSelector} from "react-redux";
 
 const a = 'первый';
 const b = 'второй';
@@ -16,11 +13,7 @@ const correct = 'ПРАВИЛЬНОЕ';
 export default function Audiocall() {
 
   const [answers, setAnswers] = useState([]);
-  const [wordComplete, setWordComplete] = useState(true);
-
-/*  const {goodCount, badCount} = useGameData();
-  const words = useSelector(state => state.words.items);//!!!слова берем из уже имеющихся в сторе,
-  const userId = useSelector(state => state.auth.userId);*/
+  const [gameStatus, setGameStatus] = useState(true);
 
   useEffect(() => {
     startGame();
@@ -28,7 +21,7 @@ export default function Audiocall() {
 
   function startGame() {
     setAnswers((answers) => [a, b, c, d, e].sort(() => 0.5 - Math.random()));
-    setWordComplete(() => true)
+    setGameStatus(() => true)
   }
 
   function chooseCorrect(event) {
@@ -37,21 +30,19 @@ export default function Audiocall() {
     }
   }
 
-  function soundOn() {
-    console.log('soundOn')
-  }
-
   function endGame() {
     console.log('WIN');
-    setWordComplete(() => false)
+    setGameStatus(() => false)
   }
 
   return (
     <section>
 
       <div>
-        {wordComplete ? <Info soundOn={soundOn} /> : <Info soundOn={soundOn} correct={correct} />}
+        {gameStatus ? 'no descr' : 'IMG'}
       </div>
+
+      <span>Sound</span>
 
       <div className={styles.answers}>
         {answers.map((word, index) => (
@@ -64,7 +55,7 @@ export default function Audiocall() {
       </div>
 
       <button onClick={startGame}>
-        {wordComplete ? 'Сдаться :(' : 'Дальше'}
+        {gameStatus ? 'skip :(' : 'next'}
       </button>
 
     </section>

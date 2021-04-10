@@ -1,0 +1,21 @@
+@import '../../../../assets/styles/main';
+
+button, i {
+  cursor: pointer;
+}
+
+.answers {
+  display: flex;
+  width: 450px;
+  justify-content: space-between;
+}
+
+.buttons_footer {
+  display: flex;
+  justify-content: space-between;
+
+  & button {
+    border: none;
+    border-radius: 5px;
+  }
+}
