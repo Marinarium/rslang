@@ -22,7 +22,8 @@ export default function Sprint() {
 	const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
 	// они соответствуют странице учебника, на которой находимся
 	const userId = useSelector((state) => state.auth.userId);
-
+	const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+	const token = useSelector(state => state.auth.token);
 	const [currentWordId, setCurrentWordId] = useState("");
 	const [boost, setBoost] = useState(0);
 	const [activeWord, setActiveWord] = useState(0);
@@ -121,11 +122,11 @@ export default function Sprint() {
 			setActiveWord(activeWord + 1);
 			setScoreGame(scoreGame + (Math.floor(boost / 4) * 20 + 10));
 			setTrueAnswer(trueAnswer + 1);
-			goodCount(userId, currentWordId, words);
+			isAuthenticated && goodCount(userId, currentWordId, words, token);
 		} else {
 			setBoost(0);
 			setActiveWord(activeWord + 1);
-			badCount(userId, currentWordId, words);
+			isAuthenticated && badCount(userId, currentWordId, words, token);
 		}
 
 	}
