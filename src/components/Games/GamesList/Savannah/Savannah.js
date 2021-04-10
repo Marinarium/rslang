@@ -138,6 +138,7 @@ export default function Savannah() {
         );
     }
 
+
     const startNewGame = () => {
         setHealth(5);
         setActiveWord(0);

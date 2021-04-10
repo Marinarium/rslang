@@ -1,0 +1,69 @@
+@import '../../../../assets/styles/main';
+
+button, i {
+  cursor: pointer;
+}
+
+.make_word {
+  border: 1px solid $lightGrey;
+  border-radius: 10px;
+  text-align: center;
+
+  & h3 {
+
+    & span {
+      color: $sixthColor;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  & .start_make {
+    visibility: visible;
+    border: none;
+    border-radius: 5px;
+    background-color: $fifthColor;
+  }
+
+  & .start_make_dis {
+    visibility: hidden;
+  }
+
+  & p {
+    color: $darkGrey;
+    font-size: 14px;
+  }
+}
+
+.make_word_game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.word_description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & span {
+    margin-right: 20px;
+  }
+}
+
+.word_letters {
+  height: 30px;
+  align-items: center;
+  display: flex;
+}
+
+.buttons_footer {
+  display: flex;
+  justify-content: space-between;
+
+  & button {
+    border: none;
+    border-radius: 5px;
+  }
+}
