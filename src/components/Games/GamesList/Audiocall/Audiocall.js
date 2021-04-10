@@ -5,6 +5,7 @@ import styles from "./Audiocall.module.scss";
 
 import Info from "./Info/Info";
 import Answer from "./Answer/Answer";
+import {Link} from "react-router-dom";
 
 const a = 'первый';
 const b = 'второй';
@@ -79,6 +80,12 @@ export default function Audiocall() {
     <section className={styles.audiocall}>
       {seconds === 0 ? (
         <>
+          <div className={styles.top__exit}>
+            <Link to="/games">
+              <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" alt=''/>
+            </Link>
+          </div>
+
           <div>
             {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn} correct={correct}/>}
           </div>

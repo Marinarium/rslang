@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {FullScreen, useFullScreenHandle} from "react-full-screen";
+//import {FullScreen, useFullScreenHandle} from "react-full-screen";
 import {useSelector} from "react-redux";
 import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
@@ -26,7 +26,7 @@ export default function MakeAWord() {
   const [looseCount, setLooseCount] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const arrRef = useRef(arrWords);
-  const handle = useFullScreenHandle();
+  //const handle = useFullScreenHandle();
 
   const {goodCount, badCount} = useGameData();
   const words = useSelector(state => state.words.items);
@@ -143,73 +143,67 @@ export default function MakeAWord() {
 
   return (
     <section className={styles.make_word}>
-      <button className={styles.start_make} onClick={handle.enter}>
-        Enter fullscreen
+      <button
+        className={gameActive ? styles.start_make_dis : styles.start_make}
+        onClick={startGame}
+        disabled={gameActive ? "disabled" : null}
+      >
+        Начать тренировку
       </button>
 
-      <FullScreen handle={handle}>
-        <button
-          className={gameActive ? styles.start_make_dis : styles.start_make}
-          onClick={startGame}
-          disabled={gameActive ? "disabled" : null}
-        >
-          Начать тренировку
-        </button>
+      <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
 
-        <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
+      {gameActive ? (
+        <main className={styles.make_word_game}>
 
-        {gameActive ? (
-          <main className={styles.make_word_game}>
+          <InputWord answer={answer}/>
 
-            <InputWord answer={answer}/>
-
-            {wordComplete ? (
-              <div>
-                <div>Transcription: {gameWordTranscription}</div>
-                <div>Meaning: {textToHtml(gameWordDescription)}</div>
-              </div>
-            ) : (
-              <div className={styles.word_letters}>
-                {gameWord.map((letter, index) => (
-                  <Letter
-                    key={index}
-                    letter={letter}
-                    correctLettersArr={correctLettersArr}
-                    setCorrectLettersArr={setCorrectLettersArr}
-                    concatenate={concatenate}
-                    endWord={endWord}
-                    totalDone={totalDone}
-                    setTotalDone={setTotalDone}
-                    setWordComplete={setWordComplete}
-                    setWordLoose={setWordLoose}
-                    setTrueCount={setTrueCount}
-                    goodCount={goodCount}
-                  />
-                ))}
-              </div>
-            )}
-
-            <div className={styles.buttons_footer}>
-              <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
-                Сдаться
-              </button>
-              <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
-                Дальше
-              </button>
+          {wordComplete ? (
+            <div>
+              <div>Transcription: {gameWordTranscription}</div>
+              <div>Meaning: {textToHtml(gameWordDescription)}</div>
             </div>
+          ) : (
+            <div className={styles.word_letters}>
+              {gameWord.map((letter, index) => (
+                <Letter
+                  key={index}
+                  letter={letter}
+                  correctLettersArr={correctLettersArr}
+                  setCorrectLettersArr={setCorrectLettersArr}
+                  concatenate={concatenate}
+                  endWord={endWord}
+                  totalDone={totalDone}
+                  setTotalDone={setTotalDone}
+                  setWordComplete={setWordComplete}
+                  setWordLoose={setWordLoose}
+                  setTrueCount={setTrueCount}
+                  goodCount={goodCount}
+                />
+              ))}
+            </div>
+          )}
 
-          </main>
-        ) : null}
+          <div className={styles.buttons_footer}>
+            <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
+              Сдаться
+            </button>
+            <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
+              Дальше
+            </button>
+          </div>
 
-        <Modal modalActive={modalActive} setModalActive={setModalActive}>
-          <ModalFinish
-            trueCount={trueCount}
-            looseCount={looseCount}
-            startGame={startGame}
-          />
-        </Modal>
+        </main>
+      ) : null}
 
-      </FullScreen>
+      <Modal modalActive={modalActive} setModalActive={setModalActive}>
+        <ModalFinish
+          trueCount={trueCount}
+          looseCount={looseCount}
+          startGame={startGame}
+        />
+      </Modal>
+
     </section>
   )
 };
