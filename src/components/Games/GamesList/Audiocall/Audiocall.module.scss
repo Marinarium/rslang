@@ -13,9 +13,28 @@ button, i {
 .buttons_footer {
   display: flex;
   justify-content: space-between;
+  border: none;
+  border-radius: 5px;
+}
 
-  & button {
-    border: none;
-    border-radius: 5px;
-  }
+.timer {
+  display: block;
+  font-size: 75px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timer h1 {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
 }
