@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
-//import {FullScreen, useFullScreenHandle} from "react-full-screen";
-import {useSelector} from "react-redux";
-import {useGameData} from "../../../../hooks/gameDataHook";
+// import {useSelector} from "react-redux";
+// import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
 import styles from "./MakeAWord.module.scss";
 
 import Letter from "./Letter/Letter";
 import InputWord from "./InputWord/InputWord";
 import ModalFinish from "../../ModalFinish/ModalFinish";
-import Modal from "./Modal/Modal";
+import Modal from "../../Modal/Modal";
+import {Link} from "react-router-dom";
 
 export default function MakeAWord() {
   const [arrWords, setArrWords] = useState([]);
@@ -25,12 +25,14 @@ export default function MakeAWord() {
   const [modalActive, setModalActive] = useState(false);
   const [looseCount, setLooseCount] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
+  const [seconds, setSeconds] = useState(5);
   const arrRef = useRef(arrWords);
-  //const handle = useFullScreenHandle();
 
-  const {goodCount, badCount} = useGameData();
-  const words = useSelector(state => state.words.items);
-  const userId = useSelector(state => state.auth.userId);
+  /*  const { goodCount, badCount } = useGameData();
+    const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
+    const userId = useSelector((state) => state.auth.userId);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const token = useSelector(state => state.auth.token);*/
 
   // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
   //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
@@ -57,6 +59,32 @@ export default function MakeAWord() {
         arrRef.current = data;
       });
   }
+
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    if (seconds > 0) {
+      setSeconds(seconds - 1);
+      startGame();
+    }
+  }, 1000);
 
   function startGame() {
     setGameActive(() => true);
@@ -143,67 +171,83 @@ export default function MakeAWord() {
 
   return (
     <section className={styles.make_word}>
-      <button
-        className={gameActive ? styles.start_make_dis : styles.start_make}
-        onClick={startGame}
-        disabled={gameActive ? "disabled" : null}
-      >
-        Начать тренировку
-      </button>
-
-      <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
-
-      {gameActive ? (
-        <main className={styles.make_word_game}>
-
-          <InputWord answer={answer}/>
-
-          {wordComplete ? (
-            <div>
-              <div>Transcription: {gameWordTranscription}</div>
-              <div>Meaning: {textToHtml(gameWordDescription)}</div>
+      {
+        seconds === 0 ? (
+          <>
+            <div className={styles.top__exit}>
+              <Link to="/games">
+                <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" alt=''/>
+              </Link>
             </div>
-          ) : (
-            <div className={styles.word_letters}>
-              {gameWord.map((letter, index) => (
-                <Letter
-                  key={index}
-                  letter={letter}
-                  correctLettersArr={correctLettersArr}
-                  setCorrectLettersArr={setCorrectLettersArr}
-                  concatenate={concatenate}
-                  endWord={endWord}
-                  totalDone={totalDone}
-                  setTotalDone={setTotalDone}
-                  setWordComplete={setWordComplete}
-                  setWordLoose={setWordLoose}
-                  setTrueCount={setTrueCount}
-                  goodCount={goodCount}
-                />
-              ))}
-            </div>
-          )}
 
-          <div className={styles.buttons_footer}>
-            <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
-              Сдаться
-            </button>
-            <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
-              Дальше
-            </button>
+            {/* <button
+                className={gameActive ? styles.start_make_dis : styles.start_make}
+                onClick={startGame}
+                disabled={gameActive ? "disabled" : null}
+              >
+                Начать тренировку
+              </button>*/}
+
+            <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
+
+            {gameActive ? (
+              <main className={styles.make_word_game}>
+
+                <InputWord answer={answer}/>
+
+                {wordComplete ? (
+                  <div>
+                    <div>Transcription: {gameWordTranscription}</div>
+                    <div>Meaning: {textToHtml(gameWordDescription)}</div>
+                  </div>
+                ) : (
+                  <div className={styles.word_letters}>
+                    {gameWord.map((letter, index) => (
+                      <Letter
+                        key={index}
+                        letter={letter}
+                        correctLettersArr={correctLettersArr}
+                        setCorrectLettersArr={setCorrectLettersArr}
+                        concatenate={concatenate}
+                        endWord={endWord}
+                        totalDone={totalDone}
+                        setTotalDone={setTotalDone}
+                        setWordComplete={setWordComplete}
+                        setWordLoose={setWordLoose}
+                        setTrueCount={setTrueCount}
+                        // goodCount={goodCount}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                <div className={styles.buttons_footer}>
+                  <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
+                    Сдаться
+                  </button>
+                  <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
+                    Дальше
+                  </button>
+                </div>
+
+              </main>
+            ) : null}
+
+            <Modal modalActive={modalActive} setModalActive={setModalActive}>
+              <ModalFinish
+                trueCount={trueCount}
+                looseCount={looseCount}
+                startGame={startGame}
+              />
+            </Modal>
+
+          </>
+        ) : (
+          <div className={styles.timer}>
+            <h1>{seconds}</h1>
           </div>
-
-        </main>
-      ) : null}
-
-      <Modal modalActive={modalActive} setModalActive={setModalActive}>
-        <ModalFinish
-          trueCount={trueCount}
-          looseCount={looseCount}
-          startGame={startGame}
-        />
-      </Modal>
-
+        )
+      }
     </section>
   )
 };
