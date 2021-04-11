@@ -5,6 +5,7 @@ import crystal from "./images/crystal.svg";
 import {useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
 import Loader from "../../Loader/Loader";
+import ExitBtn from "../../ExitBtn/ExitBtn";
 
 const SPEED_WORD = 4;
 const LIMIT_WORD = 60;
@@ -160,11 +161,7 @@ export default function Savannah() {
             </div>
             <div className={styles.top}>
               <div className={styles.top__health}>{hp}</div>
-              <div className={styles.top__exit}>
-                <Link to="/games">
-                  <img src="https://img.icons8.com/plasticine/48/000000/close-window.png"/>
-                </Link>
-              </div>
+              <ExitBtn />
             </div>
             <div className={styles.center}>
               {randomWords[Object.keys(randomWords)[activeWord]].map((el) => {

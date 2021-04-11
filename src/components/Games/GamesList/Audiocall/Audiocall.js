@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 // import {useGameData} from "../../../../hooks/gameDataHook";
 // import {useSelector} from "react-redux";
-import {textToHtml} from '../../../../helpers.js'
 import {useInterval} from '../../../../helpers.js'
 import styles from "./Audiocall.module.scss";
 
@@ -9,8 +8,8 @@ import Info from "./Info/Info";
 import Answer from "./Answer/Answer";
 import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
-import {Link} from "react-router-dom";
 import Loader from "../../Loader/Loader";
+import ExitBtn from "../../ExitBtn/ExitBtn";
 
 const a = 'первый';
 const b = 'второй';
@@ -72,11 +71,7 @@ export default function Audiocall() {
     <section className={styles.audiocall}>
       {seconds === 0 ? (
         <>
-          <div className={styles.top__exit}>
-            <Link to="/games">
-              <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" alt=''/>
-            </Link>
-          </div>
+          <ExitBtn />
 
           <div>
             {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn} correct={correct}/>}
@@ -103,7 +98,6 @@ export default function Audiocall() {
               startGame={startGame}
             />
           </Modal>
-
         </>
       ) : (
         <Loader seconds={seconds}/>

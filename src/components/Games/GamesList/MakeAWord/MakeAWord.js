@@ -9,8 +9,8 @@ import Letter from "./Letter/Letter";
 import InputWord from "./InputWord/InputWord";
 import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
-import {Link} from "react-router-dom";
 import Loader from "../../Loader/Loader";
+import ExitBtn from "../../ExitBtn/ExitBtn";
 
 export default function MakeAWord() {
   const [arrWords, setArrWords] = useState([]);
@@ -156,11 +156,7 @@ export default function MakeAWord() {
     <section className={styles.make_word}>
       {seconds === 0 ? (
         <>
-          <div className={styles.top__exit}>
-            <Link to="/games">
-              <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" alt=''/>
-            </Link>
-          </div>
+          <ExitBtn />
 
           <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
 

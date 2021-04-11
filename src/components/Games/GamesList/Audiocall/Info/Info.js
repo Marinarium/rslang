@@ -1,4 +1,5 @@
 import React, {} from 'react';
+import {textToHtml} from '../../../../../helpers.js'
 import styles from "./Info.module.scss";
 
 export default function Info({correct, soundOn}) {
