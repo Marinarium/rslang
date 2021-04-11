@@ -34,6 +34,15 @@ export default function Audiocall() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const token = useSelector(state => state.auth.token);*/
 
+  // useEffect(() => {
+  //   setArrWords([...words]);
+  // }, [words]);
+  //
+  // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
+  //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+  //   activeWordObj && setCurrentWordId(activeWordObj.id)
+  // }, [words, activeWord, randomWords]);
+
   useEffect(() => {
     startGame();
   }, []);

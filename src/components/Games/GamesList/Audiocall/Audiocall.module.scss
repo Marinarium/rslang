@@ -25,6 +25,7 @@ button, i {
   display: flex;
   width: 450px;
   justify-content: space-between;
+  color: $light;
 }
 
 .buttons_footer {
@@ -32,8 +33,4 @@ button, i {
   justify-content: space-between;
   border: none;
   border-radius: 5px;
-}
-
-.top__exit {
-  z-index: 30;
 }
