@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {authLogin, loginFormChange} from '../../redux/authReducer';
-import styles from "../RegisterForm/RegisterForm.module.scss";
 import MainTitle from "../MainTitle/MainTitle";
 
+import styles from "../RegisterForm/RegisterForm.module.scss";
 
 export const LoginForm = () => {
     const history = useHistory();
@@ -34,6 +34,7 @@ export const LoginForm = () => {
                     className={styles.input}
                     onChange={changeHandler}
                     name='email'
+                    type='email'
                     id='mail'
                     value={loginForm.email}
                     required
@@ -46,6 +47,7 @@ export const LoginForm = () => {
                     className={styles.input}
                     onChange={changeHandler}
                     name='password'
+                    type='password'
                     id='password'
                     value={loginForm.password}
                     required

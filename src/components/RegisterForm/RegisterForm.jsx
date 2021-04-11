@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import MainTitle from "../MainTitle/MainTitle";
 
-
 import styles from './RegisterForm.module.scss'
 
 export const RegisterForm = () => {
@@ -36,23 +35,26 @@ export const RegisterForm = () => {
         <form className={styles.form}>
             <MainTitle text={'Регистрация'}/>
             <div className={styles.field}>
-                <label className={styles.label} htmlFor="mail">Email</label>
+                <label className={styles.label} htmlFor="mail">Email*</label>
                 <input
                     className={styles.input}
                     onChange={changeHandler}
                     value={registerForm.email}
                     name='email'
+                    type='email'
                     id='mail'
                     required
                 />
                 <div className={styles.line}/>
             </div>
             <div className={styles.field}>
-                <label className={styles.label} htmlFor="password">Пароль</label>
+                <label className={styles.label} htmlFor="password">Пароль*</label>
                 <input
                     className={styles.input}
                     onChange={changeHandler}
                     value={registerForm.password}
+                    type='password'
+                    minLength='8'
                     name='password'
                     id='password'
                     required
@@ -60,7 +62,7 @@ export const RegisterForm = () => {
                 <div className={styles.line}/>
             </div>
             <div className={styles.field}>
-                <label className={styles.label} htmlFor="name">Никнейм</label>
+                <label className={styles.label} htmlFor="name">Никнейм*</label>
                 <input
                     className={styles.input}
                     onChange={changeHandler}
@@ -71,7 +73,7 @@ export const RegisterForm = () => {
                 />
                 <div className={styles.line}/>
             </div>
-            <label className={styles.label} htmlFor="img">Аватарка</label>
+            <label className={styles.label} htmlFor="img">Аватарка*</label>
             <input className={styles.avatar}
                 id="img"
                 accept=".jpg, .jpeg, .png"
