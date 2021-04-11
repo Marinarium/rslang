@@ -1,4 +1,3 @@
-.timer,
 .endGame {
   display: block;
   font-size: 75px;
@@ -10,15 +9,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.timer h1 {
-  width: 120px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-  border-radius: 50%;
 }
 
 .moveWord {
@@ -68,9 +58,7 @@
   z-index: 30;
   align-self: flex-end;
 }
-.top__exit {
-  z-index: 30;
-}
+
 .top__health {
   display: flex;
   z-index: 30;
@@ -81,6 +69,7 @@
   justify-content: space-around;
   width: 100%;
 }
+
 .button__choise {
   font-size: 30px;
   padding: 10px 20px;
@@ -93,9 +82,11 @@
   z-index: 30;
   transition: 0.5s linear all;
 }
+
 .bottom img {
 	z-index:1000;
 }
+
 .endGame_body {
   width: 50%;
   height: 50%;
@@ -162,6 +153,7 @@
   border: 1px solid wheat;
   border-radius: 10px;
 }
+
 .endGame_body_bottom button a {
   color: #000 !important;
   text-decoration: none;

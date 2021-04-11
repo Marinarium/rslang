@@ -2,13 +2,15 @@ import React, {useState, useEffect, useRef} from 'react';
 // import {useSelector} from "react-redux";
 // import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
+import {useInterval} from '../../../../helpers.js'
 import styles from "./MakeAWord.module.scss";
 
 import Letter from "./Letter/Letter";
 import InputWord from "./InputWord/InputWord";
 import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
-import {Link} from "react-router-dom";
+import Loader from "../../Loader/Loader";
+import ExitBtn from "../../ExitBtn/ExitBtn";
 
 export default function MakeAWord() {
   const [arrWords, setArrWords] = useState([]);
@@ -60,28 +62,9 @@ export default function MakeAWord() {
       });
   }
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
-
   useInterval(() => {
     if (seconds > 0) {
-      setSeconds(seconds - 1);
+      setSeconds((prev) => prev - 1);
       startGame();
     }
   }, 1000);
@@ -171,83 +154,67 @@ export default function MakeAWord() {
 
   return (
     <section className={styles.make_word}>
-      {
-        seconds === 0 ? (
-          <>
-            <div className={styles.top__exit}>
-              <Link to="/games">
-                <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" alt=''/>
-              </Link>
-            </div>
+      {seconds === 0 ? (
+        <>
+          <ExitBtn />
 
-            {/* <button
-                className={gameActive ? styles.start_make_dis : styles.start_make}
-                onClick={startGame}
-                disabled={gameActive ? "disabled" : null}
-              >
-                Начать тренировку
-              </button>*/}
+          <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
 
-            <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
+          {gameActive ? (
+            <main className={styles.make_word_game}>
 
-            {gameActive ? (
-              <main className={styles.make_word_game}>
+              <InputWord answer={answer}/>
 
-                <InputWord answer={answer}/>
-
-                {wordComplete ? (
-                  <div>
-                    <div>Transcription: {gameWordTranscription}</div>
-                    <div>Meaning: {textToHtml(gameWordDescription)}</div>
-                  </div>
-                ) : (
-                  <div className={styles.word_letters}>
-                    {gameWord.map((letter, index) => (
-                      <Letter
-                        key={index}
-                        letter={letter}
-                        correctLettersArr={correctLettersArr}
-                        setCorrectLettersArr={setCorrectLettersArr}
-                        concatenate={concatenate}
-                        endWord={endWord}
-                        totalDone={totalDone}
-                        setTotalDone={setTotalDone}
-                        setWordComplete={setWordComplete}
-                        setWordLoose={setWordLoose}
-                        setTrueCount={setTrueCount}
-                        // goodCount={goodCount}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                <div className={styles.buttons_footer}>
-                  <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
-                    Сдаться
-                  </button>
-                  <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
-                    Дальше
-                  </button>
+              {wordComplete ? (
+                <div>
+                  <div>Transcription: {gameWordTranscription}</div>
+                  <div>Meaning: {textToHtml(gameWordDescription)}</div>
                 </div>
+              ) : (
+                <div className={styles.word_letters}>
+                  {gameWord.map((letter, index) => (
+                    <Letter
+                      key={index}
+                      letter={letter}
+                      correctLettersArr={correctLettersArr}
+                      setCorrectLettersArr={setCorrectLettersArr}
+                      concatenate={concatenate}
+                      endWord={endWord}
+                      totalDone={totalDone}
+                      setTotalDone={setTotalDone}
+                      setWordComplete={setWordComplete}
+                      setWordLoose={setWordLoose}
+                      setTrueCount={setTrueCount}
+                      // goodCount={goodCount}
+                    />
+                  ))}
+                </div>
+              )}
 
-              </main>
-            ) : null}
+              <div className={styles.buttons_footer}>
+                <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
+                  Сдаться
+                </button>
+                <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
+                  Дальше
+                </button>
+              </div>
 
-            <Modal modalActive={modalActive} setModalActive={setModalActive}>
-              <ModalFinish
-                trueCount={trueCount}
-                looseCount={looseCount}
-                startGame={startGame}
-              />
-            </Modal>
+            </main>
+          ) : null}
 
-          </>
-        ) : (
-          <div className={styles.timer}>
-            <h1>{seconds}</h1>
-          </div>
-        )
-      }
+          <Modal modalActive={modalActive} setModalActive={setModalActive}>
+            <ModalFinish
+              trueCount={trueCount}
+              looseCount={looseCount}
+              startGame={startGame}
+            />
+          </Modal>
+
+        </>
+      ) : (
+        <Loader seconds={seconds}/>
+      )}
     </section>
   )
 };

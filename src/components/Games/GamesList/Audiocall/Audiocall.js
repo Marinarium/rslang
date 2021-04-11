@@ -1,11 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react';
-import styles from "./Audiocall.module.scss";
 // import {useGameData} from "../../../../hooks/gameDataHook";
 // import {useSelector} from "react-redux";
+import {useInterval} from '../../../../helpers.js'
+import styles from "./Audiocall.module.scss";
 
 import Info from "./Info/Info";
 import Answer from "./Answer/Answer";
-import {Link} from "react-router-dom";
+import ModalFinish from "../../ModalFinish/ModalFinish";
+import Modal from "../../Modal/Modal";
+import Loader from "../../Loader/Loader";
+import ExitBtn from "../../ExitBtn/ExitBtn";
 
 const a = 'первый';
 const b = 'второй';
@@ -19,6 +23,9 @@ export default function Audiocall() {
 
   const [answers, setAnswers] = useState([]);
   const [wordComplete, setWordComplete] = useState(true);
+  const [modalActive, setModalActive] = useState(false);
+  const [looseCount, setLooseCount] = useState(0);
+  const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
 
   /*  const { goodCount, badCount } = useGameData();
@@ -27,43 +34,35 @@ export default function Audiocall() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const token = useSelector(state => state.auth.token);*/
 
+  // useEffect(() => {
+  //   setArrWords([...words]);
+  // }, [words]);
+  //
+  // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
+  //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+  //   activeWordObj && setCurrentWordId(activeWordObj.id)
+  // }, [words, activeWord, randomWords]);
+
   useEffect(() => {
     startGame();
   }, []);
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
-
   useInterval(() => {
-    if (seconds > 0) {
-      setSeconds((prev) => prev - 1);
-    }
+    if (seconds > 0) setSeconds((prev) => prev - 1)
   }, 1000);
 
   function startGame() {
     setAnswers((answers) => [a, b, c, d, e].sort(() => 0.5 - Math.random()));
-    setWordComplete(() => true)
+    setWordComplete(() => true);
+    setModalActive(() => false);
+    setLooseCount(0);
+    setTrueCount(0);
   }
 
   function chooseCorrect(event) {
     if (correct === event.target.innerText) {
-      endGame()
+      setTrueCount((prev) => prev + 1);
+      endGame();
     }
   }
 
@@ -73,18 +72,15 @@ export default function Audiocall() {
 
   function endGame() {
     console.log('WIN');
-    setWordComplete(() => false)
+    setWordComplete(() => false);
+    setModalActive(() => true);
   }
 
   return (
     <section className={styles.audiocall}>
       {seconds === 0 ? (
         <>
-          <div className={styles.top__exit}>
-            <Link to="/games">
-              <img src="https://img.icons8.com/plasticine/48/000000/close-window.png" alt=''/>
-            </Link>
-          </div>
+          <ExitBtn />
 
           <div>
             {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn} correct={correct}/>}
@@ -103,11 +99,17 @@ export default function Audiocall() {
           <button onClick={startGame} className={styles.buttons_footer}>
             {wordComplete ? 'Сдаться :(' : 'Дальше'}
           </button>
+
+          <Modal modalActive={modalActive} setModalActive={setModalActive}>
+            <ModalFinish
+              trueCount={trueCount}
+              looseCount={looseCount}
+              startGame={startGame}
+            />
+          </Modal>
         </>
       ) : (
-        <div className={styles.timer}>
-          <h1>{seconds}</h1>
-        </div>
+        <Loader seconds={seconds}/>
       )}
     </section>
   )

@@ -3,6 +3,7 @@ import styles from "./Sprint.module.scss";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGameData } from "../../../../hooks/gameDataHook";
+import Loader from "../../Loader/Loader";
 
 const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 	'#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -229,9 +230,7 @@ export default function Sprint() {
 					</div>
 				)
 			) : (
-				<div className={styles.timer}>
-					<h1>{seconds}</h1>
-				</div>
+				<Loader seconds={seconds}/>
 			)}
 		</div>
 	) : (
