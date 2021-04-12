@@ -5,6 +5,14 @@
   @include wrapper;
 }
 
+.instruction {
+  @include text-font(12px, normal);
+  max-width: 400px;
+  color: $darkGrey;
+  position: relative;
+  top: -30px
+}
+
 .field {
   position: relative;
   width: 350px;
