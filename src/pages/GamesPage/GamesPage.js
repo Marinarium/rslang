@@ -69,16 +69,19 @@ export default function GamesPage({location, match}) {
     return (
         <>
             {
-                modalIsVisible && <div>
-                    <h4>Выберите сложность игры</h4>
+                modalIsVisible && <div className={styles.wrap}>
+                    <h4 className={styles.title}>Выберите сложность игры</h4>
+                    <div className={styles.list}>
                     {
                         unitItems.map(i => <button
+                            className={styles.button}
                             key={i.group}
                             style={{backgroundColor: i.color}}
                             onClick={() => buttonHandler(i.group - 1)}>{i.group}
                         </button>)
                     }
-                    <button onClick={confirmHandler}>Начать</button>
+                    </div>
+                    <button onClick={confirmHandler} className={styles.start}>Начать</button>
                 </div>
             }
             <main className={styles.main}>

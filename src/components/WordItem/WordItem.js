@@ -158,11 +158,11 @@ export default function WordItem({
                 </div>
                 <div className={styles.description}>
                     <div className={styles.meaning}>
-                        <p className={styles.meaning_eng}>{textMeaning}</p>
+                        <p className={styles.meaning_eng} dangerouslySetInnerHTML={{ __html: textMeaning }}></p>
                         {isWordTranslated && <p className={styles.meaning_ru}>{textMeaningTranslate}</p>}
                     </div>
                     <div className={styles.example}>
-                        <p className={styles.example_eng}>{textExample}</p>
+                        <p className={styles.example_eng}  dangerouslySetInnerHTML={{ __html: textExample }}></p>
                         {isWordTranslated && <p className={styles.example_ru}>{textExampleTranslate}</p>}
                     </div>
                 </div>
@@ -176,6 +176,7 @@ export default function WordItem({
                                 className={`${styles.button} ${classesAlt.join(' ')}`}
                                 type="button"
                                 onClick={deleteButtonHandler}
+                                style={{backgroundColor: '#FDFDFD'}}
                             >
                                 В удалённые слова
                             </button>

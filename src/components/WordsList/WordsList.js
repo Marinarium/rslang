@@ -82,8 +82,6 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
 
     return (
         <>
-            <Games startGameHandler={startGameHandler}/>
-            <Pagination handlePageClick={handlePageClick} currentPage={currentPage}/>
             <section className={styles.statistic_page}>
                 <h3>слов на странице: {words.length}</h3>
                 <h3>общий результат страницы: {totalPageResult.good}/{totalPageResult.bad}</h3>
@@ -91,6 +89,8 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
             <div className={styles.words}>
                 {allWords}
             </div>
+            <Pagination handlePageClick={handlePageClick} currentPage={currentPage}/>
+            <Games startGameHandler={startGameHandler}/>
         </>
     );
 }

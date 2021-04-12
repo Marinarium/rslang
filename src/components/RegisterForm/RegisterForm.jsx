@@ -34,6 +34,7 @@ export const RegisterForm = () => {
     return (
         <form className={styles.form}>
             <MainTitle text={'Регистрация'}/>
+            <p className={styles.instruction}>Для того, чтобы воспользоваться всеми функциями приложения - пожалуйста зарегистрируйтесь, потом прейдите на страницу входа, войдите и перезагрузите страницу. Пароль должен содержать не менее 8 символов</p>
             <div className={styles.field}>
                 <label className={styles.label} htmlFor="mail">Email*</label>
                 <input

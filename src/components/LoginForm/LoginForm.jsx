@@ -26,7 +26,7 @@ export const LoginForm = () => {
 
     };
     return (
-        <form className={styles.form}>
+        <form className={styles.form} id="registration">
             <MainTitle text={'Вход'}/>
             <div className={styles.field}>
                 <label className={styles.label} htmlFor="mail">Email</label>
@@ -54,7 +54,7 @@ export const LoginForm = () => {
                 />
                 <div className={styles.line}/>
             </div>
-            <button className={styles.button} onClick={submitHandler}>Войти</button>
+            <button className={styles.button} onClick={submitHandler} form="registration" type="submit">Войти</button>
         </form>
     )
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import styles from './Pagination.module.scss';
+
+import './Pagination.scss'
+
 export const Pagination = ({handlePageClick, currentPage}) => {
-
-
     return (
         <ReactPaginate
-            previousLabel={'previous'}
-            nextLabel={'next'}
+            previousLabel={'<  '}
+            nextLabel={'  >'}
             breakLabel={'...'}
             breakClassName={'break-me'}
             pageCount={30}
@@ -15,7 +15,7 @@ export const Pagination = ({handlePageClick, currentPage}) => {
             pageRangeDisplayed={5}
             onPageChange={handlePageClick}
             containerClassName={'pagination'}
-            activeClassName={styles.active}
+            activeClassName={'active'}
             forcePage={+currentPage}
         />
     );
