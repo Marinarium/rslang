@@ -70,9 +70,6 @@ export default function Header() {
             <Link to="/" className={styles.logo}>
                 <img src={logo} alt="Logo RSLang" className={styles.logo}/>
             </Link>
-            {isAuthenticated && avatar &&
-            <div className={styles.avatar}><img src={baseUrl + avatar} alt={'avatar'}/></div>}
-            {isAuthenticated && <div className={styles.name}>{name}</div>}
             <nav className={styles.menu}>
                 <div className={!menuState ? `${styles.burger}` : `${styles.burger} ${styles.active}`}
                      onClick={showMenu}>
@@ -85,6 +82,12 @@ export default function Header() {
                     {menu}
                 </ul>
             </nav>
+            {isAuthenticated &&
+            <div className={styles.profinfo}>
+                {avatar && <div className={styles.avatar}><img src={baseUrl + avatar} alt={'avatar'}/></div>}
+                <div className={styles.name}>{name}</div>
+            </div>
+            }
 
         </header>
     );
