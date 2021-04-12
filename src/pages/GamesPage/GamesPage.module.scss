@@ -4,3 +4,58 @@
   @include wrapper;
   padding-bottom: 90px;
 }
+
+.wrap {
+  @include wrapper;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.title {
+  @include title-font(20px, bold);
+  margin-bottom: 20px;
+}
+
+.list {
+  margin-bottom: 20px;
+}
+
+.button {
+  @include title-font(16px, normal);
+  color: $light;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  transition-duration: 350ms;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    filter: saturate(200%);
+    transform: scale(1.2);
+  }
+}
+
+.start {
+  @include title-font(16px, normal);
+  color: $light;
+  background-color: $firstColor;
+  padding: 5px 18px;
+  border: 2px solid $firstColor;
+  cursor: pointer;
+  transition-duration: 350ms;
+  min-width: 150px;
+  border-radius: 50px;
+  display: block;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    filter: saturate(200%);
+  }
+}
