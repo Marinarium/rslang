@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {FullScreen, useFullScreenHandle} from "react-full-screen";
 import {useSelector} from "react-redux";
 import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
@@ -26,7 +25,6 @@ export default function MakeAWord() {
   const [looseCount, setLooseCount] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const arrRef = useRef(arrWords);
-  const handle = useFullScreenHandle();
 
   const {goodCount, badCount} = useGameData();
   const words = useSelector(state => state.words.items);
@@ -143,11 +141,7 @@ export default function MakeAWord() {
 
   return (
     <section className={styles.make_word}>
-      <button className={styles.start_make} onClick={handle.enter}>
-        Enter fullscreen
-      </button>
 
-      <FullScreen handle={handle}>
         <button
           className={gameActive ? styles.start_make_dis : styles.start_make}
           onClick={startGame}
@@ -209,7 +203,6 @@ export default function MakeAWord() {
           />
         </Modal>
 
-      </FullScreen>
     </section>
   )
 };
