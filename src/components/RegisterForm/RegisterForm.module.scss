@@ -7,6 +7,7 @@
 
 .instruction {
   @include text-font(12px, normal);
+  line-height: 1.25;
   max-width: 400px;
   color: $darkGrey;
   position: relative;
