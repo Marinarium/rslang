@@ -1,0 +1,54 @@
+@import '../../assets/styles/main';
+
+.pagination {
+  @include title-font(16px, normal);
+  color: $dark;
+  display: flex;
+  justify-content: center;
+  margin: 30px auto 60px;
+
+  li {
+    margin: 0 10px;
+
+    @media (max-width: 500px) {
+      margin: 0 5px;
+    }
+  }
+
+  a {
+    transition-duration: 300ms;
+  }
+
+  a:focus, a:hover {
+    outline: none;
+    color: $firstColor;
+    cursor: pointer;
+  }
+
+  .active {
+    color: $firstColor;
+  }
+
+  .previous.disabled {
+    color: $lightGrey;
+    transition-duration: 300ms;
+
+    & a:hover {
+      color: $lightGrey;
+      cursor: auto;
+    }
+  }
+
+  .next.disabled {
+    color: $lightGrey;
+    transition-duration: 300ms;
+
+    & a:hover {
+      color: $lightGrey;
+      cursor: auto;
+    }
+  }
+}
+
+
+
