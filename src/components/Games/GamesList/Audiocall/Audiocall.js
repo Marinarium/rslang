@@ -10,6 +10,7 @@ import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
+import Answer from "./Answer/Answer";
 
 export default function Audiocall() {
 
@@ -63,14 +64,17 @@ export default function Audiocall() {
 
   const chooseCorrect = (el) => {
     if (!el[1]) {
-      console.log('НЕправильно')
       isAuthenticated && badCount(userId, currentWordId, words, token);// записываем неправильный ответ
     } else {
-      console.log('правильно')
+      toNextWord();
       setTrueCount((prev) => prev + 1);
       isAuthenticated && goodCount(userId, currentWordId, words, token);// записываем правильный ответ
     }
   };
+
+  function toNextWord() {
+    console.log('правильно')
+  }
 
   function soundOn() {
     console.log('soundOn')
@@ -94,19 +98,18 @@ export default function Audiocall() {
           </div>
 
           <div className={styles.answers}>
-            {randomWords[Object.keys(randomWords)[activeWord]].map((el) => {
+            {randomWords[Object.keys(randomWords)[activeWord]].map((el, index) => {
               return (
-                <div
-                  key={el[0]}
-                  onClick={() => chooseCorrect(el)}
-                >
-                  {el[0]}
-                </div>
+                <Answer
+                  key={index}
+                  el={el}
+                  chooseCorrect={chooseCorrect}
+                />
               );
             })}
           </div>
 
-          <button onClick={startNewGame} className={styles.buttons_footer}>
+          <button onClick={toNextWord} className={styles.buttons_footer}>
             {wordComplete ? 'Сдаться :(' : 'Дальше'}
           </button>
 
