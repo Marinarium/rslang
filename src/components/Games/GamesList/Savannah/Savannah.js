@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import crystal from "./images/crystal.svg";
 import {useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
+import {useInterval} from '../../../../helpers.js'
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
 
@@ -31,25 +32,6 @@ export default function Savannah() {
   const [seconds, setSeconds] = useState(5);
   const [trueAnswer, setTrueAnswer] = useState(0);
   const [newWord, setNewWord] = useState(false);
-
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
 
   useEffect(() => {
     setArrWords([...words]);

@@ -3,6 +3,7 @@ import styles from "./Sprint.module.scss";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGameData } from "../../../../hooks/gameDataHook";
+import {useInterval} from '../../../../helpers.js'
 import Loader from "../../Loader/Loader";
 
 const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -35,43 +36,6 @@ export default function Sprint() {
 	const [trueAnswer, setTrueAnswer] = useState(0);
 	const [timer, setTimer] = useState(60);
 	const [randomColor, setRandomColor] = useState(1);
-
-	function useInterval(callback, delay) {
-		const savedCallback = useRef();
-
-		useEffect(() => {
-			savedCallback.current = callback;
-		}, [callback]);
-
-		useEffect(() => {
-			function tick() {
-				savedCallback.current();
-			}
-			if (delay !== null) {
-				let id = setInterval(tick, delay);
-				return () => clearInterval(id);
-			}
-		}, [delay]);
-	}
-
-
-	function useInterval(callback, delay) {
-		const savedCallback = useRef();
-
-		useEffect(() => {
-			savedCallback.current = callback;
-		}, [callback]);
-
-		useEffect(() => {
-			function tick() {
-				savedCallback.current();
-			}
-			if (delay !== null) {
-				let id = setInterval(tick, delay);
-				return () => clearInterval(id);
-			}
-		}, [delay]);
-	}
 
 	useEffect(() => {
 		setArrWords([...words]);
