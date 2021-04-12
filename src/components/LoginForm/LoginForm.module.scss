@@ -47,6 +47,7 @@
   &:hover,
   &:focus {
     filter: saturate(200%);
+    outline: none;
   }
 }
 
