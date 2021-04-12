@@ -1,110 +1,120 @@
 import React, {useState, useEffect, useRef} from 'react';
-// import {useGameData} from "../../../../hooks/gameDataHook";
-// import {useSelector} from "react-redux";
+import {useGameData} from "../../../../hooks/gameDataHook";
+import {useSelector} from "react-redux";
 import {useInterval} from '../../../../helpers.js'
 import styles from "./Audiocall.module.scss";
 
 import Info from "./Info/Info";
-import Answer from "./Answer/Answer";
+// import Answer from "./Answer/Answer";
 import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
 
-const a = 'первый';
-const b = 'второй';
-const c = 'третий';
-const d = 'четвёртый';
-const e = 'ПРАВИЛЬНОЕ';
-
-const correct = 'ПРАВИЛЬНОЕ';
-
 export default function Audiocall() {
 
-  const [answers, setAnswers] = useState([]);
+  const [arrWords, setArrWords] = useState([]);
+  const [randomWords, setRandomWords] = useState([]);
   const [wordComplete, setWordComplete] = useState(true);
   const [modalActive, setModalActive] = useState(false);
-  const [looseCount, setLooseCount] = useState(0);
+  const [currentWordId, setCurrentWordId] = useState('');
+  const [activeWord, setActiveWord] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
 
-  /*  const { goodCount, badCount } = useGameData();
-    const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
-    const userId = useSelector((state) => state.auth.userId);
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    const token = useSelector(state => state.auth.token);*/
-
-  // useEffect(() => {
-  //   setArrWords([...words]);
-  // }, [words]);
-  //
-  // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
-  //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
-  //   activeWordObj && setCurrentWordId(activeWordObj.id)
-  // }, [words, activeWord, randomWords]);
-
-  useEffect(() => {
-    startGame();
-  }, []);
+  const {goodCount, badCount} = useGameData();
+  const words = useSelector((state) => state.words.items);
+  const userId = useSelector((state) => state.auth.userId);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const token = useSelector(state => state.auth.token);
 
   useInterval(() => {
     if (seconds > 0) setSeconds((prev) => prev - 1)
   }, 1000);
 
-  function startGame() {
-    setAnswers((answers) => [a, b, c, d, e].sort(() => 0.5 - Math.random()));
-    setWordComplete(() => true);
-    setModalActive(() => false);
-    setLooseCount(0);
-    setTrueCount(0);
-  }
+  useEffect(() => {
+    setArrWords(() => [...words])
+  }, [words]);
 
-  function chooseCorrect(event) {
-    if (correct === event.target.innerText) {
+  useEffect(() => {
+    const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+    activeWordObj && setCurrentWordId(activeWordObj.id);
+  }, [words, activeWord, randomWords]);
+
+  useEffect(() => {
+    setRandomWords(
+      arrWords
+        .reduce((result, el) => {
+          const clonedArray = JSON.parse(JSON.stringify(arrWords));
+          result[el.word] = [
+            [el.wordTranslate, true, el.id],
+            ...clonedArray
+              .sort(() => 0.5 - Math.random())
+              .filter((elF) => elF.word !== el.word)
+              .slice(0, 4)
+              .map((el) => {
+                return [el.wordTranslate, false];
+              }),
+          ].sort(() => Math.random() - 0.5);
+          return result;
+        }, {})
+    );
+  }, [arrWords]);
+
+  const chooseCorrect = (el) => {
+    if (!el[1]) {
+      console.log('НЕправильно')
+      isAuthenticated && badCount(userId, currentWordId, words, token);// записываем неправильный ответ
+    } else {
+      console.log('правильно')
       setTrueCount((prev) => prev + 1);
-      endGame();
+      isAuthenticated && goodCount(userId, currentWordId, words, token);// записываем правильный ответ
     }
-  }
+  };
 
   function soundOn() {
     console.log('soundOn')
   }
 
-  function endGame() {
-    console.log('WIN');
-    setWordComplete(() => false);
-    setModalActive(() => true);
-  }
+  const startNewGame = () => {
+    setActiveWord(0);
+    setWordComplete(() => true);
+    setModalActive(() => false);
+    setTrueCount(0);
+  };
 
   return (
     <section className={styles.audiocall}>
       {seconds === 0 ? (
         <>
-          <ExitBtn />
+          <ExitBtn/>
 
           <div>
-            {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn} correct={correct}/>}
+            {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
           </div>
 
           <div className={styles.answers}>
-            {answers.map((word, index) => (
-              <Answer
-                key={index}
-                word={word}
-                chooseCorrect={chooseCorrect}
-              />
-            ))}
+            {randomWords[Object.keys(randomWords)[activeWord]].map((el) => {
+              return (
+                <div
+                  key={el[0]}
+                  onClick={() => chooseCorrect(el)}
+                >
+                  {el[0]}
+                </div>
+              );
+            })}
           </div>
 
-          <button onClick={startGame} className={styles.buttons_footer}>
+          <button onClick={startNewGame} className={styles.buttons_footer}>
             {wordComplete ? 'Сдаться :(' : 'Дальше'}
           </button>
 
           <Modal modalActive={modalActive} setModalActive={setModalActive}>
             <ModalFinish
               trueCount={trueCount}
-              looseCount={looseCount}
-              startGame={startGame}
+              looseCount={Object.keys(randomWords).length - trueCount}
+              startGame={startNewGame}
             />
           </Modal>
         </>

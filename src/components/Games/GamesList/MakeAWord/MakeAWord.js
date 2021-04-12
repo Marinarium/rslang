@@ -25,7 +25,6 @@ export default function MakeAWord() {
   const [gameActive, setGameActive] = useState(false);
   const [totalDone, setTotalDone] = useState(false);
   const [modalActive, setModalActive] = useState(false);
-  const [looseCount, setLooseCount] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
   const arrRef = useRef(arrWords);
@@ -73,7 +72,6 @@ export default function MakeAWord() {
     setGameActive(() => true);
     setWordComplete(() => false);
     setModalActive(() => false);
-    setLooseCount(0);
     setTrueCount(0);
     shuffleLetters(arrRef.current[0].word);
     getLettersArr(arrRef.current[0].word);
@@ -122,7 +120,6 @@ export default function MakeAWord() {
   }
 
   function toLoose() {
-    setLooseCount((prev) => prev + 1);
     //badCount(userId, currentWordId, words); // записываем неправильный ответ
     setWordComplete(() => true);
     setWordLoose(() => true);
@@ -206,7 +203,7 @@ export default function MakeAWord() {
           <Modal modalActive={modalActive} setModalActive={setModalActive}>
             <ModalFinish
               trueCount={trueCount}
-              looseCount={looseCount}
+              looseCount={arrWords.length - trueCount}
               startGame={startGame}
             />
           </Modal>
