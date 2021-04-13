@@ -139,7 +139,6 @@ export default function WordItem({
         <section className={styles.card}>
             <header className={`${styles.head} ${classes.join(' ')}`}>
                 <p>{goodGameResults}/{badGameResults}</p>
-
             </header>
             <main className={styles.main}>
                 <div className={styles.main_info}>
@@ -148,9 +147,8 @@ export default function WordItem({
                         <img src={speaker} alt="audio" className={styles.speaker} onClick={playHandler}/>
                         <h4 className={`${styles.word} ${classesAlt.join(' ')}`}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
-
+                        {/*!!!!!!добавить стили для сложного слова, надпись удалить*/}
                         {difficulty === 'hard' && <p style={{color: 'red', marginLeft: 50}}>СЛОЖНОЕ СЛОВО</p>}
-
 
                         {isWordTranslated && <span className={styles.translation}>{wordTranslate}</span>}
                     </div>
