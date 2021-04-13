@@ -27,7 +27,6 @@ export default function WordItem({
                                      difficulty,
                                      userWord
 
-
                                  }) {
 
 
@@ -53,8 +52,8 @@ export default function WordItem({
     const classes = [];
     const classesAlt = [];
 
-    switch (activeUnit.name) { //тут сократить, думаю, как-то можно, или по-другому сделать и в CSS по норм сделать
-        case '1 раздел' :// и вообще без массива, через переменную, но пока оставляю так, может по-другому будет
+    switch (activeUnit.name) {
+        case '1 раздел' :
             classes.push(styles.unit1);
             classesAlt.push(styles.unit1_alt);
             break;
@@ -177,6 +176,7 @@ export default function WordItem({
                                 type="button"
                                 onClick={deleteButtonHandler}
                                 style={{backgroundColor: '#FDFDFD'}}
+                                disabled={!token}
                             >
                                 В удалённые слова
                             </button>
@@ -184,6 +184,7 @@ export default function WordItem({
                                 className={`${styles.button} ${classes.join(' ')}`}
                                 type="button"
                                 onClick={difficultButtonHandler}
+                                disabled={!token}
                             >
                                 В сложные слова
                             </button>
