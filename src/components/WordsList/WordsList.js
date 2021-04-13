@@ -77,7 +77,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     };
     useEffect(() => {
         userId && dispatch(getStatistics({userId, token}))
-    },[userId, token])
+    },[dispatch, userId, token]);
     useEffect(() => {
 
         const totalGoodResult = words.reduce((acc, current) => {
@@ -97,7 +97,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                 bad: totalBadResult
             }
         });
-    }, [words])
+    }, [words, dispatch])
 
     return (
         <>

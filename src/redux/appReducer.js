@@ -9,7 +9,7 @@ const initialState = {
     isWordTranslated: true,
     isWordButtonsShown: true
 
-}
+};
 
 const appReducer = createSlice({
     name: 'appReducer',
@@ -24,7 +24,6 @@ const appReducer = createSlice({
                     }
                     return i
                 }),
-
             }
         },
         setCurrentDifficultPagesItem: (state, action) => {
@@ -36,11 +35,9 @@ const appReducer = createSlice({
                     }
                     return i
                 }),
-
             }
         },
         setCurrentDeletedPagesItem: (state, action) => {
-
             return {
                 ...state,
                 currentDeletedPagesArray: state.currentDeletedPagesArray.map((i, index) => {
@@ -49,7 +46,6 @@ const appReducer = createSlice({
                     }
                     return i
                 }),
-
             }
         },
         setCurrentLearnedPagesItem: (state, action) => {
@@ -61,52 +57,42 @@ const appReducer = createSlice({
                     }
                     return i
                 }),
-
             }
         },
         setCurrentPagesArray: (state, action) => {
-
             return {
                 ...state,
                 currentPagesArray: action.payload,
-
             }
         },
         setCurrentDifficultPagesArray: (state, action) => {
-
             return {
                 ...state,
                 currentDifficultPagesArray: action.payload,
-
             }
         },
         setCurrentDeletedPagesArray: (state, action) => {
-
             return {
                 ...state,
                 currentDeletedPagesArray: action.payload,
-
             }
         },
         setCurrentLearnedPagesArray: (state, action) => {
-
             return {
                 ...state,
                 currentLearnedPagesArray: action.payload,
-
             }
         },
         setActiveUnit: (state, action) => {
             return {
                 ...state,
                 activeUnit: action.payload,
-
             }
         },
         setIsWordTranslated: (state, action) => {
             return {
                 ...state,
-                isWordTranslated: action.payload //? action.payload : !state.isWordTranslated
+                isWordTranslated: action.payload
             }
         },
         setIsWordButtonsShown: (state, action) => {
@@ -115,11 +101,9 @@ const appReducer = createSlice({
                 isWordButtonsShown: action.payload //? action.payload : !state.isWordButtonsShown
             }
         },
-
-
     },
     extraReducers: {}
-})
+});
 
 export const {
     setCurrentPagesItem,
@@ -135,6 +119,6 @@ export const {
     setCurrentLearnedPagesItem
 
 
-} = appReducer.actions
+} = appReducer.actions;
 
-export default appReducer.reducer
+export default appReducer.reducer;

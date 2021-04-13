@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './WordItem.module.scss';
 import speaker from './images/speaker.svg';
 import {playAudios} from '../../services/utils/playAudio';

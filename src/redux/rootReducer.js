@@ -3,7 +3,7 @@ import wordsReducer from './wordsReducer'
 import authReducer from './authReducer'
 import appReducer from './appReducer'
 import statReducer from './statReducer'
-import dictionaryReducer from './dictionaryReducer'
+import dictionaryReducer from './dictionaryReducer';
 
 export default configureStore({
   reducer: {
@@ -13,8 +13,8 @@ export default configureStore({
       dictionary: dictionaryReducer,
       stat: statReducer
   },
-    // middleware: (getDefaultMiddleware) =>
-    // getDefaultMiddleware({
-    //     serializableCheck: false,
-    // }),
-})
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+        serializableCheck: false,
+    }),
+});

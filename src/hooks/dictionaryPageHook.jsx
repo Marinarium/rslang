@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-
 export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, setItem, match) => {
 
     const dispatch = useDispatch();
@@ -15,20 +14,14 @@ export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, s
         const lSPagesArray = JSON.parse(localStorage.getItem(storageName))
         lSPagesArray && dispatch(setArray(lSPagesArray))
 
-    }, [dispatch]);
+    }, [storageName, dispatch, setArray]);
 
     useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
-
         localStorage.setItem(storageName, JSON.stringify(currentPagesArray));
 
-    }, [currentPagesArray]);
+    }, [storageName, currentPagesArray]);
 
     useEffect(() => { // Загружаем сложные слова
-
         userId && dispatch(getWords({group: currentGroup, page: currentPage, userId, token}));
-
-    }, [dispatch, userId, currentGroup, currentPage]);
-
-
-
-}
+    }, [dispatch, userId, currentGroup, currentPage, token, getWords]);
+};

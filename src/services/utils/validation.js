@@ -1,20 +1,20 @@
 export function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return re.test(String(email).toLowerCase())
-}
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+};
 
-export function validateName(name) {
-    const re = /^[A-Za-zА-Яа-я -]+$/
-    return re.test(String(name).toLowerCase())
-
-}
+// export function validateName(name) {
+//     const re = /^[A-Za-zА-Яа-я -]+$/;
+//     return re.test(String(name).toLowerCase())
+//
+// }
 
 
 export const validateControl = (value, validation) => {
     if (!validation) {
         return true
     }
-    let isValid = true
+    let isValid = true;
 
     if (validation.required) {
         isValid = value.trim() !== '' && isValid
@@ -25,7 +25,7 @@ export const validateControl = (value, validation) => {
     }
 
     if (validation.name) {
-        isValid = validateName(value) && isValid
+        isValid = (String(value).length >= 1) && isValid
     }
 
     if (validation.password) {
@@ -33,4 +33,4 @@ export const validateControl = (value, validation) => {
     }
 
     return isValid
-}
+};

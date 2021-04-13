@@ -1,4 +1,4 @@
-import {request} from './request'
+import {request} from './request';
 
 export const statApi = {
 
@@ -12,7 +12,6 @@ export const statApi = {
                 'Accept': 'application/json'
             }
         )
-
     },
 
     putStatistics({userId, stats, token}) {
@@ -40,27 +39,5 @@ export const statApi = {
             }
         )
     },
-    getDeletedWords({group, page, userId, token}) { //Get deleted words
-        return request(
-            `users/${userId}/aggregatedWords?filter={"userWord.optional.deleted":true}&group=${group}&page=${page}&wordsPerPage=20`,
-            'GET',
-            true,
-            {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        )
-    },
-    getLearnedWords({group, page, userId, token}) { //Get learned words
-        return request(
-            `users/${userId}/aggregatedWords?filter={"$or":[{"userWord.difficulty":"hard"},{"userWord.optional.learned":true}]}&group=${group}&page=${page}&wordsPerPage=20`,
-            'GET',
-            true,
-            {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        )
-    },
 
-}
+};

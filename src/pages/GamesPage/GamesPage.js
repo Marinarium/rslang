@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import Games from "../../components/Games/Games";
 import {useHistory} from 'react-router-dom';
 import styles from "./GamesPage.module.scss";
-import {fetchWords, getAllUserWordsWithoutDeletedWords, updateUserWord} from "../../redux/wordsReducer";
+import {fetchWords, getAllUserWordsWithoutDeletedWords} from "../../redux/wordsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
 import {getStatistics, putStatistics} from "../../redux/statReducer";
@@ -41,7 +41,7 @@ export default function GamesPage({location, match}) {
 
     useEffect(() => {
         userId && dispatch(getStatistics({userId, token}))
-    },[userId, token]);
+    },[userId, token, dispatch]);
 
     const buttonHandler = (group) => {
         setCurrentGroup(group)

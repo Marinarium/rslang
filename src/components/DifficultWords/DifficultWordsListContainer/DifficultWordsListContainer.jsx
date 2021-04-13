@@ -6,8 +6,6 @@ import {setCurrentDifficultPagesArray, setCurrentDifficultPagesItem} from '../..
 import {WordsList} from '../../WordsList/WordsList';
 import {useDictionaryPage} from '../../../hooks/dictionaryPageHook';
 
-
-
 function DifficultWordsListContainer({match}) {
 
     const dispatch = useDispatch();

@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {authLogout, setIsAuthenticated} from '../../redux/authReducer';
 import {baseUrl} from '../../services/baseUrl/baseUrl';
 
-
 export default function Header() {
 
     const dispatch = useDispatch();

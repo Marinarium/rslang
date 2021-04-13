@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {getCount} from "../../redux/statReducer";
+import {getCount, getStatistics} from "../../redux/statReducer";
 import {useDispatch, useSelector} from "react-redux";
 
 export const Statistics = () => {
@@ -10,7 +10,8 @@ export const Statistics = () => {
 
     useEffect(() => {
         userId && dispatch(getCount({userId, token}));
-    }, [userId, token]);
+        userId && dispatch(getStatistics({userId, token}));
+    }, [dispatch, userId, token]);
 
     return (
         <>
@@ -22,5 +23,4 @@ export const Statistics = () => {
         </>
     )
 
-
-}
+};
