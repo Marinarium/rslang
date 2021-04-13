@@ -1,14 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {fetchWords, getAllUserWordsWithoutDeletedWords} from '../../redux/wordsReducer';
+import {fetchWords, getAllUserWordsWithoutDeletedWords, setIsLoading} from '../../redux/wordsReducer';
 import {setCurrentPagesArray, setIsWordButtonsShown, setIsWordTranslated} from '../../redux/appReducer';
 import {setCurrentPagesItem} from '../../redux/appReducer';
 import {WordsList} from '../WordsList/WordsList';
 
+
 function TextBookListContainer({location, match}) {
 
     const dispatch = useDispatch();
+
     const currentGroup = match.params.unit - 1; // номер текущей группы
     const currentPage = useSelector(state => state.app.currentPagesArray[currentGroup]); // номер текущей страницы
     const userId = useSelector(state => state.auth.userId);
@@ -16,7 +18,6 @@ function TextBookListContainer({location, match}) {
     const words = useSelector(state => state.words.items);
     const currentPagesArray = useSelector(state => state.app.currentPagesArray);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-
     useEffect(() => {
         // Записываем массив текущих страниц из LS в store
         const lSPagesArray = JSON.parse(localStorage.getItem('currentPagesArray'));
@@ -29,12 +30,9 @@ function TextBookListContainer({location, match}) {
     }, [dispatch]);
 
     useEffect(() => { // Загружаем слова
-        !isAuthenticated
-        && dispatch(fetchWords({group: currentGroup, page: currentPage}));
-        isAuthenticated
-        && userId
-        && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId, token}));
-    }, [dispatch, currentPage, currentGroup, userId, isAuthenticated, token]);
+        !userId && dispatch(fetchWords({group: currentGroup, page: currentPage}));
+        userId && dispatch(getAllUserWordsWithoutDeletedWords({group: currentGroup, page: currentPage, userId, token}));
+    }, [dispatch, userId,  currentGroup, currentPage, token]);
 
     useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
         localStorage.setItem('currentPagesArray', JSON.stringify(currentPagesArray))
@@ -49,7 +47,8 @@ function TextBookListContainer({location, match}) {
     };
 
     return (
-        <WordsList
+
+         <WordsList
             location={location}
             match={match}
             container={'text-book'}

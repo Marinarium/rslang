@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {Link, withRouter, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {setActiveDictionaryUnit} from '../../redux/dictionaryReducer';
-
 import styles from './DictionaryUnitsList.module.scss';
+
 
 const DictionaryUnitsList = () => {
 
@@ -19,6 +19,7 @@ const DictionaryUnitsList = () => {
     const activeDictionaryUnit = dictionaryItems.find(i => pathname.includes(i.unit)) || dictionaryItems[0];
 
     useEffect(() => {
+
         dispatch(setActiveDictionaryUnit(activeDictionaryUnit));
     }, [activeDictionaryUnit, dispatch]);
 

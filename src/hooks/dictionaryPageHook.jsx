@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {setIsLoading} from "../redux/wordsReducer";
 
 export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, setItem, match) => {
 
@@ -21,7 +22,8 @@ export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, s
 
     }, [storageName, currentPagesArray]);
 
-    useEffect(() => { // Загружаем сложные слова
+    useEffect(() => { // Загружаем  слова
+        dispatch(setIsLoading(true));
         userId && dispatch(getWords({group: currentGroup, page: currentPage, userId, token}));
     }, [dispatch, userId, currentGroup, currentPage, token, getWords]);
 };

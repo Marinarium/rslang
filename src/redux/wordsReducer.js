@@ -7,7 +7,8 @@ const initialState = {
     pageForm: {
         group: '',
         page: ''
-    }
+    },
+    isLoading: false
 };
 
 export const fetchWords = createAsyncThunk(
@@ -162,43 +163,67 @@ const wordsReducer = createSlice({
                 pageForm: {...state.pageForm, ...action.payload}
             }
         },
+        setIsLoading: (state, action) => {
+            return {
+                ...state,
+                isLoading: action.payload
+            }
+        },
 
     },
     extraReducers: {
+        [fetchWords.pending]: (state) => {
+            return {
+                ...state,
+                isLoading: true
+            }
+        },
         [fetchWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoading: false
             }
         },
         [getDifficultWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoading: false
             }
         },
         [getDeletedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoading: false
             }
         },
         [getLearnedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoading: false
             }
         },
         [getAllUserWordsWithoutUserWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoading: false
+            }
+        },
+        [getAllUserWordsWithoutDeletedWords.pending]: (state) => {
+            return {
+                ...state,
+                isLoading: true
             }
         },
         [getAllUserWordsWithoutDeletedWords.fulfilled]: (state, action) => {
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoading: false
             }
         },
         [createUserWord.fulfilled]: (state, action) => {
@@ -221,5 +246,5 @@ const wordsReducer = createSlice({
     }
 });
 
-
+export const {setIsLoading} = wordsReducer.actions
 export default wordsReducer.reducer;

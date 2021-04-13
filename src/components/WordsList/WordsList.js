@@ -8,6 +8,8 @@ import Games from '../Games/Games';
 import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
 import {getStatistics, putStatistics} from "../../redux/statReducer";
 import {useDispatch, useSelector} from "react-redux";
+import {Loader} from "../Loader/Loader";
+
 
 export function WordsList({words, handlePageClick, currentPage, currentGroup, container, location, match}) {
     const history = useHistory();
@@ -15,6 +17,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     const gamesCount = useSelector(state => state.stat.gamesCount);
     const token = useSelector(state => state.auth.token);
     const userId = useSelector(state => state.auth.userId);
+    const isLoading = useSelector(state => state.words.isLoading);
     const [totalPageResult, setTotalPageResult] = useState({});
     const {setUserWords, getWords} = useStartGameWithAuth();
 
@@ -100,7 +103,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
     }, [words, dispatch])
 
     return (
-        <>
+        <> {isLoading ? <Loader/> :<>
             <section className={styles.statistic_page}>
                 <h3>слов на странице: {words.length}</h3>
                 <h3>общий результат страницы: {totalPageResult.good}/{totalPageResult.bad}</h3>
@@ -110,7 +113,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
             </div>
             <Pagination handlePageClick={handlePageClick} currentPage={currentPage}/>
             <Games startGameHandler={startGameHandler}/>
-        </>
+        </>}</>
     );
 }
 
