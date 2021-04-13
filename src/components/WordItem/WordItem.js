@@ -80,7 +80,7 @@ export default function WordItem({
         default:
             break;
     }
-    if (difficulty === 'hard'){
+    if (difficulty === 'hard' && (container === 'text-book' || container === 'Learned') ){
         classes.push(styles.hard);
         classesAlt.push(styles.hard_alt);
     }
