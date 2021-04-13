@@ -2,6 +2,9 @@ import React, {useEffect} from "react";
 import {getCount, getStatistics} from "../../redux/statReducer";
 import {useDispatch, useSelector} from "react-redux";
 
+import styles from './Statistics.module.scss';
+import MainTitle from "../MainTitle/MainTitle";
+
 export const Statistics = () => {
     const dispatch = useDispatch();
     const token = useSelector(state => state.auth.token);
@@ -14,13 +17,25 @@ export const Statistics = () => {
     }, [dispatch, userId, token]);
 
     return (
-        <>
-            <h2>Statistics</h2>
-            <div>learned: {statistics.learned}</div>
-            <div>difficult: {statistics.difficult}</div>
-            <div>deleted: {statistics.deleted}</div>
-            <div>gamesCount: {statistics.gamesCount}</div>
-        </>
+        <main className={styles.main}>
+            <MainTitle text={'Статистика'}/>
+            <div className={styles.box}>
+                <h3 className={styles.subtitle}>На изучении:</h3>
+                <span className={styles.number}>{statistics.learned}</span>
+            </div>
+            <div className={styles.box}>
+                <h3 className={styles.subtitle}>Сложные слова:</h3>
+                <span className={styles.number}>{statistics.difficult}</span>
+            </div>
+            <div className={styles.box}>
+                <h3 className={styles.subtitle}>Удаленные слова:</h3>
+                <span className={styles.number}>{statistics.deleted}</span>
+            </div>
+            <div className={styles.box}>
+                <h3 className={styles.subtitle}>Кол-во сыгранных игр:</h3>
+                <span className={styles.number}>{statistics.gamesCount}</span>
+            </div>
+        </main>
     )
 
 };
