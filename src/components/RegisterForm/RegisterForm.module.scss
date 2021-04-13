@@ -24,7 +24,12 @@
     width: auto;
   }
 }
-
+.error {
+  display: block;
+  text-align: start;
+  font-size: 0.78vw;
+  color: red;
+}
 .label {
   @include title-font(20px);
   display: block;
