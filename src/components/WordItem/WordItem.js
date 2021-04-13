@@ -80,6 +80,10 @@ export default function WordItem({
         default:
             break;
     }
+    if (difficulty === 'hard'){
+        classes.push(styles.hard);
+        classesAlt.push(styles.hard_alt);
+    }
     const difficultButtonHandler = async () => {
         if (userWord) {
             await dispatch(updateUserWord({
@@ -147,9 +151,6 @@ export default function WordItem({
                         <img src={speaker} alt="audio" className={styles.speaker} onClick={playHandler}/>
                         <h4 className={`${styles.word} ${classesAlt.join(' ')}`}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
-                        {/*!!!!!!добавить стили для сложного слова, надпись удалить*/}
-                        {difficulty === 'hard' && <p style={{color: 'red', marginLeft: 50}}>СЛОЖНОЕ СЛОВО</p>}
-
                         {isWordTranslated && <span className={styles.translation}>{wordTranslate}</span>}
                     </div>
                 </div>
