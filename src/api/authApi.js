@@ -1,7 +1,6 @@
 import {request} from './request'
 
 export const authApi = {
-
     getUser(id, token) {
         return request(
             `users/${id}`,
@@ -13,7 +12,6 @@ export const authApi = {
             }
         )
     },
-
     login(loginForm) {
         return request(
             `signin`,
@@ -25,7 +23,6 @@ export const authApi = {
             },
             JSON.stringify({...loginForm})
         )
-
     },
     register(formData) {
         return request(
@@ -35,6 +32,5 @@ export const authApi = {
             {},
             formData
         )
-
     }
-}
+};

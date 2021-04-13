@@ -17,6 +17,7 @@ import Savannah from "../Games/GamesList/Savannah/Savannah";
 import Sprint from "../Games/GamesList/Sprint/Sprint";
 import Audiocall from "../Games/GamesList/Audiocall/Audiocall";
 import MakeAWord from "../Games/GamesList/MakeAWord/MakeAWord";
+import {Statistics} from "../Statistics/Statistics";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/dictionary/deleted/:unit" component={DeletedWords}/>
                 <Route path="/dictionary/learned/:unit" component={LearnedWords}/>
                 <Route path="/settings" component={SettingsPage}/>
+                <Route path="/statistic" component={Statistics}/>
                 <Route path="/games" exact component={GamesPage} />
                 {/*Если тут вносите изменения, убедитесь, что игры работают!!!!*/}
                 <Route path="/games/savannah" component={Savannah} />

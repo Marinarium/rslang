@@ -1,15 +1,17 @@
-import {request} from './request'
+import {request} from './request';
 
 export const statApi = {
 
-    getStatistics(userId) {
+    getStatistics({userId, token}) {
         return request(
             `users/${userId}/statistics`,
             'GET',
             null,
-            {'Accept': 'application/json'}
+            {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
         )
-
     },
 
     putStatistics({userId, stats, token}) {
@@ -26,6 +28,16 @@ export const statApi = {
         )
 
     },
+    getCount({ userId, token}) {
+        return request(
+            `users/${userId}/aggregatedWords/getCount`,
+            'GET',
+            true,
+            {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+    },
 
-
-}
+};

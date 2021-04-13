@@ -1,8 +1,9 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-   activeDictionaryUnit: {},
-}
+    activeDictionaryUnit: {},
+};
+
 
 const dictionaryReducer = createSlice({
     name: 'dictionaryReducer',
@@ -12,15 +13,14 @@ const dictionaryReducer = createSlice({
             return {
                 ...state,
                 activeDictionaryUnit: action.payload,
-
             }
         },
     },
     extraReducers: {}
-})
+});
 
 export const {
     setActiveDictionaryUnit,
-} = dictionaryReducer.actions
+} = dictionaryReducer.actions;
 
 export default dictionaryReducer.reducer

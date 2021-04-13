@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {Link, useLocation, withRouter} from "react-router-dom";
-import styles from './UnitsList.module.scss'
-import {useDispatch} from 'react-redux'
-import {setActiveUnit} from '../../redux/appReducer'
+import styles from './UnitsList.module.scss';
+import {useDispatch} from 'react-redux';
+import {setActiveUnit} from '../../redux/appReducer';
 
 
 function UnitsList({link}) {
@@ -34,7 +34,7 @@ function UnitsList({link}) {
 
     useEffect(() => {
         dispatch(setActiveUnit(activeUnit));
-    }, [activeUnit, dispatch])
+    }, [activeUnit, dispatch]);
 
     const units = unitItems.map(({name, linkTo, color}) => {
         return (
@@ -58,4 +58,4 @@ function UnitsList({link}) {
     );
 }
 
-export default withRouter(UnitsList)
+export default withRouter(UnitsList);

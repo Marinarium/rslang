@@ -6,10 +6,19 @@ import {Pagination} from '../Pagination/Pagination';
 import {useHistory} from 'react-router-dom';
 import Games from '../Games/Games';
 import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
+import {getStatistics, putStatistics} from "../../redux/statReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {Loader} from "../Loader/Loader";
+
 
 export function WordsList({words, handlePageClick, currentPage, currentGroup, container, location, match}) {
     const history = useHistory();
-    const [totalPageResult, setTotalPageResult] = useState({})
+    const dispatch = useDispatch();
+    const gamesCount = useSelector(state => state.stat.gamesCount);
+    const token = useSelector(state => state.auth.token);
+    const userId = useSelector(state => state.auth.userId);
+    const isLoading = useSelector(state => state.words.isLoading);
+    const [totalPageResult, setTotalPageResult] = useState({});
     const {setUserWords, getWords} = useStartGameWithAuth();
 
     const allWords = words.map(({
@@ -55,10 +64,23 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
 
     const startGameHandler = (linkTo) => {
         setUserWords(words);
-        (container === 'text-book') && getWords(currentPage, currentGroup)
-        history.push(`/${linkTo}`)
-    };
+        (container === 'text-book') && getWords(currentPage, currentGroup);
+        dispatch(putStatistics({
+            userId,
+            stats: {
+                "learnedWords": 0,
+                "optional": {
+                    gamesCount: (gamesCount + 1)
+                }
+            },
+            token
+        }));
+        history.push(`/${linkTo}`);
 
+    };
+    useEffect(() => {
+        userId && dispatch(getStatistics({userId, token}))
+    },[dispatch, userId, token]);
     useEffect(() => {
 
         const totalGoodResult = words.reduce((acc, current) => {
@@ -78,10 +100,10 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
                 bad: totalBadResult
             }
         });
-    }, [words])
+    }, [words, dispatch])
 
     return (
-        <>
+        <> {isLoading ? <Loader/> :<>
             <section className={styles.statistic_page}>
                 <h3>слов на странице: {words.length}</h3>
                 <h3>общий результат страницы: {totalPageResult.good}/{totalPageResult.bad}</h3>
@@ -91,7 +113,7 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
             </div>
             <Pagination handlePageClick={handlePageClick} currentPage={currentPage}/>
             <Games startGameHandler={startGameHandler}/>
-        </>
+        </>}</>
     );
 }
 

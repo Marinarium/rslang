@@ -2,17 +2,18 @@ import React, {useEffect, useMemo, useState} from "react";
 import Games from "../../components/Games/Games";
 import {useHistory} from 'react-router-dom';
 import styles from "./GamesPage.module.scss";
-import {fetchWords, getAllUserWordsWithoutDeletedWords, updateUserWord} from "../../redux/wordsReducer";
+import {fetchWords, getAllUserWordsWithoutDeletedWords} from "../../redux/wordsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
+import {getStatistics, putStatistics} from "../../redux/statReducer";
 
 export default function GamesPage({location, match}) {
     const history = useHistory();
     const page = useMemo(() => Math.ceil(Math.random() * 19), []);
-    console.log('page', page)
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [link, setLink] = useState(null);
     const dispatch = useDispatch();
+    const gamesCount = useSelector(state => state.stat.gamesCount);
     const userId = useSelector(state => state.auth.userId);
     const token = useSelector(state => state.auth.token);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -38,6 +39,10 @@ export default function GamesPage({location, match}) {
         {group: '6', color: bgColors.sixthColor}
     ];
 
+    useEffect(() => {
+        userId && dispatch(getStatistics({userId, token}))
+    },[userId, token, dispatch]);
+
     const buttonHandler = (group) => {
         setCurrentGroup(group)
         isAuthenticated
@@ -60,11 +65,22 @@ export default function GamesPage({location, match}) {
         setUserWords(words);
         getWords(page, currentGroup);
         setModalIsVisible(false);
+        dispatch(putStatistics({
+            userId,
+            stats: {
+                "learnedWords": 0,
+                "optional": {
+                    gamesCount: (gamesCount + 1)
+                }
+            },
+            token
+        }));
         link && history.push(`/${link}`);
     };
     const startGameHandler = (linkTo) => {
         setModalIsVisible(true);
         setLink(linkTo);
+
     };
     return (
         <>

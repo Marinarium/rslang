@@ -2,10 +2,11 @@ import React, {useState, useEffect, useRef} from "react";
 import styles from "./Savannah.module.scss";
 import {Link} from "react-router-dom";
 import crystal from "./images/crystal.svg";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
+import {putStatistics} from "../../../../redux/statReducer";
 
 const SPEED_WORD = 4;
 const LIMIT_WORD = 60;
@@ -14,12 +15,13 @@ const RETURN_START_WORD = -20;
 export default function Savannah() {
 
   const {goodCount, badCount} = useGameData();
-
+  const dispatch = useDispatch();
   const words = useSelector(state => state.words.items);//!!!слова берем из уже имеющихся в сторе,
   // они соответствуют странице учебника, на которой находимся
   const userId = useSelector(state => state.auth.userId);
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const token = useSelector(state => state.auth.token);
+  const gamesCount = useSelector(state => state.stat.gamesCount);
 
   const [currentWordId, setCurrentWordId] = useState('');
   const [health, setHealth] = useState(5);
@@ -148,6 +150,16 @@ export default function Savannah() {
     setNumberWords(15);
     setSeconds(5);
     setTrueAnswer(0);
+    dispatch(putStatistics({
+      userId,
+      stats: {
+        "learnedWords": 0,
+        "optional": {
+          gamesCount: (gamesCount + 1)
+        }
+      },
+      token
+    }));
   };
 
   return Object.keys(randomWords).length !== 0 ? (

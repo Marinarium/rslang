@@ -51,6 +51,5 @@ export const useStartGameWithAuth = () => {
     }))
    };
 
-
     return {setUserWords, getWords}
-}
+};

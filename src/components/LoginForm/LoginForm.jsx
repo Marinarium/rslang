@@ -6,22 +6,12 @@ import MainTitle from "../MainTitle/MainTitle";
 import {validateControl} from '../../services/utils/validation';
 import styles from "../RegisterForm/RegisterForm.module.scss";
 
+
 export const LoginForm = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const loginForm = useSelector(state => state.auth.loginForm);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-
-    const [nameValidation, setNameValidation] = useState({
-        name: 'name',
-        valid: false,
-        touched: false,
-        validation: {
-            required: true,
-            name: true
-        },
-        errorMessage: 'Введите корректное имя'
-    });
 
     const [emailValidation, setEmailValidation] = useState({
         name: 'email',
@@ -33,6 +23,7 @@ export const LoginForm = () => {
         },
         errorMessage: 'Введите корректный email'
     });
+
     const [passwordValidation, setPasswordValidation] = useState({
         name: 'password',
         valid: false,
@@ -65,13 +56,15 @@ export const LoginForm = () => {
     const submitHandler = (event) => {
         event.preventDefault();
         dispatch(authLogin(loginForm));
+
     };
     return (
         <form className={styles.form} id="registration">
             <MainTitle text={'Вход'}/>
             <div className={styles.field}>
                 <label className={styles.label} htmlFor="mail">Email</label>
-                <span className={styles.error}>{emailValidation.touched && !emailValidation.valid && emailValidation.errorMessage}</span>
+                <span
+                    className={styles.error}>{emailValidation.touched && !emailValidation.valid && emailValidation.errorMessage}</span>
                 <input
                     className={styles.input}
                     onChange={changeHandler}
@@ -86,7 +79,8 @@ export const LoginForm = () => {
             </div>
             <div className={styles.field}>
                 <label className={styles.label} htmlFor="password">Пароль</label>
-                <span className={styles.error}>{passwordValidation.touched && !passwordValidation.valid && passwordValidation.errorMessage}</span>
+                <span
+                    className={styles.error}>{passwordValidation.touched && !passwordValidation.valid && passwordValidation.errorMessage}</span>
                 <input
                     type='password'
                     className={styles.input}

@@ -12,7 +12,6 @@ export default function Header() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const avatar = useSelector(state => state.auth.avatar);
     const name = useSelector(state => state.auth.name);
-    const userId = useSelector(state => state.auth.userId);
     const menuItems = [
         {name: 'Электронный учебник', linkTo: '/text-book/1'},
         {name: 'Словарь', linkTo: '/dictionary'},
@@ -28,6 +27,7 @@ export default function Header() {
         const localStorageAuthData = JSON.parse(localStorage.getItem('userData'));
         localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData));
     }, [dispatch]);
+
 
     const [menuState, setMenu] = useState(false);
 

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {setIsWordTranslated, setIsWordButtonsShown} from '../../redux/appReducer';
 
-import styles from './Settings.module.scss'
+import styles from './Settings.module.scss';
 import MainTitle from "../MainTitle/MainTitle";
 
 export default function Settings() {
@@ -13,7 +13,7 @@ export default function Settings() {
         event.target.name === 'translation' && dispatch(setIsWordTranslated(!isWordTranslated));
         event.target.name === 'actionButtons' && dispatch(setIsWordButtonsShown(!isWordButtonsShown));
 
-    }
+    };
     useEffect(() => {
 
         localStorage.setItem('wordSettings', JSON.stringify({isWordTranslated, isWordButtonsShown}));
