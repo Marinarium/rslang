@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {authRegister, registerFormChange, setIsRegistered} from '../../redux/authReducer'
-import {useDispatch, useSelector} from 'react-redux'
-import {useHistory} from 'react-router-dom'
+import React, {useEffect, useRef, useState} from 'react';
+import {authRegister, registerFormChange, setIsRegistered} from '../../redux/authReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import MainTitle from "../MainTitle/MainTitle";
 
-import styles from './RegisterForm.module.scss'
+import styles from './RegisterForm.module.scss';
 import {validateControl} from "../../services/utils/validation";
 
 export const RegisterForm = () => {

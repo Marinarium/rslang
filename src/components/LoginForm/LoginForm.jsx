@@ -6,6 +6,7 @@ import MainTitle from "../MainTitle/MainTitle";
 import {validateControl} from '../../services/utils/validation';
 import styles from "../RegisterForm/RegisterForm.module.scss";
 
+
 export const LoginForm = () => {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -65,6 +66,7 @@ export const LoginForm = () => {
     const submitHandler = (event) => {
         event.preventDefault();
         dispatch(authLogin(loginForm));
+
     };
     return (
         <form className={styles.form} id="registration">
