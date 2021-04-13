@@ -3,9 +3,10 @@ import {statApi} from "../api/statApi";
 
 
 const initialState = {
-    learned: [],
-    deleted: [],
-    difficult:[]
+    learned: 0,
+    deleted: 0,
+    difficult: 0,
+    gamesCount: 0
 }
 
 export const getStatistics = createAsyncThunk(
@@ -22,7 +23,7 @@ export const getStatistics = createAsyncThunk(
     }
 );
 export const getCount = createAsyncThunk(
-    'statReducer/getDifficultWordsCount',
+    'statReducer/getCount',
     async ({userId, token}) => {
         const data = await statApi.getCount({userId, token})
             .then((res) => res && res.json())
@@ -59,9 +60,8 @@ const statReducer = createSlice({
 
             return {
                 ...state,
-                learned: action.payload.learnedWords,
-                deleted: action.payload.optional.deleted,
-                difficult:action.payload.optional.difficult
+                gamesCount: action.payload.optional.gamesCount,
+
             }
 
         },
@@ -69,9 +69,9 @@ const statReducer = createSlice({
 
             return {
                 ...state,
-                difficult:action.payload.difficult,
-                deleted:action.payload.deleted,
-                learned:action.payload.learned,
+                difficult: action.payload.difficult,
+                deleted: action.payload.deleted,
+                learned: action.payload.learned,
             }
 
         },
@@ -79,17 +79,13 @@ const statReducer = createSlice({
 
             return {
                 ...state,
-                // learned: action.payload.learnedWords,
-                // deleted: action.payload.optional.deleted,
-                // difficult:action.payload.optional.difficult
-            }
+                gamesCount: action.payload.optional.gamesCount,
 
+            }
         },
     }
 })
 
-export const {
-
-} = statReducer.actions
+export const {} = statReducer.actions
 
 export default statReducer.reducer

@@ -5,16 +5,14 @@ import styles from './Header.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {authLogout, setIsAuthenticated} from '../../redux/authReducer';
 import {baseUrl} from '../../services/baseUrl/baseUrl';
-import {getCount, getDifficultWordsCount, getStatistics} from "../../redux/statReducer";
+
 
 export default function Header() {
 
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const avatar = useSelector(state => state.auth.avatar);
-    const token = useSelector(state => state.auth.token);
     const name = useSelector(state => state.auth.name);
-    const userId = useSelector(state => state.auth.userId);
     const menuItems = [
         {name: 'Электронный учебник', linkTo: '/text-book/1'},
         {name: 'Словарь', linkTo: '/dictionary'},
@@ -31,9 +29,6 @@ export default function Header() {
         localStorageAuthData && dispatch(setIsAuthenticated(localStorageAuthData));
     }, [dispatch]);
 
-    useEffect(() => {
-        userId && dispatch(getCount({userId, token}));
-    }, [userId, token]);
 
     const [menuState, setMenu] = useState(false);
 

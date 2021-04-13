@@ -6,10 +6,16 @@ import {Pagination} from '../Pagination/Pagination';
 import {useHistory} from 'react-router-dom';
 import Games from '../Games/Games';
 import {useStartGameWithAuth} from "../../hooks/startGameWithAuthHook";
+import {getStatistics, putStatistics} from "../../redux/statReducer";
+import {useDispatch, useSelector} from "react-redux";
 
 export function WordsList({words, handlePageClick, currentPage, currentGroup, container, location, match}) {
     const history = useHistory();
-    const [totalPageResult, setTotalPageResult] = useState({})
+    const dispatch = useDispatch();
+    const gamesCount = useSelector(state => state.stat.gamesCount);
+    const token = useSelector(state => state.auth.token);
+    const userId = useSelector(state => state.auth.userId);
+    const [totalPageResult, setTotalPageResult] = useState({});
     const {setUserWords, getWords} = useStartGameWithAuth();
 
     const allWords = words.map(({
@@ -55,10 +61,23 @@ export function WordsList({words, handlePageClick, currentPage, currentGroup, co
 
     const startGameHandler = (linkTo) => {
         setUserWords(words);
-        (container === 'text-book') && getWords(currentPage, currentGroup)
-        history.push(`/${linkTo}`)
-    };
+        (container === 'text-book') && getWords(currentPage, currentGroup);
+        dispatch(putStatistics({
+            userId,
+            stats: {
+                "learnedWords": 0,
+                "optional": {
+                    gamesCount: (gamesCount + 1)
+                }
+            },
+            token
+        }));
+        history.push(`/${linkTo}`);
 
+    };
+    useEffect(() => {
+        userId && dispatch(getStatistics({userId, token}))
+    },[userId, token])
     useEffect(() => {
 
         const totalGoodResult = words.reduce((acc, current) => {

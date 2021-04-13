@@ -15,10 +15,10 @@ export const Statistics = () => {
     return (
         <>
             <h2>Statistics</h2>
-            <div>{statistics.learned}</div>
-            <div>{statistics.difficult}</div>
-            <div>{statistics.deleted}</div>
-            <div></div>
+            <div>learned: {statistics.learned}</div>
+            <div>difficult: {statistics.difficult}</div>
+            <div>deleted: {statistics.deleted}</div>
+            <div>gamesCount: {statistics.gamesCount}</div>
         </>
     )
 
