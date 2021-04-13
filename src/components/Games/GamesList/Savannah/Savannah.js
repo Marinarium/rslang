@@ -189,9 +189,9 @@ export default function Savannah() {
                 );
               })}
             </div>
-            <div className={styles.bottom}>
-              <img src={crystal}/>
-            </div>
+            {/*<div className={styles.bottom}>*/}
+            {/*  <img src={crystal}/>*/}
+            {/*</div>*/}
           </>
         ) : (
           <div className={styles.endGame}>
@@ -199,7 +199,7 @@ export default function Savannah() {
               <div className={styles.endGame_body_top}>
                 <h1>Круто,отличный результат!</h1>
                 <h3>
-                  {trueAnswer} слов изучено,
+                  {trueAnswer} слов изучено,{' '}
                   {Object.keys(randomWords).length - trueAnswer} на изучении
                 </h3>
               </div>
