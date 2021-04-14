@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector} from "react-redux";
-import {useGameData} from "../../../../hooks/gameDataHook";
+import React, {useState, useEffect, useRef} from 'react';
+// import {useSelector} from "react-redux";
+// import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
 import {useInterval} from '../../../../helpers.js'
 import styles from "./MakeAWord.module.scss";
@@ -27,15 +27,39 @@ export default function MakeAWord() {
   const [modalActive, setModalActive] = useState(false);
   const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
+  const arrRef = useRef(arrWords);
 
-  const { goodCount, badCount } = useGameData();
-  const words = useSelector((state) => state.words.items);
-  const userId = useSelector((state) => state.auth.userId);
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  const token = useSelector(state => state.auth.token);
-  const [currentWordId, setCurrentWordId] = useState('');
-  const [randomWords, setRandomWords] = useState([]);
-  const [activeWord, setActiveWord] = useState(0);
+  /*  const { goodCount, badCount } = useGameData();
+    const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
+    const userId = useSelector((state) => state.auth.userId);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const token = useSelector(state => state.auth.token);*/
+
+  // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
+  //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
+  //   activeWordObj && setCurrentWordId(activeWordObj.id)
+  // }, [words, activeWord, randomWords]);
+
+  useEffect(() => {
+    fetch("https://react-lang-app.herokuapp.com/words")
+      .then((data) => data.json())
+      .then((data) => {
+        data = data.sort(() => 0.5 - Math.random());
+        setArrWords(data);
+        arrRef.current = data;
+        return data;
+      })
+  }, []);
+
+  function anotherNewGame() {
+    fetch("https://react-lang-app.herokuapp.com/words")
+      .then((data) => data.json())
+      .then((data) => {
+        data = data.sort(() => 0.5 - Math.random());
+        setArrWords(data);
+        arrRef.current = data;
+      });
+  }
 
   useInterval(() => {
     if (seconds > 0) {
@@ -44,30 +68,15 @@ export default function MakeAWord() {
     }
   }, 1000);
 
-  useEffect(() => {
-    setArrWords(() => [...words])
-  }, [words]);
-
-  useEffect(() => {
-    const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
-    activeWordObj && setCurrentWordId(activeWordObj.id)
-  }, [words, activeWord, randomWords]);
-
-  useEffect(() => {
-    setRandomWords(() => arrWords.sort(() => 0.5 - Math.random()));
-    // setRandomWords(() => arrWords);
-  }, [arrWords]);
-
   function startGame() {
     setGameActive(() => true);
     setWordComplete(() => false);
     setWordLoose(() => false);
     setModalActive(() => false);
-    setActiveWord(0);
     setTrueCount(0);
-    shuffleLetters(randomWords[0].word);
-    getLettersArr(randomWords[0].word);
-    getTranslate(randomWords[0].wordTranslate);
+    shuffleLetters(arrRef.current[0].word);
+    getLettersArr(arrRef.current[0].word);
+    getTranslate(arrRef.current[0].wordTranslate);
     console.log(wordLoose, 'wordLoose')
   }
 
@@ -84,12 +93,12 @@ export default function MakeAWord() {
   }
 
   function shrinkArr() {
-    if (randomWords.length === 1) {
+    if (arrRef.current.length === 1) {
       setWordComplete(() => false);
       setGameActive(() => false);
     }
     setAnswer(() => '');
-    return setRandomWords(() => randomWords.slice(1));
+    return arrRef.current = arrRef.current.slice(1);
   }
 
   function getLettersArr(word) {
@@ -113,32 +122,33 @@ export default function MakeAWord() {
   }
 
   function toLoose() {
-    isAuthenticated && badCount(userId, currentWordId, words, token);
+    //badCount(userId, currentWordId, words);
     setWordComplete(() => true);
     setWordLoose(() => true);
-    setAnswer(() => randomWords[0].word);
-    getDescription(randomWords[0].textMeaning);
-    getTranscription(randomWords[0].transcription)
+    setAnswer(() => arrRef.current[0].word);
+    getDescription(arrRef.current[0].textMeaning);
+    getTranscription(arrRef.current[0].transcription)
   }
 
   function nextBtn() {
     shrinkArr();
-    if (randomWords.length === 0) {
+    if (arrRef.current.length === 0) {
       setModalActive(() => true);
+      anotherNewGame();
       return;
     }
     setTotalDone(() => true);
     setWordComplete(() => false);
     setWordLoose(() => false);
-    shuffleLetters(randomWords[0].word);
-    getLettersArr(randomWords[0].word);
-    getTranslate(randomWords[0].wordTranslate);
+    shuffleLetters(arrRef.current[0].word);
+    getLettersArr(arrRef.current[0].word);
+    getTranslate(arrRef.current[0].wordTranslate);
   }
 
   function endWord() {
     setTotalDone(() => true);
-    getDescription(randomWords[0].textMeaning);
-    getTranscription(randomWords[0].transcription)
+    getDescription(arrRef.current[0].textMeaning);
+    getTranscription(arrRef.current[0].transcription)
   }
 
   return (
@@ -174,12 +184,7 @@ export default function MakeAWord() {
                       setWordComplete={setWordComplete}
                       setWordLoose={setWordLoose}
                       setTrueCount={setTrueCount}
-                      isAuthenticated={isAuthenticated}
-                      goodCount={goodCount}
-                      userId={userId}
-                      currentWordId={currentWordId}
-                      words={words}
-                      token={token}
+                      // goodCount={goodCount}
                     />
                   ))}
                 </div>

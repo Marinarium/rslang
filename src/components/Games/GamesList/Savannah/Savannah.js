@@ -1,9 +1,10 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import styles from "./Savannah.module.scss";
 import {Link} from "react-router-dom";
 import crystal from "./images/crystal.svg";
 import {useDispatch, useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
+import {useInterval} from '../../../../helpers.js'
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
 import {putStatistics} from "../../../../redux/statReducer";
@@ -33,25 +34,6 @@ export default function Savannah() {
   const [seconds, setSeconds] = useState(5);
   const [trueAnswer, setTrueAnswer] = useState(0);
   const [newWord, setNewWord] = useState(false);
-
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
 
   useEffect(() => {
     setArrWords([...words]);
@@ -134,9 +116,9 @@ export default function Savannah() {
     hp.push(
       <div>
         {health > i ? (
-          <img src="https://img.icons8.com/android/32/fa314a/hearts.png"/>
+          <img src="https://img.icons8.com/android/32/fa314a/hearts.png" alt=''/>
         ) : (
-          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png"/>
+          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png" alt=''/>
         )}
       </div>
     );

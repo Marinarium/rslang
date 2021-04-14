@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Sprint.module.scss";
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { useGameData } from "../../../../hooks/gameDataHook";
+import {useInterval} from '../../../../helpers.js'
 import Loader from "../../Loader/Loader";
 import {putStatistics} from "../../../../redux/statReducer";
 
@@ -37,43 +38,6 @@ export default function Sprint() {
 	const [trueAnswer, setTrueAnswer] = useState(0);
 	const [timer, setTimer] = useState(60);
 	const [randomColor, setRandomColor] = useState(1);
-
-	function useInterval(callback, delay) {
-		const savedCallback = useRef();
-
-		useEffect(() => {
-			savedCallback.current = callback;
-		}, [callback]);
-
-		useEffect(() => {
-			function tick() {
-				savedCallback.current();
-			}
-			if (delay !== null) {
-				let id = setInterval(tick, delay);
-				return () => clearInterval(id);
-			}
-		}, [delay]);
-	}
-
-
-	function useInterval(callback, delay) {
-		const savedCallback = useRef();
-
-		useEffect(() => {
-			savedCallback.current = callback;
-		}, [callback]);
-
-		useEffect(() => {
-			function tick() {
-				savedCallback.current();
-			}
-			if (delay !== null) {
-				let id = setInterval(tick, delay);
-				return () => clearInterval(id);
-			}
-		}, [delay]);
-	}
 
 	useEffect(() => {
 		setArrWords([...words]);
@@ -116,8 +80,8 @@ export default function Sprint() {
 
 	let trueLevel = [];
 	for (let i = 0; i < 3; i++) {
-		trueLevel.push(<div key={i}>{boost % 4 > i ? <div className={styles.sprint__center_level_full}></div>
-			: <div className={styles.sprint__center_level_clear}></div>}</div>);
+		trueLevel.push(<div key={i}>{boost % 4 > i ? <div className={styles.sprint__center_level_full}/>
+			: <div className={styles.sprint__center_level_clear}/>}</div>);
 	}
 	const clickChoice = (click) => {
 		if (click === randomWords[activeWord]['right']) {
@@ -132,7 +96,7 @@ export default function Sprint() {
 			isAuthenticated && badCount(userId, currentWordId, words, token);
 		}
 
-	}
+	};
 
 	useInterval(() => {
 		if (seconds > 0) {
@@ -146,7 +110,7 @@ export default function Sprint() {
 
 	useInterval(() => {
 		setRandomColor(Math.floor(Math.random() * ((colorArray.length - 1) - 0 + 1)) + 0)
-	}, 5000)
+	}, 5000);
 
 	const startNewGame = () => {
 		setBoost(0);
@@ -210,8 +174,8 @@ export default function Sprint() {
 
 						</div>
 						<div className={styles.sprint__bottom}>
-							<img src="https://img.icons8.com/bubbles/75/000000/left.png" onClick={() => clickChoice(true)} />
-							<img src="https://img.icons8.com/bubbles/75/000000/right.png" onClick={() => clickChoice(false)} />
+							<img src="https://img.icons8.com/bubbles/75/000000/left.png" onClick={() => clickChoice(true)} alt=''/>
+							<img src="https://img.icons8.com/bubbles/75/000000/right.png" onClick={() => clickChoice(false)} alt=''/>
 						</div>
 					</>
 				) : (
