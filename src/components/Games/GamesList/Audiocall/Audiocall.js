@@ -86,8 +86,9 @@ export default function Audiocall() {
 
   function toNextWord() {
     //console.log(randomWords)
+    setActiveWord((prev) => prev + 1);
     setWordComplete(() => false);
-    setRandomWords(() => randomWords[Object.keys(randomWords)[activeWord+1]])
+    setRandomWords(() => randomWords[Object.keys(randomWords)[activeWord]])
   }
 
   function soundOn() {
