@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from "./Answer.module.scss";
 import {baseUrl} from "../../../../../services/baseUrl/baseUrl";
 
-export default function Answer({answer, setTrueCount, goodCount, badCount, isAuthenticated,
+export default function Answer({answer, setWordComplete, setTrueCount, goodCount, badCount, isAuthenticated,
                                  userId, currentWordId, words, token}) {
 
   const [done, setDone] = useState(false);
@@ -27,8 +27,12 @@ export default function Answer({answer, setTrueCount, goodCount, badCount, isAut
       isAuthenticated && badCount(userId, currentWordId, words, token);
     } else {
       setDone(() => true);
+      setWordComplete(() => true);
       setTrueCount((prev) => prev + 1);
       isAuthenticated && goodCount(userId, currentWordId, words, token);
+
+      soundOn()
+
       // shrinkArr();
       // if (randomWords.length === 0) {
       //   setModalActive(() => true);

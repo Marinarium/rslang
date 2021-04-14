@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {useGameData} from "../../../../hooks/gameDataHook";
 // import {useHistory} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useInterval} from '../../../../helpers.js'
+import {putStatistics} from "../../../../redux/statReducer";
 import styles from "./Audiocall.module.scss";
 
 import Info from "./Info/Info";
@@ -11,6 +12,7 @@ import Modal from "../../Modal/Modal";
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
 import Answer from "./Answer/Answer";
+import {baseUrl} from "../../../../services/baseUrl/baseUrl";
 
 export default function Audiocall() {
 
@@ -22,11 +24,13 @@ export default function Audiocall() {
   const [activeWord, setActiveWord] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
+  const dispatch = useDispatch();
   const {goodCount, badCount} = useGameData();
   const words = useSelector((state) => state.words.items);
   const userId = useSelector((state) => state.auth.userId);
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const token = useSelector(state => state.auth.token);
+  const gamesCount = useSelector(state => state.stat.gamesCount);
   // const history = useHistory();
 
   useInterval(() => {
@@ -47,7 +51,6 @@ export default function Audiocall() {
       arrWords
         .reduce((result, el) => {
           const clonedArray = JSON.parse(JSON.stringify(arrWords));
-          console.log(result)
           result[el.word] = [
             [el.wordTranslate, true, el.id, el.audio],
             ...clonedArray
@@ -63,20 +66,35 @@ export default function Audiocall() {
     );
   }, [arrWords]);
 
-  function shrinkArr() {
-    if (randomWords.length === 1) {
-      setWordComplete(() => false);
-    }
-    return setRandomWords(() => randomWords.slice(1));
-  }
-
-
   const startGame = () => {
     setActiveWord(0);
     setWordComplete(() => false);
     setModalActive(() => false);
     setTrueCount(0);
+    token && dispatch(putStatistics({
+      userId,
+      stats: {
+        "learnedWords": 0,
+        "optional": {
+          gamesCount: (gamesCount + 1)
+        }
+      },
+      token
+    }));
   };
+
+  function toNextWord() {
+    //console.log(randomWords)
+
+    setWordComplete(() => false);
+    setRandomWords(() => randomWords[Object.keys(randomWords)[activeWord+1]])
+  }
+
+  function soundOn() {
+    // const audio = new Audio(baseUrl + answer[3]);
+    // audio.play();
+    console.log(randomWords)
+  }
 
   return (
     <section className={styles.audiocall}>
@@ -85,8 +103,7 @@ export default function Audiocall() {
           <ExitBtn/>
 
           <div>
-            {/*{wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>} */}
-            <Info soundOn={soundOn}/>
+            {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
           </div>
 
           <div className={styles.answers}>
@@ -95,6 +112,7 @@ export default function Audiocall() {
                 <Answer
                   key={index}
                   answer={answer}
+                  setWordComplete={setWordComplete}
                   setTrueCount={setTrueCount}
                   isAuthenticated={isAuthenticated}
                   goodCount={goodCount}
@@ -108,9 +126,8 @@ export default function Audiocall() {
             })}
           </div>
 
-          <button onClick={shrinkArr} className={styles.buttons_footer}>
-            {/*{wordComplete ? 'Сдаться :(' : 'Дальше'}*/}
-            Дальше
+          <button onClick={toNextWord} className={styles.buttons_footer}>
+            {wordComplete ? 'Дальше' : 'Сдаться :('}
           </button>
 
           <Modal modalActive={modalActive} setModalActive={setModalActive}>
