@@ -7,16 +7,8 @@ import {useInterval} from '../../../../helpers.js'
 import Loader from "../../Loader/Loader";
 import {putStatistics} from "../../../../redux/statReducer";
 
-const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
-	'#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-	'#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
-	'#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-	'#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
-	'#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-	'#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
-	'#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-	'#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
-	'#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+const colorArray = ['#1380EE', '#6970EC', '#8D62D5',
+	'#A353BD', '#E15CB2', '#B53C8A', '#F13765'];
 
 
 export default function Sprint() {
@@ -174,6 +166,7 @@ export default function Sprint() {
 
 						</div>
 						<div className={styles.sprint__bottom}>
+							<p className={styles.sprint__tip}>Вы можете использовать клавиатуру</p>
 							<img src="https://img.icons8.com/bubbles/75/000000/left.png" onClick={() => clickChoice(true)} alt=''/>
 							<img src="https://img.icons8.com/bubbles/75/000000/right.png" onClick={() => clickChoice(false)} alt=''/>
 						</div>
@@ -184,9 +177,8 @@ export default function Sprint() {
 							<div className={styles.endGame_body_top}>
 								<h1>Круто,отличный результат!</h1>
 								<h3>
-									{trueAnswer} слов изучено,
-                  {randomWords.length - trueAnswer} на изучении
-                </h3>
+									{trueAnswer} слов изучено, {randomWords.length - trueAnswer} на изучении
+               					 </h3>
 							</div>
 							<div className={styles.endGame_body_center}>
 								<div className={styles.endGame_body_circle}>
@@ -209,6 +201,6 @@ export default function Sprint() {
 			)}
 		</div>
 	) : (
-		<h1>Loading</h1>
+		<h1 className={styles.main}>Loading...</h1>
 	);
 }

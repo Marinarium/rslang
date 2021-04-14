@@ -1,5 +1,11 @@
 @import '../../../../assets/styles/main';
 
+.main {
+  @include wrapper;
+  @include main;
+  box-sizing: border-box;
+}
+
 .savannah {
   @include wrapper;
   box-sizing: border-box;
@@ -148,6 +154,7 @@
   text-align: center;
   margin-bottom: 10px;
 }
+
 .endGame_body_top h3 {
   @include text-font(14px, normal);
   text-align: center;
@@ -185,10 +192,10 @@
 }
 
 .endGame_body_bottom button {
-  @include title-font(14px, normal);
+  @include title-font(16px, normal);
   color: $light;
   background-color: $firstColor;
-  padding: 5px 8px;
+  padding: 5px 18px;
   border: 2px solid $firstColor;
   cursor: pointer;
   transition-duration: 350ms;
