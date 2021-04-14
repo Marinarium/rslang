@@ -45,7 +45,6 @@ export default function Audiocall() {
       arrWords
         .reduce((result, el) => {
           const clonedArray = JSON.parse(JSON.stringify(arrWords));
-          console.log(result)
           result[el.word] = [
             [el.wordTranslate, true, el.id],
             ...clonedArray
@@ -61,20 +60,6 @@ export default function Audiocall() {
     );
   }, [arrWords]);
 
-  const chooseCorrect = (el) => {
-    if (!el[1]) {
-      isAuthenticated && badCount(userId, currentWordId, words, token);
-    } else {
-      setWordComplete(() => true);
-      setTrueCount((prev) => prev + 1);
-      isAuthenticated && goodCount(userId, currentWordId, words, token);
-      shrinkArr();
-      if (randomWords.length === 0) {
-        setModalActive(() => true);
-      }
-    }
-  };
-
   function shrinkArr() {
     if (randomWords.length === 1) {
       setWordComplete(() => false);
@@ -86,7 +71,7 @@ export default function Audiocall() {
     console.log('soundOn')
   }
 
-  const startNewGame = () => {
+  const startGame = () => {
     setActiveWord(0);
     setWordComplete(() => false);
     setModalActive(() => false);
@@ -96,7 +81,7 @@ export default function Audiocall() {
   return (
     <section className={styles.audiocall}>
       {seconds === 0 ? (
-        <>
+        <div className={styles.audiocall_inner}>
           <ExitBtn/>
 
           <div>
@@ -104,29 +89,37 @@ export default function Audiocall() {
           </div>
 
           <div className={styles.answers}>
-            {randomWords[Object.keys(randomWords)[activeWord]].map((el, index) => {
+            {randomWords[Object.keys(randomWords)[activeWord]].map((answer, index) => {
               return (
                 <Answer
                   key={index}
-                  el={el}
-                  chooseCorrect={chooseCorrect}
+                  answer={answer}
+                  setTrueCount={setTrueCount}
+                  isAuthenticated={isAuthenticated}
+                  goodCount={goodCount}
+                  badCount={badCount}
+                  userId={userId}
+                  currentWordId={currentWordId}
+                  words={words}
+                  token={token}
                 />
               );
             })}
           </div>
 
           <button onClick={shrinkArr} className={styles.buttons_footer}>
-            {wordComplete ? 'Сдаться :(' : 'Дальше'}
+            {/*{wordComplete ? 'Сдаться :(' : 'Дальше'}*/}
+            Дальше
           </button>
 
           <Modal modalActive={modalActive} setModalActive={setModalActive}>
             <ModalFinish
               trueCount={trueCount}
               looseCount={Object.keys(randomWords).length - trueCount}
-              startGame={startNewGame}
+              startGame={startGame}
             />
           </Modal>
-        </>
+        </div>
       ) : (
         <Loader seconds={seconds}/>
       )}

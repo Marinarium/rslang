@@ -10,15 +10,20 @@ button, i {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-repeat: repeat;
   background-position: 0 0;
+}
+
+.audiocall_inner {
+  position: fixed;
+  top: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
 }
 
 .answers {

@@ -68,7 +68,6 @@ export default function MakeAWord() {
     shuffleLetters(randomWords[0].word);
     getLettersArr(randomWords[0].word);
     getTranslate(randomWords[0].wordTranslate);
-    console.log(wordLoose, 'wordLoose')
   }
 
   function shuffleLetters(word) {
