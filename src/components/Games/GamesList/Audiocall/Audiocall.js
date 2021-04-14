@@ -101,11 +101,9 @@ export default function Audiocall() {
       {seconds === 0 ? (
         <div className={styles.audiocall_inner}>
           <ExitBtn/>
-
           <div>
             {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
           </div>
-
           <div className={styles.answers}>
             {randomWords[Object.keys(randomWords)[activeWord]].map((answer, index) => {
               return (
@@ -125,7 +123,6 @@ export default function Audiocall() {
               );
             })}
           </div>
-
           <button onClick={toNextWord} className={styles.buttons_footer}>
             {wordComplete ? 'Дальше' : 'Сдаться :('}
           </button>
