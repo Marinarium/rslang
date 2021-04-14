@@ -1,11 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useGameData} from "../../../../hooks/gameDataHook";
 import {useSelector} from "react-redux";
 import {useInterval} from '../../../../helpers.js'
 import styles from "./Audiocall.module.scss";
 
 import Info from "./Info/Info";
-// import Answer from "./Answer/Answer";
 import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
 import Loader from "../../Loader/Loader";
@@ -16,13 +15,12 @@ export default function Audiocall() {
 
   const [arrWords, setArrWords] = useState([]);
   const [randomWords, setRandomWords] = useState([]);
-  const [wordComplete, setWordComplete] = useState(true);
+  const [wordComplete, setWordComplete] = useState(false);
   const [modalActive, setModalActive] = useState(false);
   const [currentWordId, setCurrentWordId] = useState('');
   const [activeWord, setActiveWord] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
-
   const {goodCount, badCount} = useGameData();
   const words = useSelector((state) => state.words.items);
   const userId = useSelector((state) => state.auth.userId);
@@ -47,6 +45,7 @@ export default function Audiocall() {
       arrWords
         .reduce((result, el) => {
           const clonedArray = JSON.parse(JSON.stringify(arrWords));
+          console.log(result)
           result[el.word] = [
             [el.wordTranslate, true, el.id],
             ...clonedArray
@@ -64,16 +63,23 @@ export default function Audiocall() {
 
   const chooseCorrect = (el) => {
     if (!el[1]) {
-      isAuthenticated && badCount(userId, currentWordId, words, token);// записываем неправильный ответ
+      isAuthenticated && badCount(userId, currentWordId, words, token);
     } else {
-      toNextWord();
+      setWordComplete(() => true);
       setTrueCount((prev) => prev + 1);
-      isAuthenticated && goodCount(userId, currentWordId, words, token);// записываем правильный ответ
+      isAuthenticated && goodCount(userId, currentWordId, words, token);
+      shrinkArr();
+      if (randomWords.length === 0) {
+        setModalActive(() => true);
+      }
     }
   };
 
-  function toNextWord() {
-    console.log('правильно')
+  function shrinkArr() {
+    if (randomWords.length === 1) {
+      setWordComplete(() => false);
+    }
+    return setRandomWords(() => randomWords.slice(1));
   }
 
   function soundOn() {
@@ -82,7 +88,7 @@ export default function Audiocall() {
 
   const startNewGame = () => {
     setActiveWord(0);
-    setWordComplete(() => true);
+    setWordComplete(() => false);
     setModalActive(() => false);
     setTrueCount(0);
   };
@@ -109,7 +115,7 @@ export default function Audiocall() {
             })}
           </div>
 
-          <button onClick={toNextWord} className={styles.buttons_footer}>
+          <button onClick={shrinkArr} className={styles.buttons_footer}>
             {wordComplete ? 'Сдаться :(' : 'Дальше'}
           </button>
 

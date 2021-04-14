@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import styles from "./Savannah.module.scss";
 import {Link} from "react-router-dom";
 import crystal from "./images/crystal.svg";
@@ -114,9 +114,9 @@ export default function Savannah() {
     hp.push(
       <div>
         {health > i ? (
-          <img src="https://img.icons8.com/android/32/fa314a/hearts.png"/>
+          <img src="https://img.icons8.com/android/32/fa314a/hearts.png" alt=''/>
         ) : (
-          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png"/>
+          <img src="https://img.icons8.com/ios/32/fa314a/hearts--v1.png" alt=''/>
         )}
       </div>
     );
@@ -160,7 +160,7 @@ export default function Savannah() {
               })}
             </div>
             <div className={styles.bottom}>
-              <img src={crystal}/>
+              <img src={crystal} alt=''/>
             </div>
           </>
         ) : (
