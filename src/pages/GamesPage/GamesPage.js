@@ -44,7 +44,7 @@ export default function GamesPage({location, match}) {
     },[userId, token, dispatch]);
 
     const buttonHandler = (group) => {
-        setCurrentGroup(group)
+        setCurrentGroup(group);
         isAuthenticated
             ?
             dispatch(getAllUserWordsWithoutDeletedWords({
@@ -65,7 +65,7 @@ export default function GamesPage({location, match}) {
         setUserWords(words);
         getWords(page, currentGroup);
         setModalIsVisible(false);
-        dispatch(putStatistics({
+        token && dispatch(putStatistics({
             userId,
             stats: {
                 "learnedWords": 0,

@@ -1,17 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
-// import {useSelector} from "react-redux";
-// import {useGameData} from "../../../../hooks/gameDataHook";
-import {textToHtml} from '../../../../helpers.js'
-import {useInterval} from '../../../../helpers.js'
-import styles from "./MakeAWord.module.scss";
+import {useSelector} from "react-redux";
+import {useGameData} from "../../../../hooks/gameDataHook";
+import {textToHtml} from '../../../../helpers.js';
+import {useInterval} from '../../../../helpers.js';
+import {useHistory} from 'react-router-dom';
 
+import styles from "./MakeAWord.module.scss";
 import Letter from "./Letter/Letter";
 import InputWord from "./InputWord/InputWord";
 import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
 import Loader from "../../Loader/Loader";
-import ExitBtn from "../../ExitBtn/ExitBtn";
 
+import ExitBtn from "../../ExitBtn/ExitBtn";
 export default function MakeAWord() {
   const [arrWords, setArrWords] = useState([]);
   const [answer, setAnswer] = useState('');
@@ -28,38 +29,48 @@ export default function MakeAWord() {
   const [looseCount, setLooseCount] = useState(0);
   const [trueCount, setTrueCount] = useState(0);
   const [seconds, setSeconds] = useState(5);
+  const [currentWord, setCurrentWord] = useState('');
+  const [currentWordId, setCurrentWordId] = useState('');
+  const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
+  const userId = useSelector((state) => state.auth.userId);
+  const token = useSelector(state => state.auth.token);
+  const { goodCount, badCount } = useGameData();
   const arrRef = useRef(arrWords);
-
-  /*  const { goodCount, badCount } = useGameData();
-    const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
-    const userId = useSelector((state) => state.auth.userId);
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    const token = useSelector(state => state.auth.token);*/
-
-  // useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
-  //   const activeWordObj = words.find(i => i.word === Object.keys(randomWords)[activeWord]);
-  //   activeWordObj && setCurrentWordId(activeWordObj.id)
-  // }, [words, activeWord, randomWords]);
+  const history = useHistory();
+  useEffect(() => { // вытаскиваем id слова, чтоб апдейтить слово в БД
+    const activeWordObj = words.find(i => i.word === currentWord);
+    activeWordObj && setCurrentWordId(activeWordObj.id)
+  }, [words, currentWord]);
 
   useEffect(() => {
-    fetch("https://react-lang-app.herokuapp.com/words")
-      .then((data) => data.json())
-      .then((data) => {
-        data = data.sort(() => 0.5 - Math.random());
-        setArrWords(data);
-        arrRef.current = data;
-        return data;
-      })
-  }, []);
+    setArrWords([...words]);
+    arrRef.current = words;
+  }, [words]);
 
+  // useEffect(() => {
+  //   fetch("https://react-lang-app.herokuapp.com/words")
+  //     .then((data) => data.json())
+  //     .then((data) => {
+  //       data = data.sort(() => 0.5 - Math.random());
+  //       setArrWords(data);
+  //       arrRef.current = data;
+  //       return data;
+  //     })
+  // }, []);
+
+  // function anotherNewGame() {
+  //   fetch("https://react-lang-app.herokuapp.com/words")
+  //     .then((data) => data.json())
+  //     .then((data) => {
+  //       data = data.sort(() => 0.5 - Math.random());
+  //       setArrWords(data);
+  //       arrRef.current = data;
+  //     });
+  // }
   function anotherNewGame() {
-    fetch("https://react-lang-app.herokuapp.com/words")
-      .then((data) => data.json())
-      .then((data) => {
-        data = data.sort(() => 0.5 - Math.random());
-        setArrWords(data);
-        arrRef.current = data;
-      });
+    const data = [...words].sort(() => 0.5 - Math.random());
+    setArrWords(data);
+    arrRef.current = data;
   }
 
   useInterval(() => {
@@ -75,9 +86,15 @@ export default function MakeAWord() {
     setModalActive(() => false);
     setLooseCount(0);
     setTrueCount(0);
-    shuffleLetters(arrRef.current[0].word);
-    getLettersArr(arrRef.current[0].word);
-    getTranslate(arrRef.current[0].wordTranslate);
+    if (arrRef.current[0]){
+      setCurrentWord(arrRef.current[0].word);
+      shuffleLetters(arrRef.current[0].word);
+      getLettersArr(arrRef.current[0].word);
+      getTranslate(arrRef.current[0].wordTranslate);
+    } else{
+      history.push('/games')
+    }
+
   }
 
   function shuffleLetters(word) {
@@ -123,7 +140,7 @@ export default function MakeAWord() {
 
   function toLoose() {
     setLooseCount((prev) => prev + 1);
-    //badCount(userId, currentWordId, words); // записываем неправильный ответ
+    token && badCount(userId, currentWordId, words, token); // записываем неправильный ответ
     setWordComplete(() => true);
     setWordLoose(() => true);
     setAnswer(() => arrRef.current[0].word);
@@ -141,9 +158,14 @@ export default function MakeAWord() {
     setTotalDone(() => true);
     setWordComplete(() => false);
     setWordLoose(() => false);
-    shuffleLetters(arrRef.current[0].word);
-    getLettersArr(arrRef.current[0].word);
-    getTranslate(arrRef.current[0].wordTranslate);
+    if (arrRef.current[0]) {
+      setCurrentWord(arrRef.current[0].word);
+      shuffleLetters(arrRef.current[0].word);
+      getLettersArr(arrRef.current[0].word);
+      getTranslate(arrRef.current[0].wordTranslate);
+    } else {
+      history.push('/games')
+    }
   }
 
   function endWord() {
@@ -185,7 +207,11 @@ export default function MakeAWord() {
                       setWordComplete={setWordComplete}
                       setWordLoose={setWordLoose}
                       setTrueCount={setTrueCount}
-                      // goodCount={goodCount}
+                      goodCount={goodCount}
+                      userId={userId}
+                      currentWordId={currentWordId}
+                      words={words}
+                      token={token}
                     />
                   ))}
                 </div>

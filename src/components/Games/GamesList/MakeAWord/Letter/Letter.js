@@ -5,7 +5,8 @@ export default function Letter({letter, correctLettersArr,
                                  setCorrectLettersArr, concatenate,
                                  endWord, totalDone, setTotalDone,
                                  setWordComplete, setWordLoose,
-                                 setTrueCount, goodCount}) {
+                                 setTrueCount, goodCount, userId, words,
+                                 currentWordId, token }) {
 
   const [done, setDone] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
@@ -33,7 +34,7 @@ export default function Letter({letter, correctLettersArr,
         setWordComplete(() => true);
         setWordLoose(() => true);
         setTrueCount((prev) => prev + 1);
-        //goodCount(userId, currentWordId, words); // записываем правильный ответ
+        token && goodCount(userId, currentWordId, words, token); // записываем правильный ответ
       }
     } else showIncorrect();
     setTotalDone(false);
