@@ -18,6 +18,7 @@ export default function Audiocall() {
 
   const [arrWords, setArrWords] = useState([]);
   const [randomWords, setRandomWords] = useState([]);
+  const [infoActiveArr, setInfoActiveArr] = useState([]);
   const [wordComplete, setWordComplete] = useState(false);
   const [modalActive, setModalActive] = useState(false);
   const [currentWordId, setCurrentWordId] = useState('');
@@ -52,7 +53,7 @@ export default function Audiocall() {
         .reduce((result, el) => {
           const clonedArray = JSON.parse(JSON.stringify(arrWords));
           result[el.word] = [
-            [el.wordTranslate, true, el.id, el.audio],
+            [el.wordTranslate, true, el.id, el.audio, el.word, el.transcription, el.textMeaning],
             ...clonedArray
               .sort(() => 0.5 - Math.random())
               .filter((elF) => elF.word !== el.word)
@@ -85,56 +86,65 @@ export default function Audiocall() {
 
   function toNextWord() {
     //console.log(randomWords)
-
     setWordComplete(() => false);
     setRandomWords(() => randomWords[Object.keys(randomWords)[activeWord+1]])
   }
 
   function soundOn() {
-    // const audio = new Audio(baseUrl + answer[3]);
-    // audio.play();
-    console.log(randomWords)
+    const answer = retAnswer();
+    const audio = new Audio(baseUrl + answer[3]);
+    audio.play();
+  }
+
+  function retAnswer() {
+    return randomWords[Object.keys(randomWords)[activeWord]].find(i => i.includes(true));
   }
 
   return (
     <section className={styles.audiocall}>
       {seconds === 0 ? (
-        <div className={styles.audiocall_inner}>
+        <>
           <ExitBtn/>
-          <div>
-            {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
-          </div>
-          <div className={styles.answers}>
-            {randomWords[Object.keys(randomWords)[activeWord]].map((answer, index) => {
-              return (
-                <Answer
-                  key={index}
-                  answer={answer}
-                  setWordComplete={setWordComplete}
-                  setTrueCount={setTrueCount}
-                  isAuthenticated={isAuthenticated}
-                  goodCount={goodCount}
-                  badCount={badCount}
-                  userId={userId}
-                  currentWordId={currentWordId}
-                  words={words}
-                  token={token}
-                />
-              );
-            })}
-          </div>
-          <button onClick={toNextWord} className={styles.buttons_footer}>
-            {wordComplete ? 'Дальше' : 'Сдаться :('}
-          </button>
+          <div className={styles.audiocall_inner}>
+            <div>
+              <Info
+                soundOn={soundOn}
+                retAnswer={retAnswer}
+                wordComplete={wordComplete}
+              />
+            </div>
+            <div className={styles.answers}>
+              {randomWords[Object.keys(randomWords)[activeWord]].map((answer, index) => {
+                return (
+                  <Answer
+                    key={index}
+                    answer={answer}
+                    setWordComplete={setWordComplete}
+                    setTrueCount={setTrueCount}
+                    isAuthenticated={isAuthenticated}
+                    goodCount={goodCount}
+                    badCount={badCount}
+                    userId={userId}
+                    currentWordId={currentWordId}
+                    words={words}
+                    token={token}
+                  />
+                );
+              })}
+            </div>
+            <button onClick={toNextWord} className={styles.buttons_footer}>
+              {wordComplete ? 'Дальше' : 'Сдаться :('}
+            </button>
 
-          <Modal modalActive={modalActive} setModalActive={setModalActive}>
-            <ModalFinish
-              trueCount={trueCount}
-              looseCount={Object.keys(randomWords).length - trueCount}
-              startGame={startGame}
-            />
-          </Modal>
-        </div>
+            <Modal modalActive={modalActive} setModalActive={setModalActive}>
+              <ModalFinish
+                trueCount={trueCount}
+                looseCount={Object.keys(randomWords).length - trueCount}
+                startGame={startGame}
+              />
+            </Modal>
+          </div>
+        </>
       ) : (
         <Loader seconds={seconds}/>
       )}
