@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import styles from "./Savannah.module.scss";
 import {Link} from "react-router-dom";
-import crystal from "./images/crystal.svg";
+// import crystal from "./images/crystal.svg";
 import {useDispatch, useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
 import {useInterval} from '../../../../helpers.js'
