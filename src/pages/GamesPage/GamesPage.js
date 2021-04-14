@@ -12,6 +12,7 @@ export default function GamesPage({location, match}) {
     const page = useMemo(() => Math.ceil(Math.random() * 19), []);
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [link, setLink] = useState(null);
+    const [isButtonDisable, setIsButtonDisable] = useState(true);
     const dispatch = useDispatch();
     const gamesCount = useSelector(state => state.stat.gamesCount);
     const userId = useSelector(state => state.auth.userId);
@@ -58,7 +59,7 @@ export default function GamesPage({location, match}) {
                 group: group,
                 page: page
             }))
-
+        setIsButtonDisable(false);
     };
 
     const confirmHandler =  () => {
@@ -99,7 +100,11 @@ export default function GamesPage({location, match}) {
                                 </button>)
                             }
                         </div>
-                        <button onClick={confirmHandler} className={styles.start}>Начать</button>
+                        <button
+                            onClick={confirmHandler}
+                            className={styles.start}
+                            disabled={isButtonDisable}
+                        >Начать</button>
                     </div>
                 </div>
             }
