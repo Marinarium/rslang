@@ -123,7 +123,6 @@ export default function Audiocall() {
             <ModalFinish
               trueCount={trueCount}
               looseCount={Object.keys(randomWords).length - trueCount}
-              startGame={startNewGame}
             />
           </Modal>
         </>

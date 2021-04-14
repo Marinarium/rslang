@@ -216,7 +216,6 @@ export default function MakeAWord() {
                         <ModalFinish
                             trueCount={trueCount}
                             looseCount={arrWords.length - trueCount}
-                            startGame={startGame}
                         />
                     </Modal>
 

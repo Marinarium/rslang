@@ -200,7 +200,6 @@ export default function Sprint() {
 								<button>
 									<Link to="/games">К списку тренировок</Link>
 								</button>
-								<button onClick={startNewGame}>Повторить тренировку</button>
 							</div>
 						</div>
 					</div>
