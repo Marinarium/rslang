@@ -1,7 +1,4 @@
-import {baseUrl} from '../services/baseUrl/baseUrl'
-
-// const userData = JSON.parse(localStorage.getItem('userData'))
-// export const token = userData && userData.token
+import {baseUrl} from '../services/baseUrl/baseUrl';
 
 export const request = (endpoint, method, withCredentials, headers, body = null) => {
     return fetch(baseUrl + endpoint, {
@@ -14,4 +11,4 @@ export const request = (endpoint, method, withCredentials, headers, body = null)
     }).catch(function (error) {
         console.log(error)
     })
-}
+};

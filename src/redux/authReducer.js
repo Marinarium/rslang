@@ -1,7 +1,5 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-
-import {authApi} from '../api/authApi'
-
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {authApi} from '../api/authApi';
 
 const initialState = {
     token: '',
@@ -21,37 +19,32 @@ const initialState = {
         password: '',
         name: ''
     }
-}
+};
 
 
 export const authLogin = createAsyncThunk(
     'authReducer/authLogin',
     async (loginForm) => {
-
         const data = await authApi.login(loginForm)
-            .then((res) => res && res.json())
-
+            .then((res) => res && res.json());
         if (!data.token) {
             throw new Error(data.message || 'Something went wrong!')
         }
-
         localStorage.setItem('userData', JSON.stringify({
             userId: data.userId, token: data.token, name: data.name, avatar: data.avatar
-        }))
+        }));
         return data
 
     }
-)
+);
 export const authRegister = createAsyncThunk(
     'authReducer/authRegister',
     async (formData) => {
         const data = await authApi.register(formData)
-            .then((res) => res && res.json())
-
+            .then((res) => res && res.json());
         return data
-
     }
-)
+);
 
 
 const authReducer = createSlice({
@@ -70,18 +63,6 @@ const authReducer = createSlice({
                 registerForm: {...state.registerForm, ...action.payload}
             }
         },
-        // cleanLoginForm: (state, action) => {
-        //     return {
-        //         ...state,
-        //         loginForm: {...state.registerForm, ...action.payload}
-        //     }
-        // },
-        // cleanRegisterForm: (state, action) => {
-        //     return {
-        //         ...state,
-        //         registerForm: {...state.registerForm, ...action.payload}
-        //     }
-        // },
         setIsAuthenticated: (state, action) => {
             return {
                 ...state,
@@ -120,9 +101,7 @@ const authReducer = createSlice({
         }
     },
     extraReducers: {
-
         [authRegister.fulfilled]: (state, action) => {
-
             return {
                 ...state,
                 isRegistered: true,
@@ -133,11 +112,8 @@ const authReducer = createSlice({
                     name: ''
                 }
             }
-
         },
-
         [authLogin.fulfilled]: (state, action) => {
-
             return {
                 ...state,
                 token: action.payload.token,
@@ -146,13 +122,11 @@ const authReducer = createSlice({
                 authError: '',
                 name: action.payload.name,
                 avatar: action.payload.avatar
-
             }
-
         },
 
     }
-})
+});
 
 export const {
     authLogout,
@@ -162,6 +136,6 @@ export const {
     setIsRegistered,
 
 
-} = authReducer.actions
+} = authReducer.actions;
 
-export default authReducer.reducer
+export default authReducer.reducer;

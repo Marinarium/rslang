@@ -88,6 +88,14 @@
       content: url("music.svg");
     }
   }
+
+  @media (max-width: 1000px) {
+    min-height: unset;
+
+    &:before {
+      display: none;
+    }
+  }
 }
 
 .link {

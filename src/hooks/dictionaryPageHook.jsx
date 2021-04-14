@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-
+import {setIsLoading} from "../redux/wordsReducer";
 
 export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, setItem, match) => {
 
@@ -15,20 +15,15 @@ export const useDictionaryPage = (pagesArray, storageName, setArray, getWords, s
         const lSPagesArray = JSON.parse(localStorage.getItem(storageName))
         lSPagesArray && dispatch(setArray(lSPagesArray))
 
-    }, [dispatch]);
+    }, [storageName, dispatch, setArray]);
 
     useEffect(() => { // Переписываем массив текущих страниц в LS при его изменении
-
         localStorage.setItem(storageName, JSON.stringify(currentPagesArray));
 
-    }, [currentPagesArray]);
+    }, [storageName, currentPagesArray]);
 
-    useEffect(() => { // Загружаем сложные слова
-
+    useEffect(() => { // Загружаем  слова
+        dispatch(setIsLoading(true));
         userId && dispatch(getWords({group: currentGroup, page: currentPage, userId, token}));
-
-    }, [dispatch, userId, currentGroup, currentPage]);
-
-
-
-}
+    }, [dispatch, userId, currentGroup, currentPage, token, getWords]);
+};

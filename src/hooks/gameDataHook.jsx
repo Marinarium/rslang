@@ -17,7 +17,7 @@ export const useGameData = () => {
             },
             token
         }
-    ))
+    ));
 
     const goodCount = (userId, currentWordId, words, token) => dispatch(updateUserWord({
             userId,
@@ -33,7 +33,6 @@ export const useGameData = () => {
             },
             token
         }
-    ))
+    ));
     return {goodCount, badCount};
-
-}
+};

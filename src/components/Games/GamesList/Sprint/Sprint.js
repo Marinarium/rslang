@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Sprint.module.scss";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useGameData } from "../../../../hooks/gameDataHook";
 import {useInterval} from '../../../../helpers.js'
 import Loader from "../../Loader/Loader";
+import {putStatistics} from "../../../../redux/statReducer";
 
 const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 	'#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -20,9 +21,10 @@ const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 
 export default function Sprint() {
 	const { goodCount, badCount } = useGameData();
-
+    const dispatch = useDispatch();
 	const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
 	// они соответствуют странице учебника, на которой находимся
+	const gamesCount = useSelector(state => state.stat.gamesCount);
 	const userId = useSelector((state) => state.auth.userId);
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 	const token = useSelector(state => state.auth.token);
@@ -117,6 +119,16 @@ export default function Sprint() {
 		setTrueAnswer(0);
 		setScoreGame(0);
 		setTimer(60);
+		dispatch(putStatistics({
+			userId,
+			stats: {
+				"learnedWords": 0,
+				"optional": {
+					gamesCount: (gamesCount + 1)
+				}
+			},
+			token
+		}));
 	};
 
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './WordItem.module.scss';
 import speaker from './images/speaker.svg';
 import {playAudios} from '../../services/utils/playAudio';
@@ -27,7 +27,6 @@ export default function WordItem({
                                      difficulty,
                                      userWord
 
-
                                  }) {
 
 
@@ -53,8 +52,8 @@ export default function WordItem({
     const classes = [];
     const classesAlt = [];
 
-    switch (activeUnit.name) { //тут сократить, думаю, как-то можно, или по-другому сделать и в CSS по норм сделать
-        case '1 раздел' :// и вообще без массива, через переменную, но пока оставляю так, может по-другому будет
+    switch (activeUnit.name) {
+        case '1 раздел' :
             classes.push(styles.unit1);
             classesAlt.push(styles.unit1_alt);
             break;
@@ -80,6 +79,10 @@ export default function WordItem({
             break;
         default:
             break;
+    }
+    if (difficulty === 'hard' && (container === 'text-book' || container === 'Learned') ){
+        classes.push(styles.hard);
+        classesAlt.push(styles.hard_alt);
     }
     const difficultButtonHandler = async () => {
         if (userWord) {
@@ -140,7 +143,6 @@ export default function WordItem({
         <section className={styles.card}>
             <header className={`${styles.head} ${classes.join(' ')}`}>
                 <p>{goodGameResults}/{badGameResults}</p>
-
             </header>
             <main className={styles.main}>
                 <div className={styles.main_info}>
@@ -149,20 +151,16 @@ export default function WordItem({
                         <img src={speaker} alt="audio" className={styles.speaker} onClick={playHandler}/>
                         <h4 className={`${styles.word} ${classesAlt.join(' ')}`}>{word}</h4>
                         <span className={styles.transcription}>{transcription}</span>
-
-                        {difficulty === 'hard' && <p style={{color: 'red', marginLeft: 50}}>СЛОЖНОЕ СЛОВО</p>}
-
-
                         {isWordTranslated && <span className={styles.translation}>{wordTranslate}</span>}
                     </div>
                 </div>
                 <div className={styles.description}>
                     <div className={styles.meaning}>
-                        <p className={styles.meaning_eng}>{textMeaning}</p>
+                        <p className={styles.meaning_eng} dangerouslySetInnerHTML={{ __html: textMeaning }}></p>
                         {isWordTranslated && <p className={styles.meaning_ru}>{textMeaningTranslate}</p>}
                     </div>
                     <div className={styles.example}>
-                        <p className={styles.example_eng}>{textExample}</p>
+                        <p className={styles.example_eng}  dangerouslySetInnerHTML={{ __html: textExample }}></p>
                         {isWordTranslated && <p className={styles.example_ru}>{textExampleTranslate}</p>}
                     </div>
                 </div>
@@ -176,6 +174,8 @@ export default function WordItem({
                                 className={`${styles.button} ${classesAlt.join(' ')}`}
                                 type="button"
                                 onClick={deleteButtonHandler}
+                                style={{backgroundColor: '#FDFDFD'}}
+                                disabled={!token}
                             >
                                 В удалённые слова
                             </button>
@@ -183,6 +183,7 @@ export default function WordItem({
                                 className={`${styles.button} ${classes.join(' ')}`}
                                 type="button"
                                 onClick={difficultButtonHandler}
+                                disabled={!token}
                             >
                                 В сложные слова
                             </button>

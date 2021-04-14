@@ -5,6 +5,15 @@
   @include wrapper;
 }
 
+.instruction {
+  @include text-font(12px, normal);
+  line-height: 1.25;
+  max-width: 400px;
+  color: $darkGrey;
+  position: relative;
+  top: -30px
+}
+
 .field {
   position: relative;
   width: 350px;
@@ -15,7 +24,12 @@
     width: auto;
   }
 }
-
+.error {
+  display: block;
+  text-align: start;
+  font-size: 0.78vw;
+  color: red;
+}
 .label {
   @include title-font(20px);
   display: block;
@@ -54,6 +68,7 @@
 
   &:hover,
   &:focus {
+    outline: none;
     filter: saturate(200%);
   }
 }

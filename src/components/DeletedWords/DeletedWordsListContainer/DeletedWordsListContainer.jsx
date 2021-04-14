@@ -7,7 +7,7 @@ import {
     setCurrentDeletedPagesItem,
 } from '../../../redux/appReducer';
 import {WordsList} from '../../WordsList/WordsList';
-import {useDictionaryPage} from '../../../hooks/dictionaryPageHook'
+import {useDictionaryPage} from '../../../hooks/dictionaryPageHook';
 
 
 function DeletedWordsListContainer({match}) {
@@ -26,13 +26,12 @@ function DeletedWordsListContainer({match}) {
     );
 
     const handlePageClick = (e) => { // Обработка нажатия на кнопку пагинации
-
         dispatch(setCurrentDeletedPagesItem({
             currentGroup: currentGroup,
             currentPage: e.selected.toString()
         }));
-
     };
+
     return (
         <WordsList
             container={'Deleted'}

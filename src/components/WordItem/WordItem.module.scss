@@ -5,6 +5,7 @@
   border: 1px solid $lightGrey;
   box-sizing: border-box;
   border-radius: 13px 13px 3px 3px;
+  position: relative;
 }
 
 .unit1{
@@ -60,6 +61,14 @@
   border-color: $sixthColor!important;
   color: $sixthColor!important;
 }
+.hard{
+  background-color: #F13765;
+}
+
+.hard_alt{
+  border-color: #F13765!important;
+  color: #F13765!important;
+}
 
 .head {
   //background-color: $thirdColor;
@@ -71,13 +80,24 @@
 }
 
 .main {
-  padding: 31px 48px 61px;
+  padding: 31px 48px 100px;
+  @media (max-width: 1200px) {
+    padding: 31px 25px 100px;
+  }
+  @media (max-width: 460px) {
+    padding: 31px 15px 40px;
+  }
 }
 
 .main_info {
   display: flex;
   align-items: center;
   margin-bottom: 25px;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .image {
@@ -89,6 +109,10 @@
   border: 1px solid $lightGrey;
   box-sizing: border-box;
   border-radius: 3px;
+
+  @media (max-width: 400px) {
+    margin-bottom: 10px;
+  }
 }
 
 .about_word {
@@ -140,6 +164,12 @@
   background-repeat: no-repeat;
   background-position: left top;
   background-size: auto;
+
+  b, i {
+    font-weight: bold;
+    color: #434141;
+    letter-spacing: 0.05em;
+  }
 }
 
 .meaning_eng {
@@ -161,6 +191,13 @@
   background-repeat: no-repeat;
   background-position: left top;
   background-size: auto;
+
+  b, i {
+    font-weight: bold;
+    color: #434141;
+    letter-spacing: 0.05em;
+  }
+
 }
 
 .example_eng {
@@ -171,8 +208,18 @@
   color: $darkGrey;
 }
 
-.button {
+.buttons {
+  position: absolute;
+  bottom: 40px;
 
+  @media (max-width: 460px) {
+    position: static;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.button {
   //background: $thirdColor;
   border-radius: 50px;
   border: 1px solid;
@@ -189,8 +236,22 @@
     margin-right: 0;
   }
 
-  &:hover {
+  &:hover, &:focus {
+    outline: none;
     filter: saturate(200%);
+  }
+
+  @media (max-width: 1200px) {
+    margin-right: 10px;
+    font-size: 14px;
+    padding: 11px 15px;
+  }
+
+  @media (max-width: 460px) {
+    &:first-child {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
   }
 }
 
