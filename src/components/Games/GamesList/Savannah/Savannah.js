@@ -211,6 +211,6 @@ export default function Savannah() {
       )}
     </div>
   ) : (
-    <h1>Loading</h1>
+    <h1 className={styles.main}>Loading</h1>
   );
 }
