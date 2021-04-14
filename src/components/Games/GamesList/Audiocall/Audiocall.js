@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useGameData} from "../../../../hooks/gameDataHook";
+// import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {useInterval} from '../../../../helpers.js'
 import styles from "./Audiocall.module.scss";
@@ -26,6 +27,7 @@ export default function Audiocall() {
   const userId = useSelector((state) => state.auth.userId);
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const token = useSelector(state => state.auth.token);
+  // const history = useHistory();
 
   useInterval(() => {
     if (seconds > 0) setSeconds((prev) => prev - 1)
@@ -45,8 +47,9 @@ export default function Audiocall() {
       arrWords
         .reduce((result, el) => {
           const clonedArray = JSON.parse(JSON.stringify(arrWords));
+          console.log(result)
           result[el.word] = [
-            [el.wordTranslate, true, el.id],
+            [el.wordTranslate, true, el.id, el.audio],
             ...clonedArray
               .sort(() => 0.5 - Math.random())
               .filter((elF) => elF.word !== el.word)
@@ -67,9 +70,6 @@ export default function Audiocall() {
     return setRandomWords(() => randomWords.slice(1));
   }
 
-  function soundOn() {
-    console.log('soundOn')
-  }
 
   const startGame = () => {
     setActiveWord(0);
@@ -85,7 +85,8 @@ export default function Audiocall() {
           <ExitBtn/>
 
           <div>
-            {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
+            {/*{wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>} */}
+            <Info soundOn={soundOn}/>
           </div>
 
           <div className={styles.answers}>

@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./Answer.module.scss";
+import {baseUrl} from "../../../../../services/baseUrl/baseUrl";
 
 export default function Answer({answer, setTrueCount, goodCount, badCount, isAuthenticated,
                                  userId, currentWordId, words, token}) {
@@ -40,6 +41,11 @@ export default function Answer({answer, setTrueCount, goodCount, badCount, isAut
     setTimeout(() => {
       setIncorrect(() => false);
     }, 250)
+  }
+
+  function soundOn() {
+    const audio = new Audio(baseUrl + answer[3]);
+    audio.play();
   }
 
   return (
