@@ -98,33 +98,32 @@ export default function Audiocall() {
       {seconds === 0 ? (
         <>
           <ExitBtn/>
+          <div className={styles.audiocall_inner}>
+            <div>
+              {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
+            </div>
+            <div className={styles.answers}>
+              {randomWords[Object.keys(randomWords)[activeWord]].map((el, index) => {
+                return (
+                  <Answer
+                    key={index}
+                    el={el}
+                    chooseCorrect={chooseCorrect}
+                  />
+                );
+              })}
+            </div>
+            <button onClick={shrinkArr} className={styles.buttons_footer}>
+              {wordComplete ? 'Сдаться :(' : 'Дальше'}
+            </button>
 
-          <div>
-            {wordComplete ? <Info soundOn={soundOn}/> : <Info soundOn={soundOn}/>}
+            <Modal modalActive={modalActive} setModalActive={setModalActive}>
+              <ModalFinish
+                trueCount={trueCount}
+                looseCount={Object.keys(randomWords).length - trueCount}
+              />
+            </Modal>
           </div>
-
-          <div className={styles.answers}>
-            {randomWords[Object.keys(randomWords)[activeWord]].map((el, index) => {
-              return (
-                <Answer
-                  key={index}
-                  el={el}
-                  chooseCorrect={chooseCorrect}
-                />
-              );
-            })}
-          </div>
-
-          <button onClick={shrinkArr} className={styles.buttons_footer}>
-            {wordComplete ? 'Сдаться :(' : 'Дальше'}
-          </button>
-
-          <Modal modalActive={modalActive} setModalActive={setModalActive}>
-            <ModalFinish
-              trueCount={trueCount}
-              looseCount={Object.keys(randomWords).length - trueCount}
-            />
-          </Modal>
         </>
       ) : (
         <Loader seconds={seconds}/>
