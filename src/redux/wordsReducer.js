@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 import {wordsApi} from '../api/wordsApi'
+
 const initialState = {
     items: [],
     userItems: [],
@@ -71,14 +72,12 @@ export const getLearnedWords = createAsyncThunk(
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
-        const modifiedData = data[0].paginatedResults.map(word => {
+        return data[0].paginatedResults.map(word => {
             const obj = {id: word._id, ...word};
             delete obj['_id'];
             return obj
 
-        });
-
-        return modifiedData
+        })
 
     }
 );
@@ -90,13 +89,12 @@ export const getAllUserWordsWithoutUserWords = createAsyncThunk(
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
-        const modifiedData = data[0].paginatedResults.map(word => {
+        return data[0].paginatedResults.map(word => {
             const obj = {id: word._id, ...word};
             delete obj['_id'];
             return obj
 
-        });
-        return modifiedData
+        })
 
     }
 );
@@ -108,13 +106,12 @@ export const getAllUserWordsWithoutDeletedWords = createAsyncThunk(
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
-        const modifiedData = data[0].paginatedResults.map(word => {
+        return data[0].paginatedResults.map(word => {
             const obj = {id: word._id, ...word};
             delete obj['_id'];
             return obj
 
-        });
-        return modifiedData
+        })
 
     }
 );

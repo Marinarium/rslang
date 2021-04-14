@@ -132,7 +132,7 @@ export default function Savannah() {
     setNumberWords(15);
     setSeconds(5);
     setTrueAnswer(0);
-    dispatch(putStatistics({
+    token && dispatch(putStatistics({
       userId,
       stats: {
         "learnedWords": 0,

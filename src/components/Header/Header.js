@@ -44,9 +44,18 @@ export default function Header() {
         document.body.classList.toggle('overflow-hidden');
         setMenu(!menuState);
     };
+    const removeMenuItem = (item, count) => {
+        return menuItems.splice(menuItems.indexOf(menuItems.find(i => i.name === item)), count);
+    };
 
-    !isAuthenticated && menuItems.splice(menuItems.indexOf(menuItems.find(i => i.name === 'Выход')), 1);
-    isAuthenticated && menuItems.splice(menuItems.indexOf(menuItems.find(i => i.name === 'Вход')), 2);
+    if (!isAuthenticated)  {
+        removeMenuItem('Выход', 1);
+        removeMenuItem('Статистика', 1);
+        removeMenuItem('Словарь', 1);
+    } else {
+        removeMenuItem('Вход', 2);
+    }
+
 
     const menu = menuItems.map(({name, linkTo}) => {
         return (

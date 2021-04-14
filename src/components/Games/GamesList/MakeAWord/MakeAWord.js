@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useGameData} from "../../../../hooks/gameDataHook";
 import {textToHtml} from '../../../../helpers.js'
 import {useInterval} from '../../../../helpers.js'
@@ -11,9 +11,11 @@ import ModalFinish from "../../ModalFinish/ModalFinish";
 import Modal from "../../Modal/Modal";
 import Loader from "../../Loader/Loader";
 import ExitBtn from "../../ExitBtn/ExitBtn";
+import {putStatistics} from "../../../../redux/statReducer";
 
 export default function MakeAWord() {
     const [arrWords, setArrWords] = useState([]);
+    const dispatch = useDispatch();
     const history = useHistory();
     const [answer, setAnswer] = useState('');
     const [gameWord, setGameWord] = useState([]);
@@ -31,6 +33,7 @@ export default function MakeAWord() {
     const [currentWord, setCurrentWord] = useState('');
     const { goodCount, badCount } = useGameData();
     const words = useSelector((state) => state.words.items);
+    const gamesCount = useSelector((state) => state.stat.gamesCount);
     const userId = useSelector((state) => state.auth.userId);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const token = useSelector(state => state.auth.token);
@@ -76,6 +79,16 @@ export default function MakeAWord() {
         } else{
             history.push('/games')
         }
+        token && dispatch(putStatistics({
+            userId,
+            stats: {
+                "learnedWords": 0,
+                "optional": {
+                    gamesCount: (gamesCount + 1)
+                }
+            },
+            token
+        }));
     }
 
     function shuffleLetters(word) {
