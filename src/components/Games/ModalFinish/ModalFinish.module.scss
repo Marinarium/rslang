@@ -5,7 +5,6 @@ button, i {
 }
 
 .endGame {
-  font-size: 75px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,18 +17,23 @@ button, i {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  width: 300px;
+  padding: 30px 20px;
+  box-sizing: border-box;
 }
 
 .endGame_body_top {
 
   & h1 {
-    font-size: 25px;
+    @include title-font(20px);
     text-align: center;
+    margin-bottom: 10px;
   }
 
   & h3 {
-    font-size: 20px;
+    @include text-font(14px, normal);
     text-align: center;
+    margin-bottom: 20px;
   }
 }
 
@@ -39,14 +43,30 @@ button, i {
   justify-content: space-around;
 
   & button {
-    width: 150px;
-    height: 40px;
-    background-color: $fifthColor;
-    border-radius: 10px;
-    border: none;
+    @include title-font(16px, normal);
+    color: $light;
+    background-color: $firstColor;
+    padding: 5px 18px;
+    border: 2px solid $firstColor;
+    cursor: pointer;
+    transition-duration: 350ms;
+    min-width: 150px;
+    border-radius: 50px;
+    display: block;
+
+    &:hover,
+    &:focus {
+      outline: none;
+      filter: saturate(200%);
+    }
+
+    @media (max-width: 600px) {
+      margin-bottom: 10px;
+      padding: 8px 10px;
+    }
 
     & a {
-      color: #000;
+      color: $light;
       text-decoration: none;
     }
   }
