@@ -31,9 +31,6 @@ export default function Header() {
 
     const [menuState, setMenu] = useState(false);
 
-    const changeOverflow = () => {
-        menuState ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
-    };
 
     const logoutHandler = () => {
         dispatch(authLogout());

@@ -1,20 +1,16 @@
 import React, {useState} from 'react';
 import styles from "./Answer.module.scss";
-import {baseUrl} from "../../../../../services/baseUrl/baseUrl";
 
 export default function Answer({answer, setWordComplete, setTrueCount,
                                  goodCount, badCount, isAuthenticated,
-                                 userId, currentWordId, words, token}) {
+                                 userId, currentWordId, words, token, done, setDone}) {
 
-  const [done, setDone] = useState(false);
+
   const [incorrect, setIncorrect] = useState(false);
   const classes = [styles.answer_btn];
-/*
-  useEffect(() => {
-    totalDone && setDone(false)
-  }, [totalDone]);*/
 
-  if (done) {
+
+  if (done && answer.includes(true) ) {
     classes.push(styles.done)
   }
 

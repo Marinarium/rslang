@@ -14,7 +14,9 @@
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.1"
+    "web-vitals": "^1.1.1",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^11.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
