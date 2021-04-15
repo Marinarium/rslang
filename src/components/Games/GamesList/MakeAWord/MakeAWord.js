@@ -169,67 +169,69 @@ export default function MakeAWord() {
   }
 
   return (
-    <section className={styles.make_word}>
-      {seconds === 0 ? (
-        <>
-          <ExitBtn/>
-          <div className={styles.make_word_inner}>
-            <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
-            {gameActive ? (
-              <main className={styles.make_word_game}>
-                <InputWord answer={answer}/>
-                {wordComplete ? (
-                  <div className={styles.answers_info}>
-                    <div><span>Transcription:</span> {gameWordTranscription}</div>
-                    <div><span>Meaning:</span> {textToHtml(gameWordDescription)}</div>
-                  </div>
-                ) : (
-                  <div className={styles.word_letters}>
-                    {gameWord.map((letter, index) => (
-                      <Letter
-                        key={index}
-                        letter={letter}
-                        correctLettersArr={correctLettersArr}
-                        setCorrectLettersArr={setCorrectLettersArr}
-                        concatenate={concatenate}
-                        endWord={endWord}
-                        totalDone={totalDone}
-                        setTotalDone={setTotalDone}
-                        setWordComplete={setWordComplete}
-                        setWordLoose={setWordLoose}
-                        setTrueCount={setTrueCount}
-                        isAuthenticated={isAuthenticated}
-                        goodCount={goodCount}
-                        userId={userId}
-                        currentWordId={currentWordId}
-                        words={words}
-                        token={token}
-                      />
-                    ))}
-                  </div>
-                )}
-                <div className={styles.buttons_footer}>
-                  <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
-                    Сдаться
-                  </button>
-                  <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
-                    Дальше
-                  </button>
-                </div>
-              </main>
-            ) : null}
+      <section className={styles.make_word}>
+        <div className={styles.make_word__wrap}>
+          {seconds === 0 ? (
+              <>
+                <ExitBtn/>
+                <div className={styles.make_word_inner}>
+                  <h3>Собери слово <span>{gameWordTranslate ? gameWordTranslate : null}</span> из букв</h3>
+                  {gameActive ? (
+                      <main className={styles.make_word_game}>
+                        <InputWord answer={answer}/>
+                        {wordComplete ? (
+                            <div className={styles.answers_info}>
+                              <div className={styles.transcription}><span>Transcription:</span> {gameWordTranscription}</div>
+                              <div className={styles.meaning}><span>Meaning:</span> {textToHtml(gameWordDescription)}</div>
+                            </div>
+                        ) : (
+                            <div className={styles.word_letters}>
+                              {gameWord.map((letter, index) => (
+                                  <Letter
+                                      key={index}
+                                      letter={letter}
+                                      correctLettersArr={correctLettersArr}
+                                      setCorrectLettersArr={setCorrectLettersArr}
+                                      concatenate={concatenate}
+                                      endWord={endWord}
+                                      totalDone={totalDone}
+                                      setTotalDone={setTotalDone}
+                                      setWordComplete={setWordComplete}
+                                      setWordLoose={setWordLoose}
+                                      setTrueCount={setTrueCount}
+                                      isAuthenticated={isAuthenticated}
+                                      goodCount={goodCount}
+                                      userId={userId}
+                                      currentWordId={currentWordId}
+                                      words={words}
+                                      token={token}
+                                  />
+                              ))}
+                            </div>
+                        )}
+                        <div className={styles.buttons_footer}>
+                          <button onClick={toLoose} disabled={wordLoose ? 'disabled' : null}>
+                            Сдаться
+                          </button>
+                          <button onClick={nextBtn} disabled={wordLoose ? null : 'disabled'}>
+                            Дальше
+                          </button>
+                        </div>
+                      </main>
+                  ) : null}
 
-            <Modal modalActive={modalActive} setModalActive={setModalActive}>
-              <ModalFinish
-                trueCount={trueCount}
-                looseCount={arrWords.length - trueCount}
-              />
-            </Modal>
-          </div>
-        </>
-      ) : (
-        <Loader seconds={seconds}/>
-      )}
-    </section>
+                  <Modal modalActive={modalActive} setModalActive={setModalActive}>
+                    <ModalFinish
+                        trueCount={trueCount}
+                        looseCount={arrWords.length - trueCount}
+                    />
+                  </Modal>
+                </div>
+              </>
+          ) : (
+              <Loader seconds={seconds}/>
+          )}
+        </div>
+      </section>
   )
 };

@@ -105,6 +105,7 @@ export default function Audiocall() {
 
   return (
     <section className={styles.audiocall}>
+      <div className={styles.audiocall__wrap}>
       {seconds === 0 ? (
         <>
           <ExitBtn/>
@@ -154,6 +155,7 @@ export default function Audiocall() {
       ) : (
         <Loader seconds={seconds}/>
       )}
+      </div>
     </section>
   )
 };

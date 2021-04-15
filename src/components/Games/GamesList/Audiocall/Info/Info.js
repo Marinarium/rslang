@@ -8,7 +8,7 @@ export default function Info({soundOn, currentAnswer, wordComplete}) {
   return (
     <section className={styles.info}>
       <div>
-        <i onClick={soundOn} className="fas fa-volume-up"/>
+        <i onClick={soundOn} className="fas fa-volume-up" style={{color: 'white'}}/>
         <span> {wordComplete ? currentAnswer[4] : null}</span>
       </div>
       <div>

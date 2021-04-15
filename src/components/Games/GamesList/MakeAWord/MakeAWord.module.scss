@@ -5,28 +5,26 @@ button, i {
 }
 
 .make_word {
-  background-image: url("./img/bg.gif");
-  background-size: cover;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-repeat: repeat;
-  background-position: 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include wrapper;
+  @include main;
+  box-sizing: border-box;
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   & h3 {
+    @include title-font(20px, 400);
     margin-bottom: 20px;
+    color: $light;
+    text-align: center;
 
     & span {
-      color: $sixthColor;
+      color: #ffc6e2;
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 600;
     }
   }
 
@@ -48,18 +46,18 @@ button, i {
 }
 
 .make_word_inner {
-  position: fixed;
-  top: 40%;
   margin: 5px auto;
-  background-color: $light;
+  background-color: $firstColor;
   border-radius: 10px;
-  padding: 15px;
-  width: 480px;
-  height: 210px;
+  padding: 40px 15px 60px;
+  max-width: 900px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 4px 2px 8px 0 rgba(205, 211, 216, 0.2);
+  box-sizing: border-box;
 }
 
 .make_word_game {
@@ -80,34 +78,70 @@ button, i {
 }
 
 .word_letters {
-  height: 30px;
   align-items: center;
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin: 30px auto;
+  max-width: 250px;
 }
 
 .answers_info {
   text-align: center;
+}
 
-  & div {
-    width: 300px;
-    margin-bottom: 20px;
+.transcription {
+  @include text-font(14px);
+  color: $light;
+  line-height: 1.2;
+  width: 300px;
+  margin-bottom: 20px;
 
-    & span {
-      color: $sixthColor;
-      font-weight: bold;
-    }
+  & span {
+    @include title-font(14px, 500);
+    color: #ffc6e2;
+  }
+}
+
+.meaning {
+  @include text-font(14px);
+  width: 300px;
+  margin-bottom: 20px;
+  color: $light;
+  line-height: 1.2;
+
+  & span {
+    @include title-font(14px, 500);
+    color: #ffc6e2;
   }
 }
 
 .buttons_footer {
   display: flex;
   justify-content: space-between;
-  width: 200px;
 
   & button {
-    border: none;
-    border-radius: 5px;
-    background-color: $sixthColor;
+    @include title-font(14px, normal);
+    color: $dark;;
+    background-color: $light;
+    padding: 5px 8px;
+    border: 2px solid $light;
+    cursor: pointer;
+    transition-duration: 350ms;
+    min-width: 120px;
+    border-radius: 50px;
+    display: block;
+    margin: 5px;
+
+    &:hover,
+    &:focus {
+      outline: none;
+      color: $firstColor;
+    }
+
+    @media (max-width: 600px) {
+      margin-bottom: 10px;
+      padding: 8px 10px;
+    }
   }
 }
