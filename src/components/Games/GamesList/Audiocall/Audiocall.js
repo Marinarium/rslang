@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {useGameData} from "../../../../hooks/gameDataHook";
-// import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useInterval} from '../../../../helpers.js'
 import {putStatistics} from "../../../../redux/statReducer";
@@ -18,9 +17,7 @@ export default function Audiocall() {
 
   const [arrWords, setArrWords] = useState([]);
   const [randomWords, setRandomWords] = useState([]);
-  const [infoActiveArr, setInfoActiveArr] = useState([]);
   const [wordComplete, setWordComplete] = useState(false);
-  const [count, setCount] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [done, setDone] = useState(false);
   const [modalActive, setModalActive] = useState(false);

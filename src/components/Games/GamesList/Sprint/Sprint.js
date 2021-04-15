@@ -14,8 +14,7 @@ const colorArray = ['#1380EE', '#6970EC', '#8D62D5',
 export default function Sprint() {
 	const { goodCount, badCount } = useGameData();
     const dispatch = useDispatch();
-	const words = useSelector((state) => state.words.items); //!!!слова берем из уже имеющихся в сторе,
-	// они соответствуют странице учебника, на которой находимся
+	const words = useSelector((state) => state.words.items);
 	const gamesCount = useSelector(state => state.stat.gamesCount);
 	const userId = useSelector((state) => state.auth.userId);
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -46,6 +45,16 @@ export default function Sprint() {
 	}, [words, activeWord, randomWords]);
 
 	useEffect(() => {
+		dispatch(putStatistics({
+			userId,
+			stats: {
+				"learnedWords": 0,
+				"optional": {
+					gamesCount: (gamesCount + 1)
+				}
+			},
+			token
+		}));
 		setRandomWords(
 			arrWords
 				.reduce((result, el) => {
@@ -68,6 +77,7 @@ export default function Sprint() {
 					return result;
 				}, []).sort(() => 0.5 - Math.random())
 		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [arrWords]);
 
 	let trueLevel = [];
@@ -104,24 +114,6 @@ export default function Sprint() {
 		setRandomColor(Math.floor(Math.random() * ((colorArray.length - 1) - 0 + 1)) + 0)
 	}, 5000);
 
-	const startNewGame = () => {
-		setBoost(0);
-		setActiveWord(0);
-		setSeconds(5);
-		setTrueAnswer(0);
-		setScoreGame(0);
-		setTimer(60);
-		dispatch(putStatistics({
-			userId,
-			stats: {
-				"learnedWords": 0,
-				"optional": {
-					gamesCount: (gamesCount + 1)
-				}
-			},
-			token
-		}));
-	};
 
 	useEffect(() => {
 		const onKeypress = (e) => {

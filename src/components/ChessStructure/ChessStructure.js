@@ -11,7 +11,7 @@ export default function ChessStructure({contentItems, title, appereance }) {
                     <div className={styles.text}>
                         {text.map((paragraph) => {
                             return (
-                                <p className={styles.p}>{paragraph}</p>
+                                <p className={styles.p} key={paragraph}>{paragraph}</p>
                             );
                         })}
                     </div>

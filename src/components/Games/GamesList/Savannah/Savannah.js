@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import styles from "./Savannah.module.scss";
 import {Link} from "react-router-dom";
-// import crystal from "./images/crystal.svg";
 import {useDispatch, useSelector} from 'react-redux';
 import {useGameData} from '../../../../hooks/gameDataHook';
 import {useInterval} from '../../../../helpers.js'
@@ -17,8 +16,7 @@ export default function Savannah() {
 
   const {goodCount, badCount} = useGameData();
   const dispatch = useDispatch();
-  const words = useSelector(state => state.words.items);//!!!слова берем из уже имеющихся в сторе,
-  // они соответствуют странице учебника, на которой находимся
+  const words = useSelector(state => state.words.items);
   const userId = useSelector(state => state.auth.userId);
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const token = useSelector(state => state.auth.token);
@@ -28,7 +26,6 @@ export default function Savannah() {
   const [health, setHealth] = useState(5);
   const [activeWord, setActiveWord] = useState(0);
   const [moveWord, setMoveWord] = useState(0);
-  const [numberWords, setNumberWords] = useState(15);
   const [arrWords, setArrWords] = useState([]);
   const [randomWords, setRandomWords] = useState([]);
   const [seconds, setSeconds] = useState(5);
@@ -46,6 +43,16 @@ export default function Savannah() {
 
 
   useEffect(() => {
+    token && dispatch(putStatistics({
+      userId,
+      stats: {
+        "learnedWords": 0,
+        "optional": {
+          gamesCount: (gamesCount + 1)
+        }
+      },
+      token
+    }));
     setRandomWords(
       arrWords
         .reduce((result, el) => {
@@ -63,6 +70,7 @@ export default function Savannah() {
           return result;
         }, {})
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [arrWords]);
 
   useInterval(() => {
@@ -124,25 +132,6 @@ export default function Savannah() {
     );
   }
 
-
-  const startNewGame = () => {
-    setHealth(5);
-    setActiveWord(0);
-    setMoveWord(0);
-    setNumberWords(15);
-    setSeconds(5);
-    setTrueAnswer(0);
-    token && dispatch(putStatistics({
-      userId,
-      stats: {
-        "learnedWords": 0,
-        "optional": {
-          gamesCount: (gamesCount + 1)
-        }
-      },
-      token
-    }));
-  };
 
   return Object.keys(randomWords).length !== 0 ? (
     <div className={styles.savannah}>
