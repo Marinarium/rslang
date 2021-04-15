@@ -1,9 +1,22 @@
 @import '../../../../../assets/styles/main';
 
 .answer_btn {
+  @include text-font(16px);
   border: 1px solid $lightGrey;
-  border-radius: 10px;
-  padding: 2px 5px;
+  border-radius: 50px;
+  padding: 8px;
+  margin: 5px;
+  color: $dark;
+  background-color: $light;
+  cursor: pointer;
+  transition-duration: 350ms;
+
+  &:hover,
+  &:focus {
+    box-shadow: 4px 2px 8px 0 rgba(205, 211, 216, 0.2);
+    outline: none;
+    color: $firstColor;
+  }
 }
 
 .done {
