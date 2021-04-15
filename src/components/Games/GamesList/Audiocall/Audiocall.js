@@ -20,6 +20,9 @@ export default function Audiocall() {
   const [randomWords, setRandomWords] = useState([]);
   const [infoActiveArr, setInfoActiveArr] = useState([]);
   const [wordComplete, setWordComplete] = useState(false);
+  const [count, setCount] = useState(0);
+  const [currentAnswer, setCurrentAnswer] = useState('');
+  const [done, setDone] = useState(false);
   const [modalActive, setModalActive] = useState(false);
   const [currentWordId, setCurrentWordId] = useState('');
   const [activeWord, setActiveWord] = useState(0);
@@ -65,7 +68,7 @@ export default function Audiocall() {
           return result;
         }, {})
     );
-  }, [arrWords]);
+  }, [arrWords, activeWord]);
 
   const startGame = () => {
     setActiveWord(0);
@@ -85,21 +88,23 @@ export default function Audiocall() {
   };
 
   function toNextWord() {
-    //console.log(randomWords)
+    if (randomWords[Object.keys(randomWords)[activeWord]].length - 1 === activeWord) {
+      setModalActive(() => true);
+      return;
+    }
     setActiveWord((prev) => prev + 1);
     setWordComplete(() => false);
-    setRandomWords(() => randomWords[Object.keys(randomWords)[activeWord]])
+    setDone(false);
+
   }
 
   function soundOn() {
-    const answer = retAnswer();
+    const answer = randomWords[Object.keys(randomWords)[activeWord]].find(i => i.includes(true));
+    setCurrentAnswer(answer);
     const audio = new Audio(baseUrl + answer[3]);
     audio.play();
   }
 
-  function retAnswer() {
-    return randomWords[Object.keys(randomWords)[activeWord]].find(i => i.includes(true));
-  }
 
   return (
     <section className={styles.audiocall}>
@@ -110,12 +115,13 @@ export default function Audiocall() {
             <div>
               <Info
                 soundOn={soundOn}
-                retAnswer={retAnswer}
+                currentAnswer={currentAnswer}
                 wordComplete={wordComplete}
               />
             </div>
             <div className={styles.answers}>
-              {randomWords[Object.keys(randomWords)[activeWord]].map((answer, index) => {
+              {randomWords[Object.keys(randomWords)[activeWord]]
+              && randomWords[Object.keys(randomWords)[activeWord]].map((answer, index) => {
                 return (
                   <Answer
                     key={index}
@@ -129,6 +135,8 @@ export default function Audiocall() {
                     currentWordId={currentWordId}
                     words={words}
                     token={token}
+                    setDone={setDone}
+                    done={done}
                   />
                 );
               })}
