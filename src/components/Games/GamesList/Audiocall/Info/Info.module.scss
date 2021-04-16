@@ -5,10 +5,41 @@
 
   & div {
     text-align: center;
+  }
+}
 
-    & span {
-      color: $sixthColor;
-      font-weight: bold;
-    }
+.word {
+  font-size: 25px;
+
+  span {
+    @include title-font(20px, 500);
+    color: $light;
+    margin-left: 10px;
+  }
+}
+
+.about {
+  max-width: 450px;
+}
+
+.transcription {
+  @include text-font(14px);
+  color: $light;
+  margin: 15px 0 5px;
+
+
+  & span {
+    @include title-font(16px, 500);
+    color: #ffc6e2;
+  }
+}
+
+.meaning {
+  @include text-font(14px);
+  color: $light;
+
+  & span {
+    @include title-font(16px, 500);
+    color: #ffc6e2;
   }
 }

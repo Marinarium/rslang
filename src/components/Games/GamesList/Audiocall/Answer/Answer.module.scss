@@ -20,9 +20,21 @@
 }
 
 .done {
-  background-color: $firstColor;
+  background-color: #1be0a2;
+  border-color: #1be0a2;
+  color: $light;
+
+  &:hover {
+    color: $light;
+  }
 }
 
 .incorrect {
   background-color: $accentColor;
+  border-color: $accentColor;
+  color: $light;
+
+  &:hover {
+    color: $light;
+  }
 }
