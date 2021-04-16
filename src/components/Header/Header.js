@@ -62,7 +62,7 @@ export default function Header() {
                             {name}
                         </Link>
                         :
-                        <Link to={linkTo} className={styles.link} onClick={showMenu}>
+                        <Link to={linkTo} className={styles.link} onClick={menuState && showMenu}>
                             {name}
                         </Link>
                 }
