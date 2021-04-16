@@ -53,7 +53,6 @@ export default function Header() {
         removeMenuItem('Вход', 2);
     }
 
-
     const menu = menuItems.map(({name, linkTo}) => {
         return (
             <li className={styles.item} key={name}>
@@ -63,7 +62,7 @@ export default function Header() {
                             {name}
                         </Link>
                         :
-                        <Link to={linkTo} className={styles.link}>
+                        <Link to={linkTo} className={styles.link} onClick={showMenu}>
                             {name}
                         </Link>
                 }
