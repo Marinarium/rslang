@@ -1,0 +1,19 @@
+@import '../../assets/styles/main';
+
+.title {
+  @include title-font()
+}
+
+.wrap {
+  margin-bottom: 40px;
+}
+
+.label {
+  @include title-font(18px, normal);
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.input {
+  cursor: pointer;
+}

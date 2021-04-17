@@ -1,0 +1,128 @@
+@import '../../assets/styles/main';
+
+.title {
+  @include title-font(26px);
+  margin-bottom: 60px;
+  text-align: center;
+  color: $dark;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 32px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 32px;
+  }
+}
+
+.item {
+  min-height: 434px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: $firstColor;
+  box-sizing: border-box;
+  transition-duration: 400ms;
+
+  &:hover {
+    background-color: $thirdColor;
+    box-shadow: 5px 5px 17px -10px $thirdColor;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background-color: #fdfdfd1a;
+    position: absolute;
+    bottom: -160px;
+    right: -90px;
+    z-index: 1;
+  }
+
+  &:before {
+    content: url("palm.svg");
+    display: block;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    z-index: 2;
+  }
+
+  &:nth-child(1) {
+    &:hover {
+      background-color: $secondColor;
+      box-shadow: 5px 5px 17px -10px $secondColor;
+    }
+
+    &:before {
+      content: url("running.svg");
+    }
+  }
+
+  &:nth-child(3) {
+    &:hover {
+      background-color: $fourthColor;
+      box-shadow: 5px 5px 17px -10px $fourthColor;
+    }
+
+    &:before {
+      content: url("gramophone.svg");
+    }
+  }
+
+  &:nth-child(4) {
+    &:hover {
+      background-color: $sixthColor;
+      box-shadow: 5px 5px 17px -10px $sixthColor;
+    }
+
+    &:before {
+      content: url("music.svg");
+    }
+  }
+
+  @media (max-width: 1000px) {
+    min-height: unset;
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.link {
+  @include title-font(48px, 900);
+  height: 100%;
+  box-sizing: border-box;
+  color: $light;
+  text-decoration: none;
+  display: block;
+  padding: 40px;
+  z-index: 5;
+  position: relative;
+
+  @media (max-width: 600px) {
+    font-size: 25px;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: #fdfdfd0a;
+    position: absolute;
+    top: -90px;
+    left: -40px;
+    z-index: 1;
+  }
+}

@@ -1,0 +1,26 @@
+@import '../../assets/styles/main';
+
+.statistic_page {
+  margin-bottom: 40px;
+
+  h3 {
+    margin-bottom: 10px;
+    @include title-font(16px, 500);
+    color: $dark;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.words {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 32px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 20px;
+  }
+}

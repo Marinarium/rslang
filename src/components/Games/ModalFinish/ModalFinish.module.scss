@@ -1,0 +1,73 @@
+@import '../../../assets/styles/main';
+
+button, i {
+  cursor: pointer;
+}
+
+.endGame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.endGame_body {
+  background-color: $light;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.endGame_body_top {
+
+  & h1 {
+    @include title-font(20px);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  & h3 {
+    @include text-font(14px, normal);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.endGame_body_bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  & button {
+    @include title-font(16px, normal);
+    color: $light;
+    background-color: $firstColor;
+    padding: 5px 18px;
+    border: 2px solid $firstColor;
+    cursor: pointer;
+    transition-duration: 350ms;
+    min-width: 150px;
+    border-radius: 50px;
+    display: block;
+
+    &:hover,
+    &:focus {
+      outline: none;
+      filter: saturate(200%);
+    }
+
+    @media (max-width: 600px) {
+      margin-bottom: 10px;
+      padding: 8px 10px;
+    }
+
+    & a {
+      color: $light;
+      text-decoration: none;
+    }
+  }
+}

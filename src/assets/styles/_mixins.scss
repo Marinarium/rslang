@@ -1,0 +1,63 @@
+@mixin title-font($font-size: 16px, $font-weight: bold, $line-height: 125%) {
+  font-family: 'Rubik', sans-serif;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+  letter-spacing: 0.05em;
+}
+
+@mixin text-font($font-size: 16px, $font-weight: normal, $line-height: 125%) {
+  font-family: 'Roboto Slab', sans-serif;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+@mixin wrapper {
+  padding-left: 5%;
+  padding-right: 5%;
+
+  @media (min-width: 1600px) {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+}
+
+@mixin main {
+  flex-grow: 1;
+  padding-bottom: 60px;
+}
+
+@mixin clearfix {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@mixin visually-hidden() {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  margin: -1px;
+}
+
+@mixin remove-visually-hidden() {
+  position: static;
+  white-space: normal;
+  width: auto;
+  height: auto;
+  overflow: auto;
+  border: none;
+  padding: 0;
+  clip: auto;
+  clip-path: none;
+  margin: 0;
+}

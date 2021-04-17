@@ -1,0 +1,6 @@
+@import '../../assets/styles/main';
+
+.main {
+  @include wrapper;
+  @include main;
+}

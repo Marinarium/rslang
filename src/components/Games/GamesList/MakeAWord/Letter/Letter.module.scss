@@ -1,0 +1,26 @@
+@import '../../../../../assets/styles/main';
+
+button {
+  cursor: pointer;
+}
+
+.btn_letter {
+  @include text-font(16px);
+  background-color: $light;
+  color: $dark;
+  border: none;
+  border-radius: 2px;
+  margin: 3px;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.done {
+  display: none;
+}
+
+.incorrect {
+  background-color: $accentColor;
+}

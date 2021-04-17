@@ -1,0 +1,221 @@
+@import '../../../../assets/styles/main';
+
+.main {
+  @include wrapper;
+  @include main;
+  box-sizing: border-box;
+}
+
+.savannah {
+  @include wrapper;
+  box-sizing: border-box;
+  background-image: url("./images/background.jpg");
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: auto 100%;
+  animation: animatedBackground 500s linear infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moveWord {
+  position: absolute;
+  font-size: 60px;
+  color: #fff;
+  text-align: center;
+  text-shadow: rgb(112, 111, 107) 1px 0 10px;
+  width: 100%;
+  z-index: 15;
+  top: 0vh;
+  transition: 0.5s linear all;
+}
+
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 10000px;
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 30;
+  align-self: flex-end;
+  position: relative;
+  top: 150px;
+}
+
+.top__health {
+  display: flex;
+  z-index: 30;
+}
+
+.center {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  bottom: 28%;
+  max-width: 1000px;
+
+  @media (max-height: 620px) {
+    bottom: 60px;
+  }
+
+  @media (max-width: 700px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 450px) {
+    bottom: 30px;
+  }
+}
+
+.button__choise {
+  @include text-font(18px, normal);
+  padding: 10px 20px;
+  color: $dark;
+  background-color: $light;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 30;
+  transition: 0.5s linear all;
+
+  @media (max-width: 700px) {
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+  }
+}
+
+.bottom img {
+	z-index:1000;
+}
+
+.endGame {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 30;
+  background-color: #fcfcfcc2;
+}
+
+.endGame_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  background-color: $light;
+  box-sizing: border-box;
+  padding: 20px 60px;
+  box-shadow: 5px 5px 32px -23px #A5DDF7;
+
+  @media (max-height: 580px) {
+    top: 150px;
+    margin-top: 0;
+  }
+
+  @media (max-width: 600px) {
+    width: auto;
+    max-width: 300px;
+    padding: 20px;
+    height: 300px;
+  }
+}
+
+.endGame_body_top h1 {
+  @include title-font(20px);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.endGame_body_top h3 {
+  @include text-font(14px, normal);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.endGame_body_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame_body_info p {
+  @include title-font(16px, normal);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.endGame_body_bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+.endGame_body_bottom button {
+  @include title-font(16px, normal);
+  color: $light;
+  background-color: $firstColor;
+  padding: 5px 18px;
+  border: 2px solid $firstColor;
+  cursor: pointer;
+  transition-duration: 350ms;
+  min-width: 150px;
+  border-radius: 50px;
+  display: block;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    filter: saturate(200%);
+  }
+
+  @media (max-width: 600px) {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+  }
+}
+
+.endGame_body_bottom button a {
+  color: $light;
+  text-decoration: none;
+}

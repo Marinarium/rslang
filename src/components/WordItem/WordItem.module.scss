@@ -1,0 +1,261 @@
+@import '../../assets/styles/main';
+
+.card {
+  background: $light;
+  border: 1px solid $lightGrey;
+  box-sizing: border-box;
+  border-radius: 13px 13px 3px 3px;
+  position: relative;
+}
+
+.unit1{
+  background-color: $firstColor;
+}
+
+.unit1_alt{
+  border-color: $firstColor!important;
+  color: $firstColor!important;
+}
+
+.unit2{
+  background-color: $secondColor;
+}
+
+.unit2_alt{
+  border-color: $secondColor!important;
+  color: $secondColor!important;
+}
+
+.unit3{
+  background-color: $thirdColor;
+}
+
+.unit3_alt{
+  border-color: 1px solid $thirdColor!important;
+  color: $thirdColor!important;
+}
+
+.unit4{
+  background-color: $fourthColor;
+}
+
+.unit4_alt{
+  border-color: $fourthColor!important;
+  color: $fourthColor!important;
+}
+
+.unit5{
+  background-color: $fifthColor;
+}
+
+.unit5_alt{
+  border-color: $fifthColor!important;
+  color: $fifthColor!important;
+}
+
+.unit6{
+  background-color: $sixthColor;
+}
+
+.unit6_alt{
+  border-color: $sixthColor!important;
+  color: $sixthColor!important;
+}
+.hard{
+  background-color: #F13765;
+}
+
+.hard_alt{
+  border-color: #F13765!important;
+  color: #F13765!important;
+}
+
+.head {
+  //background-color: $thirdColor;
+  padding: 18px 25px 18px;
+  color: $light;
+  @include title-font(16px, normal);
+  border-radius: 13px 13px 0 0;
+  text-align: right;
+}
+
+.main {
+  padding: 31px 48px 100px;
+  @media (max-width: 1200px) {
+    padding: 31px 25px 100px;
+  }
+  @media (max-width: 460px) {
+    padding: 31px 15px 40px;
+  }
+}
+
+.main_info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.image {
+  margin-right: 22px;
+  object-fit: cover;
+  object-position: center;
+  width: 130px;
+  height: 121px;
+  border: 1px solid $lightGrey;
+  box-sizing: border-box;
+  border-radius: 3px;
+
+  @media (max-width: 400px) {
+    margin-bottom: 10px;
+  }
+}
+
+.about_word {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.speaker {
+  display: inline-block;
+  margin-right: 12px;
+  transition-duration: 300ms;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(1px);
+  }
+}
+
+.word {
+  display: inline-block;
+  margin-right: 9px;
+  @include title-font(20px, 500);
+  border: none;
+  //color: $thirdColor;
+}
+
+.transcription {
+  @include title-font(18px, 300);
+  color: $darkGrey;
+}
+
+.translation {
+  flex-basis: 100%;
+  margin-top: 7px;
+  @include text-font(17px, normal);
+  letter-spacing: 0.05em;
+  color: $dark;
+}
+
+.meaning {
+  padding-left: 32px;
+  @include text-font(14px, normal);
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: $dark;
+  margin-bottom: 33px;
+  background-image: url("./images/magnifier.svg");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: auto;
+
+  b, i {
+    font-weight: bold;
+    color: #434141;
+    letter-spacing: 0.05em;
+  }
+}
+
+.meaning_eng {
+  margin-bottom: 9px;
+}
+
+.meaning_ru {
+  color: $darkGrey;
+}
+
+.example {
+  padding-left: 32px;
+  @include text-font(14px, normal);
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: $dark;
+  margin-bottom: 32px;
+  background-image: url("./images/book.svg");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: auto;
+
+  b, i {
+    font-weight: bold;
+    color: #434141;
+    letter-spacing: 0.05em;
+  }
+
+}
+
+.example_eng {
+  margin-bottom: 9px;
+}
+
+.example_ru {
+  color: $darkGrey;
+}
+
+.buttons {
+  position: absolute;
+  bottom: 40px;
+
+  @media (max-width: 460px) {
+    position: static;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.button {
+  //background: $thirdColor;
+  border-radius: 50px;
+  border: 1px solid;
+  //border: none;
+  color: $light;
+  @include title-font(16px, normal);
+  line-height: 19px;
+  padding: 11px 18px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition-duration: 300ms;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+    filter: saturate(200%);
+  }
+
+  @media (max-width: 1200px) {
+    margin-right: 10px;
+    font-size: 14px;
+    padding: 11px 15px;
+  }
+
+  @media (max-width: 460px) {
+    &:first-child {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.button_empty {
+  background-color: $light;
+  //color: $thirdColor;
+}

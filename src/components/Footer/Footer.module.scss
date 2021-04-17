@@ -1,0 +1,73 @@
+@import '../../assets/styles/main';
+
+.footer {
+  background-color: $dark;
+  padding: 14px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (min-width: 1600px) {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+}
+
+.copyright {
+  @include title-font(14px, 400);
+  line-height: 16px;
+  color: $light;
+}
+
+.rs {
+  display: inline-block;
+  margin-bottom: 7px;
+  transition-duration: 300ms;
+
+  &:hover, &:focus {
+    outline: none;
+    transform: translateY(-2px);
+  }
+}
+
+.authors {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  list-style: none;
+}
+
+.author {
+  margin-bottom: 4px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.author_link {
+  display: flex;
+  align-items: center;
+  @include title-font(12px, 400);
+  line-height: 16px;
+  text-decoration-line: underline;
+  color: $light;
+  transition-duration: 300ms;
+
+  svg path {
+    transition-duration: 300ms;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+    color: $firstColor;
+
+    svg path {
+      fill: $firstColor;
+    }
+  }
+}
+
+.login {
+  margin-right: 10px;
+}

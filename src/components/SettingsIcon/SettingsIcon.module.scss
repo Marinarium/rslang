@@ -1,0 +1,21 @@
+@import '../../assets/styles/main';
+
+.icon {
+  margin-left: 12px;
+  vertical-align: middle;
+
+  &:focus {
+    outline: none;
+  }
+
+  svg {
+    transition-duration: 300ms;
+  }
+
+
+  &:hover svg,
+  &:focus svg{
+    outline: none;
+    transform: rotate(120deg);
+  }
+}

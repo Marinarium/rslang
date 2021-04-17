@@ -1,0 +1,34 @@
+@import '../../assets/styles/main';
+
+.main {
+  @include wrapper;
+  @include main;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: $dark;
+
+  &:nth-child(2) {
+    color: $firstColor;
+  }
+
+  &:nth-child(3) {
+    color: $accentColor;
+  }
+
+  &:nth-child(4) {
+    color: $darkGrey;
+  }
+}
+
+.subtitle {
+  @include title-font(18px);
+  margin-right: 10px;
+}
+
+.number {
+  @include text-font(16px, normal);
+}
